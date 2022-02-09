@@ -36,24 +36,27 @@ public class PrepareAndLoadGame : MonoBehaviourPunCallbacks
     private void Update()
     {
         // Travel through the room's player list and check if all of them are ready
-        bool loadGame = true;
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+        if (PhotonNetwork.CurrentRoom != null)
         {
-            Hashtable hash = PhotonNetwork.PlayerList[i].CustomProperties;
+            bool loadGame = true;
+            for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
+            {
+                Hashtable hash = PhotonNetwork.PlayerList[i].CustomProperties;
 
-            if (!hash.ContainsKey("isReady"))
-            {
-                loadGame = false;
+                if (!hash.ContainsKey("isReady"))
+                {
+                    loadGame = false;
+                }
+                else if (!(bool)hash["isReady"])
+                {
+                    loadGame = false;
+                }
             }
-            else if (!(bool)hash["isReady"])
-            {
-                loadGame = false;
-            }
+
+            // In case all players in the room are ready, load the Game scene.
+            if (loadGame)
+                SceneManager.LoadScene("Game");
         }
-
-        // In case all players in the room are ready, load the Game scene.
-        if (loadGame)
-            SceneManager.LoadScene("Game");
     }
 
     // Method triggered when the value of ready checkbox changes. Updates the is ready status of the local player.

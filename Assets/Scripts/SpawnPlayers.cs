@@ -32,8 +32,13 @@ public class SpawnPlayers : MonoBehaviour
             // Computes a random position within the spawning area and instantiates an instance of the selected character
             Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), 0.5f, Random.Range(minZ, maxZ));
             GameObject go = PhotonNetwork.Instantiate(characterPrefabs[selectedCharacter].name, randomPosition, Quaternion.identity);
-            cam.LookAt = go.transform;
-            cam.Follow = go.transform;
+
+            // Set up player camera
+            if (cam)
+            {
+                cam.LookAt = go.transform;
+                cam.Follow = go.transform;
+            }
         }
     }
 }
