@@ -149,11 +149,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 104367893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fa83684cd296c340bab4d36764545b1, type: 3}
+  m_Script: {fileID: 11500000, guid: eb25f95f1a5bfee48a22ee4fed03945a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapRows: 2
-  mapColumns: 2
+  mapRows: 4
+  mapColumns: 4
   roomPrefab: {fileID: 1702942907953882187, guid: 8a5fb6eedd7232d43b8e3a0c391ebc93, type: 3}
   corridorPrefab: {fileID: 7854969932190131910, guid: eda25c63acd0e5249a172701b19bd1df, type: 3}
 --- !u!4 &104367895
