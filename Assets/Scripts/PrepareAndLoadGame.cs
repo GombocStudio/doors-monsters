@@ -93,15 +93,15 @@ public class PrepareAndLoadGame : MonoBehaviourPunCallbacks
             playersText.text = "PLAYERS: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers;
     }
 
-    // Triggered when a new player enters the room.
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
+        base.OnPlayerEnteredRoom(newPlayer);
         UpdatePlayersText();
     }
 
-    // Triggered when a player leaves the room.
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
+        base.OnPlayerLeftRoom(otherPlayer);
         UpdatePlayersText();
     }
 
