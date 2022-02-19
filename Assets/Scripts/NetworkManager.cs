@@ -13,43 +13,70 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private GameObject _lobbyPanel;
     [SerializeField] private GameObject _roomPanel;
+    [SerializeField] private GameObject _gameModePanel;
     private InputField _name;
+    private InputField _room;
     private Text _playerList;
     private const int MinNameExtension = 3;
 
+    private bool isLocal;
     #endregion
 
     #region Public Methods
 
     public void OnClickConnect()
     {
-        PhotonNetwork.ConnectUsingSettings();
+        if (_name.text.Length > MinNameExtension)
+        {
+            PhotonNetwork.NickName = _name.text;
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        else
+        {
+            Debug.LogWarning("Name extension is invalid.");
+        }
     }
 
     public void OnClickCreateRoom()
     {
+        isLocal = false;
         if (_name.text.Length > MinNameExtension)
         {
             PhotonNetwork.NickName = _name.text;
-            PhotonNetwork.CreateRoom(null);
+            PhotonNetwork.CreateRoom(_name.text);
         }
         else
         {
+            Debug.LogWarning("Name extension is invalid.");
+        }
+    }
+
+    public void OnClickJoinRoom()
+    {
+        isLocal = true;
+        if (_room.text.Length > MinNameExtension)
+        {
+            PhotonNetwork.NickName = _name.text;
+            PhotonNetwork.JoinRoom(_room.text);
+        }
+        else
+        {
+            _room.gameObject.SetActive(true);
             Debug.LogWarning("Name extension is invalid.");
         }
     }
 
     public void OnClickMatchmaking()
     {
-        if (_name.text.Length > MinNameExtension)
-        {
+        //if (_name.text.Length > MinNameExtension)
+        //{
             PhotonNetwork.NickName = _name.text;
             PhotonNetwork.JoinRandomOrCreateRoom(null);
-        }
-        else
-        {
-            Debug.LogWarning("Name extension is invalid.");
-        }
+        //}
+        //else
+        //{
+        //    Debug.LogWarning("Name extension is invalid.");
+       // }
     }
 
     public void OnClickStartGame()
@@ -85,13 +112,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _menuPanel.SetActive(true);
         _lobbyPanel.SetActive(false);
         _roomPanel.SetActive(false);
+        _gameModePanel.SetActive(false);
     }
 
-    private void EnableLobbyPanel()
+    public void EnableLobbyPanel()
     {
         _menuPanel.SetActive(false);
         _lobbyPanel.SetActive(true);
+        _room.gameObject.SetActive(false);
         _roomPanel.SetActive(false);
+        _gameModePanel.SetActive(false);
     }
 
     private void EnableRoomPanel()
@@ -99,6 +129,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         _menuPanel.SetActive(false);
         _lobbyPanel.SetActive(false);
         _roomPanel.SetActive(true);
+        _gameModePanel.SetActive(false);
+    } 
+    
+    private void EnableGameModePanel()
+    {
+        _menuPanel.SetActive(false);
+        _lobbyPanel.SetActive(false);
+        _roomPanel.SetActive(false);
+        _gameModePanel.SetActive(true);
     }
 
     #endregion
@@ -112,7 +151,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        _name = _lobbyPanel.GetComponentInChildren<InputField>();
+        _name = _menuPanel.GetComponentInChildren<InputField>();
+        _room = _lobbyPanel.GetComponentInChildren<InputField>();
         _playerList = _roomPanel.GetComponentInChildren<Text>();
     }
 
@@ -124,7 +164,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         base.OnConnectedToMaster();
         Debug.Log("Connected to Master Server.");
-        EnableLobbyPanel();
+        EnableGameModePanel();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -156,8 +196,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         base.OnJoinRoomFailed(returnCode, message);
-        Debug.Log("Failed to join random room. Creating a room.");
-        PhotonNetwork.CreateRoom(null);
+        if (isLocal)
+        {
+            Debug.Log("Failed to join random room " + PhotonNetwork.CurrentRoom.Name);
+        }
+        else
+        {
+            Debug.Log("Failed to join random room. Creating a room.");
+            PhotonNetwork.CreateRoom(null);
+        }
+        
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
