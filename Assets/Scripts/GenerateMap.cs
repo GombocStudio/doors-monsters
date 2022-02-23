@@ -217,4 +217,9 @@ public class GenerateMap : MonoBehaviour
 
         return rand;
     }
+
+    public MapStructure[,] GetMapData()
+    {
+        return mapData;
+    }
 }
