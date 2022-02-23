@@ -41,7 +41,7 @@ public class GenerateMap : MonoBehaviour
     public GameObject corridorPrefab;
 
     private MapDataGenerator dataGenerator;
-    private MapStructure[,] mapData;
+    public MapStructure[,] mapData;
 
     private void Awake()
     {
