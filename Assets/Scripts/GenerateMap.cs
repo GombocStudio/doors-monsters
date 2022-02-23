@@ -25,7 +25,6 @@ public class MapDataGenerator
     public MapStructure[,] FromDimensions(int sizeRows, int sizeCols)
     {
         MapStructure[,] data = new MapStructure[sizeRows, sizeCols];
-        // stub to fill in
         return data;
     }
 }
@@ -34,6 +33,9 @@ public class GenerateMap : MonoBehaviour
 {
     public int mapRows;
     public int mapColumns;
+
+    public int maxRoomWidth;
+    public int maxRoomDepth;
 
     public GameObject roomPrefab;
     public GameObject corridorPrefab;
@@ -57,12 +59,27 @@ public class GenerateMap : MonoBehaviour
             {
                 MapStructure structure = mapData[i, j];                                
 
-                // Compute room random size
-                structure.width = Random.Range(3, 4);
-                structure.depth = Random.Range(3, 4);
-
                 var cellTypeValues = typeof(CellType).GetEnumValues();
-                structure.type = (CellType)cellTypeValues.GetValue(Random.Range(0, cellTypeValues.Length));
+
+                if (Random.value <= 0.85f) { structure.type = CellType.Room; }
+                else { structure.type = CellType.Corridor; }
+
+                // Compute map structure size
+                switch (structure.type)
+                {
+                    case CellType.Room:
+                        structure.width = RandomOddNumber(2, maxRoomWidth);
+                        structure.depth = RandomOddNumber(2, maxRoomDepth);
+                        break;
+
+                    case CellType.Corridor:
+                        structure.width = 1;
+                        structure.depth = 1;
+                        break;
+
+                    default:
+                        break;
+                }
 
                 mapData[i, j] = structure;
             }
@@ -72,24 +89,30 @@ public class GenerateMap : MonoBehaviour
         for (int i = 0; i < mapData.GetLength(0); i++)
         {
             for (int j = 0; j < mapData.GetLength(1); j++)
-            {                                
-                Vector3 spawningPos = ComputeSpawningPosition(mapData[i, j], i, j);
-                
-                switch(mapData[i, j].type)
+            {
+                // Compute map element neighbor data
+                MapStructure[] neighborData = ComputeNeighborData(i, j);
+
+                //  Compute map element spawning position
+                mapData[i, j].position = ComputeSpawningPosition(mapData[i, j], neighborData);
+
+                // Spawn map element
+                switch (mapData[i, j].type)
                 {
                     case CellType.Room:
-                        SpawnRoom(mapData[i, j], spawningPos);      
+                        SpawnRoom(mapData[i, j]);      
                         break;
 
                     case CellType.Corridor:
-                        SpawnCorridor(mapData[i, j], i, j, spawningPos);
+                        SpawnCorridorOrigin(mapData[i, j]);
                         break;
 
                     default:
                         break;
                 }
 
-                mapData[i, j].position = spawningPos;
+                // Spawn corridor tiles that connect the map elements
+                SpawnCorridorTiles(mapData[i, j], neighborData);
             }
         }
     }
@@ -100,20 +123,20 @@ public class GenerateMap : MonoBehaviour
         
     }
 
-    private Vector3 ComputeSpawningPosition(MapStructure element, int row, int col)
+    private Vector3 ComputeSpawningPosition(MapStructure element, MapStructure[] neighborData)
     {
-        MapStructure[] neighborData = ComputeNeighborData(row, col);
-        Vector3 spawningPos = new Vector3();
         // Compute room spawning position
+        Vector3 spawningPos = new Vector3();
         if (neighborData[0].type != null)
         {
-            spawningPos.x += neighborData[0].position.x + neighborData[0].width * 0.5f + element.width * 0.5f;
+            spawningPos.x = neighborData[0].position.x + (maxRoomWidth - 1);
         }
 
         if (neighborData[1].type != null)
         {
-            spawningPos.z += neighborData[1].position.z + neighborData[1].depth * 0.5f + element.depth * 0.5f;
+            spawningPos.z = neighborData[1].position.z - (maxRoomDepth - 1);
         }
+
         return spawningPos;
     }
 
@@ -140,39 +163,58 @@ public class GenerateMap : MonoBehaviour
         return neighborData;
     }
 
-    private void SpawnRoom(MapStructure element, Vector3 position)
+    private void SpawnRoom(MapStructure element)
     {
-        GameObject roomClone = Instantiate(roomPrefab, position, Quaternion.AngleAxis(90, Vector3.right));
+        GameObject roomClone = Instantiate(roomPrefab, element.position, Quaternion.AngleAxis(90, Vector3.right));
         roomClone.transform.localScale = new Vector3(element.width, element.depth, 1);
         roomClone.GetComponent<MeshRenderer>().material.color = Color.grey;
     }
 
-    private void SpawnCorridor(MapStructure element, int row, int col, Vector3 position)
+    private void SpawnCorridorOrigin(MapStructure element)
     {
-        var elementWidth = element.width / 2;
-        var elementDepth = element.depth / 2;
+        Instantiate(corridorPrefab, element.position, Quaternion.AngleAxis(90, Vector3.right));
+    }
+
+    private void SpawnCorridorTiles(MapStructure element, MapStructure[] neighborData)
+    {
+        float elementWidth = element.width * 0.5f;
+        float elementDepth = element.depth * 0.5f;
+
+        float neighborWidth = neighborData[0].width * 0.5f;
+        float neighborDepth = neighborData[1].depth * 0.5f;
 
         System.Action<Vector3> spawnCorridor = (position) =>
         {
             Instantiate(corridorPrefab, position, Quaternion.AngleAxis(90, Vector3.right));
         };
 
-        spawnCorridor(position);
-        if (col != 0)
+        if (neighborData[0].type != null)
         {
-            spawnCorridor(position - new Vector3(elementWidth, 0, 0));
+            int numTiles = (int)(maxRoomWidth - elementWidth - neighborWidth) - 1;
+            for (int i = 0; i < numTiles; i++)
+            {
+                spawnCorridor(element.position - new Vector3(elementWidth + 0.5f, 0, 0) - new Vector3(1, 0, 0) * i);
+            }
         }
-        if (row != 0)
+
+        if (neighborData[1].type != null)
         {
-            spawnCorridor(position - new Vector3(0, 0, elementDepth));
+            int numTiles = (int)(maxRoomDepth - elementDepth - neighborDepth) - 1;
+            for (int i = 0; i < numTiles; i++)
+            {
+                spawnCorridor(element.position + new Vector3(0, 0, elementDepth + 0.5f) + new Vector3(0, 0, 1) * i);
+            }
         }
-        if (row != mapData.GetLength(0) - 1)
+    }
+
+    private int RandomOddNumber(int minInclusive, int maxExclusive)
+    {
+        int rand = Random.Range(2, maxRoomWidth);
+        while (rand % 2 == 0)
         {
-            spawnCorridor(position + new Vector3(0, 0, elementDepth));
+            rand = Random.Range(minInclusive, maxExclusive);
         }
-        if (col != mapData.GetLength(1) - 1)
-        {
-            spawnCorridor(position + new Vector3(elementWidth, 0, 0));
-        }
+
+        return rand;
     }
 }

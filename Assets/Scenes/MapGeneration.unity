@@ -149,11 +149,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 104367893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb25f95f1a5bfee48a22ee4fed03945a, type: 3}
+  m_Script: {fileID: 11500000, guid: ce52cf7efd3d5284492de0ff1464740c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapRows: 4
-  mapColumns: 4
+  mapRows: 3
+  mapColumns: 3
+  maxRoomWidth: 6
+  maxRoomDepth: 6
   roomPrefab: {fileID: 1702942907953882187, guid: 8a5fb6eedd7232d43b8e3a0c391ebc93, type: 3}
   corridorPrefab: {fileID: 7854969932190131910, guid: eda25c63acd0e5249a172701b19bd1df, type: 3}
 --- !u!4 &104367895
@@ -164,7 +166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 104367893}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7126926, y: -7.343038, z: 4.788778}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
