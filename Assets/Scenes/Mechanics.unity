@@ -153,7 +153,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1125132131
+--- !u!1001 &1264611262
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -204,6 +204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 704245636174960476, guid: b7d715ccced575548aa845c387399235, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 704245636174960477, guid: b7d715ccced575548aa845c387399235, type: 3}
       propertyPath: sceneViewId
       value: 1
@@ -211,6 +215,10 @@ PrefabInstance:
     - target: {fileID: 704245636174960482, guid: b7d715ccced575548aa845c387399235, type: 3}
       propertyPath: m_Name
       value: Character 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 704245636174960485, guid: b7d715ccced575548aa845c387399235, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7d715ccced575548aa845c387399235, type: 3}
@@ -248,7 +256,7 @@ MonoBehaviour:
   terrainColumns: 4
   maxRoomWidth: 8
   maxRoomDepth: 8
-  roomChance: 0.5
+  roomChance: 1
   corridorOrigin:
   - {fileID: 2374625122092861940, guid: 2db699ab9a9f1454a9ee55d9e473cf62, type: 3}
   - {fileID: 2594990341318704803, guid: cd428c6ef342041488a17697aad88080, type: 3}

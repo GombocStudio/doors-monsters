@@ -6,14 +6,27 @@ using UnityEngine.InputSystem;
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class CharacterController : MonoBehaviour
 {
-    // Reference to photonview component of the character. Prevents input from local player to influence every character in the scene.
-    PhotonView _view;
+    // Character's ID
+    public int id;
 
-    // Character movement variables
+    // Door control time in seconds
+    public float doorControlTime;
+
+    // Character's current game score
+    public int score;
+
+    // Character's material
+    public Material material;
+
+    // Character movement related variables
     private float _speed = 6.0f;
     private Vector3 _movement = new Vector3(0, 0, 0);
 
+    // Reference to character's rigidbody
     private Rigidbody _rigidbody;
+
+    // Reference to photonview component of the character. Prevents input from local player to influence every character in the scene.
+    private PhotonView _view;
 
     // Start is called before the first frame update
     private void Start()
@@ -41,5 +54,29 @@ public class CharacterController : MonoBehaviour
         // Updates transform position of character if current view is from the local player
         if (_view && _view.IsMine)
             _rigidbody.velocity = _movement * _speed;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // Check if other collider gameobject is interactable
+        Interactable interactable = other.gameObject.GetComponent<Interactable>();
+        if (!interactable) { return; }
+
+        Debug.Log("Trigger enter!");
+
+        // Interact with collider gameobject
+        interactable.Interact(this);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Check if other collider gameobject is interactable
+        Interactable interactable = other.gameObject.GetComponent<Interactable>();
+        if (!interactable) { return; }
+
+        Debug.Log("Trigger exit!");
+
+        // Interact with collider gameobject
+        interactable.Interact(this);
     }
 }
