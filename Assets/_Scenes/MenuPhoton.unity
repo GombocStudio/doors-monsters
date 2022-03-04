@@ -1294,7 +1294,7 @@ MonoBehaviour:
   _menuPanel: {fileID: 1211970866}
   _lobbyPanel: {fileID: 245788179}
   _roomPanel: {fileID: 1465072633}
-  _gameSceneName: Game2
+  _gameSceneName: TestScenePhoton
 --- !u!4 &748551590
 Transform:
   m_ObjectHideFlags: 0
