@@ -7,23 +7,23 @@ public class MonsterController : MonoBehaviour
     public GameObject monsterPrefab;
     public GameObject gameManager;
 
-    private GenerateMap mapGenerator;
+    private TerrainGenerator mapGenerator;
     private System.DateTime lastSpawnedTime = System.DateTime.Now;
     
     public bool paused = false;
     // Start is called before the first frame update
     void Start()
     {
-        mapGenerator = gameManager.GetComponent<GenerateMap>();        
+        mapGenerator = gameManager.GetComponent<TerrainGenerator>();        
         //SpawnMonster();
     }
 
-    private MapStructure GetRandomRoom()
+    private TerrainStructure GetRandomRoom()
     {
-        var mapData = mapGenerator.mapData;
+        var mapData = mapGenerator.terrainData;
         int rows = mapData.GetLength(0);
         int cols = mapData.GetLength(1);
-        MapStructure? room = null;
+        TerrainStructure? room = null;
         while (room == null)
         {
             int r = Random.Range(0, rows);
