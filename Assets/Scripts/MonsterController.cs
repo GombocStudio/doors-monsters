@@ -9,6 +9,8 @@ public class MonsterController : MonoBehaviour
 
     private GenerateMap mapGenerator;
     private System.DateTime lastSpawnedTime = System.DateTime.Now;
+    
+    public bool paused = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,13 +41,20 @@ public class MonsterController : MonoBehaviour
     private void SpawnMonster()        
     {
         var room = GetRandomRoom();
-        Instantiate(monsterPrefab, room.position, Quaternion.AngleAxis(90, Vector3.right));
+        var spawnPos = room.position;
+        spawnPos.x += Random.Range(-1f, 1f);        
+        spawnPos.z += Random.Range(-1f, 1f);
+        var monster = Instantiate(monsterPrefab, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
+        monster.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        monster.transform.Translate(new Vector3(0, 0.5f));
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        if (paused) return;
+
         if (System.DateTime.Now - lastSpawnedTime > System.TimeSpan.FromMilliseconds(1000))
         {
             SpawnMonster();
