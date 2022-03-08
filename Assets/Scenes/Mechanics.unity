@@ -123,89 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &3914550
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3914553}
-  - component: {fileID: 3914552}
-  - component: {fileID: 3914551}
-  m_Layer: 0
-  m_Name: Camera
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &3914551
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3914550}
-  m_Enabled: 1
---- !u!20 &3914552
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3914550}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &3914553
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3914550}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &557933214
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +153,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1125132131
+--- !u!1001 &1264611262
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -257,7 +174,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 704245636174960473, guid: b7d715ccced575548aa845c387399235, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6
+      value: -6.12
       objectReference: {fileID: 0}
     - target: {fileID: 704245636174960473, guid: b7d715ccced575548aa845c387399235, type: 3}
       propertyPath: m_LocalRotation.w
@@ -287,6 +204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 704245636174960476, guid: b7d715ccced575548aa845c387399235, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 704245636174960477, guid: b7d715ccced575548aa845c387399235, type: 3}
       propertyPath: sceneViewId
       value: 1
@@ -295,13 +216,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Character 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1044228973974596194, guid: b7d715ccced575548aa845c387399235, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1044228973974596198, guid: b7d715ccced575548aa845c387399235, type: 3}
-      propertyPath: sceneViewId
-      value: 1
+    - target: {fileID: 704245636174960485, guid: b7d715ccced575548aa845c387399235, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7d715ccced575548aa845c387399235, type: 3}
@@ -337,14 +254,14 @@ MonoBehaviour:
   terrainParent: {fileID: 557933214}
   terrainRows: 4
   terrainColumns: 4
-  maxRoomWidth: 9
-  maxRoomDepth: 9
-  roomChance: 0.5
+  maxRoomWidth: 8
+  maxRoomDepth: 8
+  roomChance: 1
   corridorOrigin:
-  - {fileID: 7004017460623930772, guid: ac27ec5a7dc82e1468cd6fb6dd866b66, type: 3}
-  - {fileID: 6607302673366933464, guid: 35cbe6cf8b3a90846a58b4b118153306, type: 3}
-  - {fileID: 5346721205569079802, guid: 77c9f3a1ecd50a946ad7d17f662474b8, type: 3}
-  corridorTile: {fileID: 6670547469706896094, guid: bc32710903bb44d47841ce1ad9a5c56d, type: 3}
+  - {fileID: 2374625122092861940, guid: 2db699ab9a9f1454a9ee55d9e473cf62, type: 3}
+  - {fileID: 2594990341318704803, guid: cd428c6ef342041488a17697aad88080, type: 3}
+  - {fileID: 8706671230545415314, guid: 9c93c6c312798e7479ff3d093d9d2bee, type: 3}
+  corridorTile: {fileID: 5896170599851216676, guid: bc32710903bb44d47841ce1ad9a5c56d, type: 3}
 --- !u!4 &1796811134
 Transform:
   m_ObjectHideFlags: 0
