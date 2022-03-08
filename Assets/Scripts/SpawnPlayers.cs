@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
+using StarterAssets;
+using UnityEngine.InputSystem;
 
 // Script responsible for spawning player characters in the game scene
 public class SpawnPlayers : MonoBehaviour
@@ -32,13 +34,22 @@ public class SpawnPlayers : MonoBehaviour
             // Computes a random position within the spawning area and instantiates an instance of the selected character
             Vector3 randomPosition = new Vector3(Random.Range(minX, maxX), 0.5f, Random.Range(minZ, maxZ));
             GameObject go = PhotonNetwork.Instantiate(characterPrefabs[selectedCharacter].name, randomPosition, Quaternion.identity);
+            cam.LookAt = go.transform;
+            cam.Follow = go.transform;
 
-            // Set up player camera
-            if (cam)
-            {
-                cam.LookAt = go.transform;
-                cam.Follow = go.transform;
-            }
+            UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
+
+#if UNITY_IOS || UNITY_ANDROID
+    UI.starterAssetsInputs = go.GetComponent<StarterAssetsInputs>();
+
+    MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
+    mobile.playerInput = go.GetComponent<PlayerInput>();
+#endif
+
+#if !(UNITY_IOS || UNITY_ANDROID)
+    UI.gameObject.SetActive(false);
+#endif
+
         }
     }
 }
