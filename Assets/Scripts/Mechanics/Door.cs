@@ -41,7 +41,7 @@ public class Door : Interactable
             ResetDoorControl();
     }
 
-    public override void Interact(CharacterController cc)
+    public override void Interact(MyCharacterController cc)
     {
         // Set door player ID to the ID of the character that opened it
         if (characterId == -1)

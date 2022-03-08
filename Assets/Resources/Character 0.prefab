@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ca76c29173893f847a9aced87b29c3a6, type: 2}
+  - {fileID: 2100000, guid: 1658bb0ad026d7c4890e6ec789801668, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -277,12 +277,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 704245636174960482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a5d37e03c1c5a8408838a10f2479d1a, type: 3}
+  m_Script: {fileID: 11500000, guid: a672d7a258aa5984aa09d09a1ce7c5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  score: 0
   doorControlTime: 2
+  score: 0
   material: {fileID: 2100000, guid: 1658bb0ad026d7c4890e6ec789801668, type: 2}
 --- !u!1 &4183654087451385514
 GameObject:

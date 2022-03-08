@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 
 // Script responsible for handling the movement and actions of the characters in the scene.
-public class CharacterController : MonoBehaviour
+public class MyCharacterController : MonoBehaviour
 {
     // Character's ID
     public int id;
