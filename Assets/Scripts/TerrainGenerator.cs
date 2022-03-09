@@ -58,7 +58,7 @@ public class TerrainGenerator : MonoBehaviour
 
     [Header("Terrain data generation")]
     private TerrainDataGenerator dataGenerator;
-    private TerrainStructure[,] terrainData;
+    public TerrainStructure[,] terrainData;
 
     private void Awake()
     {
