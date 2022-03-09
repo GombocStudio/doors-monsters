@@ -11,8 +11,8 @@ public struct TerrainStructure
     public Vector3 position;
     public Quaternion rotation;
 
-    public int width;
-    public int depth;
+    public float width;
+    public float depth;
 }
 
 public enum CellType
@@ -264,8 +264,8 @@ public class TerrainGenerator : MonoBehaviour
 
             if (temp.Length < 3) { return; }
 
-            int.TryParse(element.prefab.name.Split('_')[1], out element.width); // RandomOddNumber(2, maxRoomWidth);
-            int.TryParse(element.prefab.name.Split('_')[2], out element.depth); // RandomOddNumber(2, maxRoomDepth);
+            float.TryParse(element.prefab.name.Split('_')[1], out element.width); // RandomOddNumber(2, maxRoomWidth);
+            float.TryParse(element.prefab.name.Split('_')[2], out element.depth); // RandomOddNumber(2, maxRoomDepth);
         }
     }
 
