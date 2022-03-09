@@ -34,11 +34,15 @@ public class GameManager : MonoBehaviour
 
 #if UNITY_IOS || UNITY_ANDROID
             UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
+
+        if (UI)
+        {
             UI.gameObject.SetActive(true);
             UI.starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
 
             MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
             mobile.playerInput = player.GetComponent<PlayerInput>();
+        }
 #endif
 
     }
