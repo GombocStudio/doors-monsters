@@ -12,6 +12,19 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TerrainGenerator terrainGenerator = FindObjectOfType<TerrainGenerator>();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // Generate terrain
+            // terrainGenerator.GenerateTerrain();
+
+            // wait
+        }
+
+        // Get terrain data
+        terrainGenerator.GetTerrainData();
+
         // GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 1, 0), Quaternion.identity, 0);
         GameObject player = PhotonNetwork.Instantiate("Character 0", new Vector3(0, 1, 0), Quaternion.identity, 0);
 

@@ -88,6 +88,12 @@ public class TerrainGenerator : MonoBehaviour
 
                 // Compute terrain structure data
                 ComputeStructureData(ref terrainData[i, j], i, j);
+
+                // Compute terrain element neighbor data
+                TerrainStructure[] neighborData = ComputeNeighborData(i, j);
+
+                //  Compute terrain element spawning position
+                ComputeSpawningPosition(ref terrainData[i, j], neighborData);
             }
         }
 
@@ -96,14 +102,11 @@ public class TerrainGenerator : MonoBehaviour
         {
             for (int j = 0; j < terrainData.GetLength(1); j++)
             {
+                // Spawn terrain element
+                SpawnStructure(terrainData[i, j]);
+
                 // Compute terrain element neighbor data
                 TerrainStructure[] neighborData = ComputeNeighborData(i, j);
-
-                //  Compute terrain element spawning position
-                ComputeSpawningPosition(ref terrainData[i, j], neighborData);
-
-                // Spawn terrain element
-                SpawnStructure(terrainData[i, j]);      
 
                 // Spawn corridor tiles that connect the terrain elements
                 SpawnCorridorTiles(terrainData[i, j], neighborData);
