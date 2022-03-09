@@ -27,6 +27,7 @@ public class SpawnPlayers : MonoBehaviour
     {
         // Gets the selected character from local player playePrefs
         int selectedCharacter = PlayerPrefs.GetInt("character");
+        selectedCharacter = 0;
 
         // Makes sure the selected character exits in our available characters list
         if (selectedCharacter < characterPrefabs.Count && characterPrefabs[selectedCharacter])
