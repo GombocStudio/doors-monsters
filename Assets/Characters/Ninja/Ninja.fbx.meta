@@ -1,32 +1,26 @@
 fileFormatVersion: 2
-guid: 9b5ad442a7956cd4faba6cfd79528041
+guid: d47b87a825798b545811c0cc0e1be93d
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
-      74: 5364737251917730800
-    second: Armature|Armature.001|Armature|ArmatureAction|Armature|ArmatureAction
-  - first:
       74: 4781951162920444690
-    second: walk
+    second: Walk
   - first:
       74: -3908598790589692577
     second: Armature|BodyAction
   - first:
-      74: -8612994791844490777
-    second: Armature|ArmatureAction (1)
+      74: -296927848946336432
+    second: Walk - Weapon
   - first:
-      74: -1246731831762816583
-    second: walk - weapon
+      74: -3100369314251171874
+    second: Idle
   - first:
-      74: -5252816984213320552
-    second: idle
+      74: -6584797662277513022
+    second: Idle - Weapon
   - first:
-      74: -6239216113759591374
-    second: attack
-  - first:
-      74: 889593738573682603
-    second: idle - weapon
+      74: 6720303635017113406
+    second: Attack
   externalObjects:
   - first:
       type: UnityEngine:Material
@@ -77,37 +71,37 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: NinjaBandanaShoesUVs
-    second: {fileID: 2800000, guid: 07d44ed2be43f3f42b93d15ede585248, type: 3}
+    second: {fileID: 2800000, guid: 45b457622c1533b4490f647e6dbfde63, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: NinjaHairUVs
-    second: {fileID: 2800000, guid: 0fb2de4504654284dbce2a9af62bb81c, type: 3}
+    second: {fileID: 2800000, guid: 41288991dbf59c44fb2b41792a7b3cb0, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: NinjaHeadUVs
-    second: {fileID: 2800000, guid: 89d04fc5534f171498203681f98587ab, type: 3}
+    second: {fileID: 2800000, guid: 7256b3e735de052409588aab8249bc47, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: NinjaKatanaPortUVs
-    second: {fileID: 2800000, guid: 6c3222a64a5eef541acad2931fd936ab, type: 3}
+    second: {fileID: 2800000, guid: 7d489ecf49705614dbb10ed26d93b98a, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: NinjaNoseEarsUVs
-    second: {fileID: 2800000, guid: 663d3b641ef511a4c8e756fedb903042, type: 3}
+    second: {fileID: 2800000, guid: 3d98f6637d7c96243a8181b8932842a2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: NinjaNoseUVs
-    second: {fileID: 2800000, guid: cff2a9d60cfcd8c46b487bbede9049ec, type: 3}
+    second: {fileID: 2800000, guid: 2c497e5539e48ed48bd20c8e34cd7e56, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: NinjaSkinUVs
-    second: {fileID: 2800000, guid: 776cf5dcece6a364d9797afbd9b59fc7, type: 3}
+    second: {fileID: 2800000, guid: 62a6ff33301934149b721413d0210147, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -136,7 +130,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: walk
+      name: Walk
       takeName: Armature|ArmatureAction
       internalID: 0
       firstFrame: 1
@@ -165,11 +159,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: walk - weapon
+      name: Walk - Weapon
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 31
-      lastFrame: 59
+      firstFrame: 41
+      lastFrame: 69
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -194,11 +188,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: idle
+      name: Idle
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 61
-      lastFrame: 90
+      firstFrame: 81
+      lastFrame: 110
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -223,11 +217,40 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: attack
+      name: Idle - Weapon
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 91
-      lastFrame: 105
+      firstFrame: 121
+      lastFrame: 150
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Attack
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 161
+      lastFrame: 175
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -247,37 +270,68 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: idle - weapon
-      takeName: Armature|ArmatureAction
-      internalID: 0
-      firstFrame: 106
-      lastFrame: 135
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 1
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 0
+      - path: Armature/Spine
+        weight: 0
+      - path: Armature/Spine/Arm.L
+        weight: 1
+      - path: Armature/Spine/Arm.L/Arm.L_end
+        weight: 1
+      - path: Armature/Spine/Arm.R
+        weight: 0
+      - path: Armature/Spine/Arm.R/Arm.R_end
+        weight: 0
+      - path: Armature/Spine/CloseWeapon
+        weight: 1
+      - path: Armature/Spine/CloseWeapon/CloseWeapon_end
+        weight: 1
+      - path: Armature/Spine/Head 1
+        weight: 1
+      - path: Armature/Spine/Head 1/Head_end
+        weight: 1
+      - path: Armature/Spine/Leg.L
+        weight: 0
+      - path: Armature/Spine/Leg.L/Leg.L_end
+        weight: 0
+      - path: Armature/Spine/Leg.R
+        weight: 0
+      - path: Armature/Spine/Leg.R/Leg.R_end
+        weight: 0
+      - path: Bandana
+        weight: 0
+      - path: Hair
+        weight: 0
+      - path: Hair/HairFront
+        weight: 0
+      - path: Head
+        weight: 0
+      - path: Head/Ear
+        weight: 0
+      - path: Head/Nose
+        weight: 0
+      - path: Katana
+        weight: 0
+      - path: Kimono
+        weight: 0
+      - path: Shuriken
+        weight: 0
+      - path: Torso
+        weight: 0
+      - path: Torso/Foot
+        weight: 0
+      - path: Torso/Hand
+        weight: 0
+      - path: Torso/KatanaPort
+        weight: 0
+      - path: Torso/KatanaPort/KatanaHolder
+        weight: 0
+      - path: Torso/KatanaPort/KatanaHolder/Cylinder
+        weight: 0
+      maskType: 0
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     isReadable: 0
@@ -335,7 +389,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: Spine
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
@@ -343,7 +397,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 0
+  avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
   additionalBone: 0
   userData: 

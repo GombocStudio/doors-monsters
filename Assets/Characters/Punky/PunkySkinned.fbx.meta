@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 99b15a10c875f374fbe0494e92162b7f
+guid: 81ed258cce4cfb84cb1cdb36a38874bf
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
@@ -16,108 +16,83 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialAxeIndia
-    second: {fileID: 2100000, guid: 1dc03c13e5688bd499ff7ad3c2f00d19, type: 2}
+      name: MaterialBatPunky
+    second: {fileID: 2100000, guid: acc1d98347447414d9b5e92b77fdee05, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialAxeIndia.001
-    second: {fileID: 2100000, guid: 3bd25340ee584604096010f1ab43e61b, type: 2}
+      name: MaterialBeltPunky
+    second: {fileID: 2100000, guid: 926d22c9dd087da45b4be36f5352a7cd, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialAxeIndia.002
-    second: {fileID: 2100000, guid: aa9c74182aba9174f9780b9e7c40e1a0, type: 2}
+      name: MaterialBodyNoseEarPunky
+    second: {fileID: 2100000, guid: de311dd777b48274995a7e8d805f7d64, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialAxeIndia.003
-    second: {fileID: 2100000, guid: 44d1f33bb037b3c47a0fb239cd78cdac, type: 2}
+      name: MaterialEarringsPunky
+    second: {fileID: 2100000, guid: 6fd6928b606349b47ad634f08deff948, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialBeltIndia
-    second: {fileID: 2100000, guid: 698643482f1625047884ef60ef5413c9, type: 2}
+      name: MaterialHairShoesGrenadesPunky
+    second: {fileID: 2100000, guid: 9a9fa24ddab6d414ba37c8123e672480, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialBeltIndia.001
-    second: {fileID: 2100000, guid: bdb304c13c1c32749bdb9748fd293288, type: 2}
+      name: MaterialHandsPunky
+    second: {fileID: 2100000, guid: 0ed5e649c5c208a4aa94527a747411eb, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialBeltIndia.002
-    second: {fileID: 2100000, guid: bfae584463d8b584da203c9f37340ae6, type: 2}
+      name: MaterialHeadPunky
+    second: {fileID: 2100000, guid: 970bf667a45259241aca5c2f3188d1ed, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialBeltIndia.003
-    second: {fileID: 2100000, guid: 5b3619395963d094796a6d7ec334223c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialHairShoesIndia
-    second: {fileID: 2100000, guid: 2c8203f583587144ea4140e0c9234e36, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialHairShoesIndia.001
-    second: {fileID: 2100000, guid: 29032e4870a58a2409a35c8fce5640f5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialHairShoesIndia.002
-    second: {fileID: 2100000, guid: b3ce2bf9979aa7944a2f8108d29ed318, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialHairShoesIndia.003
-    second: {fileID: 2100000, guid: 5ea4aeb49eaef3f4f893835f19029cf1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialHeadIndia
-    second: {fileID: 2100000, guid: 9898837abd587024d995b853198a7734, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialSkinIndia
-    second: {fileID: 2100000, guid: 8d987c0a385560f458c77dcf3e5b64b9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialTorsoIndia
-    second: {fileID: 2100000, guid: d86dcdd127d716e40b2493d039800f72, type: 2}
+      name: MaterialPackPunky
+    second: {fileID: 2100000, guid: d858b5968dff8b24f82502fffd825a89, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: IndiaBeltUVs
-    second: {fileID: 2800000, guid: 0ecd465edc39ec94895e27d8bcc6b2f1, type: 3}
+      name: PunkyBeltUVS
+    second: {fileID: 2800000, guid: 40a35f2b484eacd44a4b37f230aa7ae8, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: IndiaFaceNormales
-    second: {fileID: 2800000, guid: 388e0f271d7be784693d4963cf92883f, type: 3}
+      name: PunkyBodyNoseEarsUVs
+    second: {fileID: 2800000, guid: 7635abc4972ac404d8d8f0bb7169ff2f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: IndiaFaceUVS
-    second: {fileID: 2800000, guid: 2a046aaf3f4b1eb46b24b6edbaf1b504, type: 3}
+      name: PunkyEarringsUVs
+    second: {fileID: 2800000, guid: f79060a012fd5034682de40fedf2121c, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: IndiaHairShoesUVs
-    second: {fileID: 2800000, guid: d58d8be6da72343469d54f95d35268f8, type: 3}
+      name: PunkyHairShoesUVs
+    second: {fileID: 2800000, guid: f4b0a5077185dc646a1842cf8933db8a, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: IndiaSkinUVs
-    second: {fileID: 2800000, guid: 250d022e20113a34388240dde70d5026, type: 3}
+      name: PunkyHandsUVs
+    second: {fileID: 2800000, guid: 312c52d02f7f7654d97bee78eb30ac26, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: IndiaTorsoUVs
-    second: {fileID: 2800000, guid: 6fab32ae0e227b74cb54f85bbfc65fbe, type: 3}
+      name: PunkyHeadUVs
+    second: {fileID: 2800000, guid: 2c47ddad094eecb4ca450e9d49de329d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: PunkyPackNormales
+    second: {fileID: 2800000, guid: 71d4d6bd1dfdc9446817067a45d7e176, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: PunkyPackUVs
+    second: {fileID: 2800000, guid: cb26501968849634392b2943b743824d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -240,16 +215,12 @@ ModelImporter:
       - path: Armature/Spine/Arm.L/Arm.L_end
         weight: 1
       - path: Armature/Spine/Arm.R
-        weight: 1
+        weight: 0
       - path: Armature/Spine/Arm.R/Arm.R_end
+        weight: 0
+      - path: Armature/Spine/CloseWeapon
         weight: 1
-      - path: Armature/Spine/Axe 1
-        weight: 1
-      - path: Armature/Spine/Axe 1/Axe_end
-        weight: 1
-      - path: Armature/Spine/Bow 1
-        weight: 1
-      - path: Armature/Spine/Bow 1/Bow_end
+      - path: Armature/Spine/CloseWeapon/CloseWeapon_end
         weight: 1
       - path: Armature/Spine/Head 1
         weight: 1
@@ -263,35 +234,37 @@ ModelImporter:
         weight: 0
       - path: Armature/Spine/Leg.R/Leg.R_end
         weight: 0
-      - path: Arrow
-        weight: 0
-      - path: Arrow.001
-        weight: 0
-      - path: Arrow.002
-        weight: 0
-      - path: Arrow.003
-        weight: 0
-      - path: Axe
-        weight: 0
-      - path: Bow
-        weight: 0
-      - path: Head
-        weight: 0
-      - path: Head/Ear
-        weight: 0
-      - path: Head/HairTail
-        weight: 0
-      - path: Head/Nose
-        weight: 0
       - path: Torso
         weight: 0
-      - path: Torso/ArrowBag
-        weight: 0
-      - path: Torso/ArrowBag/BagBelt
+      - path: Torso/Bat
         weight: 0
       - path: Torso/Foot
         weight: 0
+      - path: Torso/Grenade
+        weight: 0
+      - path: Torso/Grenade/GrenadeHandle
+        weight: 0
+      - path: Torso/Grenade.001
+        weight: 0
+      - path: Torso/Grenade.001/GrenadeHandle.001
+        weight: 0
       - path: Torso/Hand
+        weight: 0
+      - path: Torso/Head
+        weight: 0
+      - path: Torso/Head/Ear
+        weight: 0
+      - path: Torso/Head/EarBall
+        weight: 0
+      - path: Torso/Head/EarRing
+        weight: 0
+      - path: Torso/Head/Hair
+        weight: 0
+      - path: Torso/Head/Nose
+        weight: 0
+      - path: Torso/Pack
+        weight: 0
+      - path: Torso/Pack/PackBelt
         weight: 0
       maskType: 0
       maskSource: {instanceID: 0}
