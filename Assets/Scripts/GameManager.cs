@@ -8,11 +8,17 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    private List<string> playersPrefabs = new List<string>();
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = PhotonNetwork.Instantiate("Player", new Vector3(0, 1, 0), Quaternion.identity, 0);
+        playersPrefabs.Add("India-Prefab");
+        playersPrefabs.Add("Ninja-Prefab");
+        playersPrefabs.Add("Punky-Prefab");
+        playersPrefabs.Add("SpaceHunter-Prefab");
+
+        GameObject player = PhotonNetwork.Instantiate(playersPrefabs[UnityEngine.Random.Range(0, 3)], new Vector3(0, 1, 0), Quaternion.identity, 0);
 
         CinemachineVirtualCamera cam = FindObjectOfType<CinemachineVirtualCamera>();
 
