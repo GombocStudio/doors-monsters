@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: 1158052173}
   - component: {fileID: 1158052172}
   - component: {fileID: 1158052174}
+  - component: {fileID: 1158052175}
   m_Layer: 0
   m_Name: '@GameManager'
   m_TagString: Untagged
@@ -272,44 +273,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce52cf7efd3d5284492de0ff1464740c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainParent: {fileID: 1355616569}
-  terrainRows: 4
-  terrainColumns: 4
-  maxRoomWidth: 8
-  maxRoomDepth: 8
-  roomChance: 0.85
+  terrainRows: 2
+  terrainColumns: 2
+  maxRoomWidth: 9
+  maxRoomDepth: 9
+  roomChance: 0.65
+  cornerRooms:
+  - {fileID: 7528944740460675877, guid: 67401e274e3bc484da71ee94aea5e915, type: 3}
+  - {fileID: 5968963788454281245, guid: 31b303b3031dccd45ae9e013ae02e879, type: 3}
+  - {fileID: 1633555678483840303, guid: c44a5f6c1a5d99447862297c67a5de5c, type: 3}
+  edgeRooms:
+  - {fileID: 3225083122212078226, guid: 4ad9ea3684e0fbd4fba06945554cbd52, type: 3}
+  - {fileID: 7234575010270546047, guid: f994e863f3c4cff4e993cef2662acf62, type: 3}
+  - {fileID: 6435180547963184787, guid: d544a39f9fac76b49a1914ef1da4e0dc, type: 3}
+  centerRooms:
+  - {fileID: 8687890310481330568, guid: c724a2924d2d2d84084d349f0cff56c1, type: 3}
+  - {fileID: 693259328136038952, guid: 11ba699e86340ba4a9437e840d7302ac, type: 3}
+  - {fileID: 1138978739608380183, guid: e3b725be73e3a3d48adbf25568c270be, type: 3}
   corridorOrigin:
   - {fileID: 2374625122092861940, guid: 2db699ab9a9f1454a9ee55d9e473cf62, type: 3}
   - {fileID: 2594990341318704803, guid: cd428c6ef342041488a17697aad88080, type: 3}
   - {fileID: 8706671230545415314, guid: 9c93c6c312798e7479ff3d093d9d2bee, type: 3}
   corridorTile: {fileID: 5896170599851216676, guid: bc32710903bb44d47841ce1ad9a5c56d, type: 3}
---- !u!1 &1355616569
-GameObject:
+--- !u!114 &1158052175
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1355616570}
-  m_Layer: 0
-  m_Name: TerrainParent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1355616570
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355616569}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 1158052171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

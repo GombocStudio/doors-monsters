@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
+[System.Serializable]
 public struct TerrainStructure
 {
     public CellType? type;
 
-    public GameObject prefab;
+    public string prefab;
 
     public Vector3 position;
     public Quaternion rotation;
@@ -15,6 +17,7 @@ public struct TerrainStructure
     public float depth;
 }
 
+[System.Serializable]
 public enum CellType
 {
     Room,
@@ -34,7 +37,8 @@ public class TerrainDataGenerator
 
 public class TerrainGenerator : MonoBehaviour
 {
-    public GameObject terrainParent;
+    [Header("Parent of terrain structures")]
+    private GameObject terrainParent;
 
     [Header("Terrain grid size")]
     public int terrainRows;
@@ -48,9 +52,9 @@ public class TerrainGenerator : MonoBehaviour
     public float roomChance = 0.85f;
 
     [Header("Room prefabs")]
-    private GameObject[] cornerRooms;
-    private GameObject[] edgeRooms;
-    private GameObject[] centerRooms;
+    public GameObject[] cornerRooms;
+    public GameObject[] edgeRooms;
+    public GameObject[] centerRooms;
 
     [Header("Corridor prefabs")]
     public List<GameObject> corridorOrigin;
@@ -58,23 +62,22 @@ public class TerrainGenerator : MonoBehaviour
 
     [Header("Terrain data generation")]
     private TerrainDataGenerator dataGenerator;
-    public TerrainStructure[,] terrainData;
+    private TerrainStructure[,] terrainData;
 
-    private void Awake()
+    private Dictionary<string, GameObject> structureDictionary = null;
+
+    public void GenerateTerrain()
     {
+        // Initialize terrain parent
+        terrainParent = new GameObject("TerrainParent");
+
         // Initialize terrain grid
         dataGenerator = new TerrainDataGenerator();
         terrainData = dataGenerator.FromDimensions(terrainRows, terrainColumns);
 
-        // Initialize room and corridor lists
-        cornerRooms = Resources.LoadAll<GameObject>("Prefabs/Rooms/Corner");
-        edgeRooms = Resources.LoadAll<GameObject>("Prefabs/Rooms/Edge");
-        centerRooms = Resources.LoadAll<GameObject>("Prefabs/Rooms/Center");
-    }
-    
-    // Start is called before the first frame update
-    void Start()
-    {
+        // Initialise structure dictionary
+        InitStructureDictionary();
+
         /**** FILL TERRAIN GRID WITH STRUCTURES DATA ****/
         for (int i = 0; i < terrainData.GetLength(0); i++)
         {
@@ -148,9 +151,10 @@ public class TerrainGenerator : MonoBehaviour
 
     private void SpawnStructure(TerrainStructure element)
     {
-        if (!element.prefab || !terrainParent) { return; }
+        if (element.prefab != "" && !terrainParent) { return; }
 
-        Instantiate(element.prefab, element.position, element.rotation, terrainParent.transform);
+        GameObject structure = PhotonNetwork.Instantiate(element.prefab, element.position, element.rotation);
+        structure.transform.SetParent(terrainParent.transform);
     }
 
     private void SpawnCorridorTiles(TerrainStructure element, TerrainStructure[] neighborData)
@@ -165,7 +169,8 @@ public class TerrainGenerator : MonoBehaviour
 
         System.Action<Vector3, Quaternion> spawnCorridor = (position, rotation) =>
         {
-            Instantiate(corridorTile, position, rotation, terrainParent.transform);
+            GameObject tile = PhotonNetwork.Instantiate(corridorTile.name, position, rotation);
+            tile.transform.SetParent(terrainParent.transform);
         };
 
         if (neighborData[0].type != null)
@@ -199,11 +204,11 @@ public class TerrainGenerator : MonoBehaviour
             switch (element.type)
             {
                 case CellType.Room:
-                    if (cornerRooms.Length > 0) { element.prefab = cornerRooms[Random.Range(0, cornerRooms.Length)]; }
+                    if (cornerRooms.Length > 0) { element.prefab = cornerRooms[Random.Range(0, cornerRooms.Length)].name; }
                     break;
 
                 case CellType.Corridor:
-                    if (corridorOrigin.Count > 2) { element.prefab = corridorOrigin[2]; }
+                    if (corridorOrigin.Count > 2) { element.prefab = corridorOrigin[2].name; }
                     break;
 
                 default:
@@ -222,11 +227,11 @@ public class TerrainGenerator : MonoBehaviour
             switch (element.type)
             {
                 case CellType.Room:
-                    if (edgeRooms.Length > 0) { element.prefab = edgeRooms[Random.Range(0, edgeRooms.Length)]; }
+                    if (edgeRooms.Length > 0) { element.prefab = edgeRooms[Random.Range(0, edgeRooms.Length)].name; }
                     break;
 
                 case CellType.Corridor:
-                    if (corridorOrigin.Count > 1) { element.prefab = corridorOrigin[1]; }
+                    if (corridorOrigin.Count > 1) { element.prefab = corridorOrigin[1].name; }
                     break;
 
                 default:
@@ -245,11 +250,11 @@ public class TerrainGenerator : MonoBehaviour
             switch (element.type)
             {
                 case CellType.Room:
-                    if (centerRooms.Length > 0) { element.prefab = centerRooms[Random.Range(0, centerRooms.Length)]; }
+                    if (centerRooms.Length > 0) { element.prefab = centerRooms[Random.Range(0, centerRooms.Length)].name; }
                     break;
 
                 case CellType.Corridor:
-                    if (corridorOrigin.Count > 0) { element.prefab = corridorOrigin[0]; }
+                    if (corridorOrigin.Count > 0) { element.prefab = corridorOrigin[0].name; }
                     break;
 
                 default:
@@ -261,14 +266,14 @@ public class TerrainGenerator : MonoBehaviour
         }
 
         // Extract structure with and depth from prefab name
-        if (element.prefab)
+        if (element.prefab != "")
         {
-            string[] temp = element.prefab.name.Split('_');
+            string[] temp = element.prefab.Split('_');
 
             if (temp.Length < 3) { return; }
 
-            float.TryParse(element.prefab.name.Split('_')[1], out element.width); // RandomOddNumber(2, maxRoomWidth);
-            float.TryParse(element.prefab.name.Split('_')[2], out element.depth); // RandomOddNumber(2, maxRoomDepth);
+            float.TryParse(element.prefab.Split('_')[1], out element.width); // RandomOddNumber(2, maxRoomWidth);
+            float.TryParse(element.prefab.Split('_')[2], out element.depth); // RandomOddNumber(2, maxRoomDepth);
         }
     }
 
@@ -286,5 +291,26 @@ public class TerrainGenerator : MonoBehaviour
     public TerrainStructure[,] GetTerrainData()
     {
         return terrainData;
+    }
+
+    public void InitStructureDictionary()
+    {
+        structureDictionary = new Dictionary<string, GameObject>();
+
+        // Add corner rooms to dictionary
+        foreach (GameObject room in cornerRooms)
+            structureDictionary.Add(room.name, room);
+
+        // Add edge rooms to dictionary
+        foreach (GameObject room in edgeRooms)
+            structureDictionary.Add(room.name, room);
+
+        // Add center rooms to dictionary
+        foreach (GameObject room in centerRooms)
+            structureDictionary.Add(room.name, room);
+
+        // Add corridor origins to dictionary
+        foreach (GameObject corridor in corridorOrigin)
+            structureDictionary.Add(corridor.name, corridor);
     }
 }

@@ -20,7 +20,7 @@ public class MonsterController : MonoBehaviour
 
     private TerrainStructure GetRandomRoom()
     {
-        var mapData = mapGenerator.terrainData;
+        var mapData = mapGenerator.GetTerrainData();
         int rows = mapData.GetLength(0);
         int cols = mapData.GetLength(1);
         TerrainStructure? room = null;
