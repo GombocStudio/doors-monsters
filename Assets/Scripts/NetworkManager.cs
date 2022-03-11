@@ -10,6 +10,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 {
     #region Properties
 
+    private TerrainGenerator _terrainGenerator;
+
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private GameObject _lobbyPanel;
     [SerializeField] private GameObject _roomPanel;

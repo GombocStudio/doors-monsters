@@ -11,7 +11,7 @@ public class Door : Interactable
     public Material defaultMaterial;
 
     // Controlling character id: -1 if door is not controlled by anyone
-    private int characterId = -1;
+    public int characterId = -1;
 
     // Control bool variable to handle open and close animations
     private bool isOpen = false;
@@ -31,7 +31,7 @@ public class Door : Interactable
     public void Update()
     {
         // Check if door is being controlled by any character
-        if (controlledTime == -1) { return; }
+        if (characterId == -1) { return; }
 
         // If being controlled start decreasing controlled time
         controlledTime -= Time.deltaTime;

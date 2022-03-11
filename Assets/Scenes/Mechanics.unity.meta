@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scenes/TestScenePhoton.unity.meta
+guid: 94d4941439c1c2a49b561327e8615424
+=======
 guid: 94449b7f5c663594095d279bf2808ed8
+>>>>>>> main:Assets/Scenes/Mechanics.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
