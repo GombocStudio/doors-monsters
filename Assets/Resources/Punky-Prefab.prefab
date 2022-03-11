@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81ed258cce4cfb84cb1cdb36a38874bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.2910537
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81ed258cce4cfb84cb1cdb36a38874bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.00000011920929
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 81ed258cce4cfb84cb1cdb36a38874bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -71,7 +71,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6409769037455708898}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 81ed258cce4cfb84cb1cdb36a38874bf, type: 3}
   m_Controller: {fileID: 9100000, guid: 8a3fd54dd7373b54194aee1f892ea716, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 3
+    InterpolateOption: 2
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0

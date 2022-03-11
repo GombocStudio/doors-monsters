@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Photon.Pun;
 
 public class PlayerController : MonoBehaviour
 {
 
     [Tooltip("How fast the character moves")]
-    public float walkSpeed = .02f;
+    public float walkSpeed = 1.0f;
     [Tooltip("How fast the character turns to face movement direction")]
     [Range(0.0f, 0.3f)]
     public float RotationSmoothTime = 0.12f;
+    [Tooltip("To test the player without Photon")]
+    public bool localMode = true;
 
     private Vector2 _movement;
     private Animator _anim;
@@ -23,6 +26,17 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!localMode)
+        {
+            PhotonView photonView = this.GetComponent<PhotonView>();
+
+            if (!photonView.IsMine)
+            {
+                this.GetComponent<PlayerInput>().enabled = false;
+                this.enabled = false;
+            }
+        }
+        
         _anim = GetComponent<Animator>();
     }
 
