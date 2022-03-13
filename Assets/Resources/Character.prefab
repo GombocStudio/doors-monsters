@@ -278,7 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a672d7a258aa5984aa09d09a1ce7c5b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  doorControlTime: 2
   score: 0
   material: {fileID: 2100000, guid: 1658bb0ad026d7c4890e6ec789801668, type: 2}
+  doorControlTime: 2

@@ -6,11 +6,9 @@ using UnityEngine.InputSystem;
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class MyCharacterController : MonoBehaviour
 {
-    // Character's ID
-    public int id;
-
-    // Door control time in seconds
-    public float doorControlTime;
+    // Character movement related variables
+    private float _speed = 6.0f;
+    private Vector3 _movement = new Vector3(0, 0, 0);
 
     // Character's current game score
     public int score;
@@ -18,9 +16,8 @@ public class MyCharacterController : MonoBehaviour
     // Character's material
     public Material material;
 
-    // Character movement related variables
-    private float _speed = 6.0f;
-    private Vector3 _movement = new Vector3(0, 0, 0);
+    // Door control time in seconds
+    public float doorControlTime;
 
     // Reference to character's rigidbody
     private Rigidbody _rigidbody;
@@ -65,7 +62,18 @@ public class MyCharacterController : MonoBehaviour
         Debug.Log("Trigger enter!");
 
         // Interact with collider gameobject
-        interactable.Interact(this);
+        interactable.Interact(this.gameObject);
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        // Check if other collider gameobject is interactable
+        Interactable interactable = other.gameObject.GetComponent<Interactable>();
+        if (!interactable) { return; }
+
+        Debug.Log("Trigger stay!");
+
+        // Interact with collider gameobject
+        interactable.Interact(this.gameObject);
     }
 
     private void OnTriggerExit(Collider other)
@@ -77,6 +85,6 @@ public class MyCharacterController : MonoBehaviour
         Debug.Log("Trigger exit!");
 
         // Interact with collider gameobject
-        interactable.Interact(this);
+        interactable.Deinteract(this.gameObject);
     }
 }

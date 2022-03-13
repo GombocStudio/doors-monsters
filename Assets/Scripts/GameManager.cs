@@ -72,10 +72,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 GameObject player = PhotonNetwork.Instantiate("Character", terrainCorners[i], Quaternion.identity);
                 if (!player) { return; }
 
-                // Get character component and set player id
-                MyCharacterController cc = player.GetComponent<MyCharacterController>();
-                if (cc) { cc.id = i; }
-
                 // Instantiate player camera
                 GameObject camera = new GameObject("Camera");
                 camera.AddComponent<Camera>();
