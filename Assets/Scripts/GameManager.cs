@@ -68,8 +68,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (PhotonNetwork.PlayerList[i].IsLocal && i < terrainCorners.Count)
             {
+                // Get player selected character
+                string character = "Character 0";
+                if(PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("character"))
+                    character = (string)PhotonNetwork.PlayerList[i].CustomProperties["character"];
+
                 // Instantiate player instance and compute player id
-                GameObject player = PhotonNetwork.Instantiate("Character", terrainCorners[i], Quaternion.identity);
+                GameObject player = PhotonNetwork.Instantiate(character, terrainCorners[i], Quaternion.identity);
                 if (!player) { return; }
 
                 // Instantiate player camera

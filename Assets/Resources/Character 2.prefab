@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4006564407920697841}
   - component: {fileID: 704245636174960472}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Character 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1658bb0ad026d7c4890e6ec789801668, type: 2}
+  - {fileID: 2100000, guid: e23cd61fc5b6b734184a5f2c76fc3856, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -279,5 +279,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: 0
-  material: {fileID: 2100000, guid: 1658bb0ad026d7c4890e6ec789801668, type: 2}
+  material: {fileID: 2100000, guid: e23cd61fc5b6b734184a5f2c76fc3856, type: 2}
   doorControlTime: 2
