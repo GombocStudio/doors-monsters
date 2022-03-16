@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Door : Interactable
 {
@@ -30,46 +31,91 @@ public class Door : Interactable
 
     public void Update()
     {
-        // Check if door is being controlled by any character
-        if (characterId == -1) { return; }
+        // Check if door is opened
+        if (!isOpen && controlledTime > 0)
+        {
+            // If opened start decreasing controlled time
+            controlledTime -= Time.deltaTime;
 
-        // If being controlled start decreasing controlled time
-        controlledTime -= Time.deltaTime;
-
-        // When controlled time is over reset door properties
-        if (controlledTime <= 0) 
-            ResetDoorControl();
+            // When controlled time is over reset door properties
+            if (controlledTime <= 0)
+                ResetDoorControl();
+        }
     }
 
-    public override void Interact(MyCharacterController cc)
+    public override void Interact(GameObject player)
     {
+        /**** SET DOOR ID ****/
+        // Check if player that interacted with the door is not null
+        if (!player) { return; }
+
+        // Get photon view component
+        PhotonView view = player.GetPhotonView();
+        if (!view) { return; }
+
         // Set door player ID to the ID of the character that opened it
-        if (characterId == -1)
-            characterId = cc.id;
+        if (characterId < 0)
+            characterId = view.ViewID;
 
-        // Play open/close door animation
-        if (_anim && cc.id == characterId)
+        /**** PLAY OPEN ANIMATION ****/
+        // Play open door animation
+        if (characterId != view.ViewID) { return; }
+
+        if (_anim && !isOpen)
         {
-            isOpen = !isOpen;
-
-            if (isOpen) { _anim.Play("Open"); }
-            else { _anim.Play("Close"); }
+            isOpen = true;
+            _anim.Play("Open");
         }
 
-        // Set door material to the material of the character that opened it
-        if (doorMesh && cc.material)
-            doorMesh.material = cc.material;
+        /**** SET DOOR MATERIAL ****/
+        // Get character component from player
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
 
-        // Set door controlled time to the control time of the character that opened it
+        // Set door material to the material of the character that opened it
+        if (!doorMesh || !cc.material) { return; }
+
+        if (doorMesh.material != cc.material)
+            doorMesh.material = cc.material;
+    }
+
+    public override void Deinteract(GameObject player)
+    {
+        /**** PLAY CLOSE ANIMATION ****/
+        // Check if player that interacted with the door is not null
+        if (!player) { return; }
+
+        // Get photon view component
+        PhotonView view = player.GetPhotonView();
+        if (!view) { return; }
+
+        // Check if same player that contols the door is the one deinteracting
+        if (characterId != view.ViewID) { return; }
+
+        // Play close door animation
+        if (_anim && isOpen)
+        {
+            isOpen = false;
+            _anim.Play("Close");
+        }
+
+        /**** SET DOOR CONTROLLED TIME ****/
+        // Get character component from player
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
+
+        // Set door controlled time to the control time of the character that interacted with it
         controlledTime = cc.doorControlTime;
     }
 
     public void ResetDoorControl()
     {
+        /**** RESET DOOR MATERIAL ****/
         // Reset door default material
         if (doorMesh && defaultMaterial)
             doorMesh.material = defaultMaterial;
 
+        /**** RESET DOOR ID ****/
         // Reset controlling character ID
         characterId = -1;
     }

@@ -6,11 +6,13 @@ using UnityEngine.InputSystem;
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class MyCharacterController : MonoBehaviour
 {
-    // Character's ID
-    public int id;
+    // Character movement related variables
+    private float _speed = 6.0f;
+    private float _rotSpeed = 5f;
+    private Vector3 _movement = new Vector3(0, 0, 0);
 
-    // Door control time in seconds
-    public float doorControlTime;
+    private Vector3 _networkPosition;
+    private Quaternion _networkRotation;
 
     // Character's current game score
     public int score;
@@ -18,9 +20,8 @@ public class MyCharacterController : MonoBehaviour
     // Character's material
     public Material material;
 
-    // Character movement related variables
-    private float _speed = 6.0f;
-    private Vector3 _movement = new Vector3(0, 0, 0);
+    // Door control time in seconds
+    public float doorControlTime;
 
     // Reference to character's rigidbody
     private Rigidbody _rigidbody;
@@ -49,11 +50,25 @@ public class MyCharacterController : MonoBehaviour
     public void FixedUpdate()
     {
         // Check if character has a rigidbody component assign to it
-        if (!_rigidbody) { return; }
+        /* if (!_rigidbody) { return; }
 
         // Updates transform position of character if current view is from the local player
         if (_view && _view.IsMine)
-            _rigidbody.velocity = _movement * _speed;
+            _rigidbody.velocity = _movement * _speed; */
+
+        Transform playerTransform = transform;
+        if (_view && _view.IsMine)
+        {
+            playerTransform.Rotate(Vector3.up * _movement.x * _rotSpeed);
+            playerTransform.Translate(Vector3.forward * _movement.y * _speed);
+        }
+        else
+        {
+            playerTransform.position =
+                Vector3.MoveTowards(transform.position, _networkPosition, _speed);
+            playerTransform.rotation =
+                Quaternion.RotateTowards(transform.rotation, _networkRotation, _rotSpeed);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -65,7 +80,18 @@ public class MyCharacterController : MonoBehaviour
         Debug.Log("Trigger enter!");
 
         // Interact with collider gameobject
-        interactable.Interact(this);
+        interactable.Interact(this.gameObject);
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        // Check if other collider gameobject is interactable
+        Interactable interactable = other.gameObject.GetComponent<Interactable>();
+        if (!interactable) { return; }
+
+        Debug.Log("Trigger stay!");
+
+        // Interact with collider gameobject
+        interactable.Interact(this.gameObject);
     }
 
     private void OnTriggerExit(Collider other)
@@ -77,6 +103,22 @@ public class MyCharacterController : MonoBehaviour
         Debug.Log("Trigger exit!");
 
         // Interact with collider gameobject
-        interactable.Interact(this);
+        interactable.Deinteract(this.gameObject);
     }
+
+    #region PhotonMethods
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            _networkPosition = (Vector3)stream.ReceiveNext();
+            _networkRotation = (Quaternion)stream.ReceiveNext();
+        }
+    }
+    #endregion
 }
