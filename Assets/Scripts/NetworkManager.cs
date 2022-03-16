@@ -10,24 +10,55 @@ using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    #region Properties
-
-    // Room UI variables
-    [Header("Room UI Variables")]
-    [SerializeField] private Text _playerList;
-    [SerializeField] private Text _roomName;
-    [SerializeField] private Button _startGameBtn;
-    public List<GameObject> charaterPrefabs;
-    public List<Vector3> prefabPositions;
-
-    // Game scene
-    [Header("Game Scene")]
-    [SerializeField] private string _gameSceneName;
-
-    private bool isBusy = false;
-
+    #region Variables
+    // UI manager class reference
     private UIManager uiManager;
 
+    // Online client state variable
+    private bool isBusy = false;
+
+    [Header("Game Scene")]
+    [SerializeField] private string _gameSceneName;
+    #endregion
+
+    #region Unity Methods
+    private void Awake()
+    {
+        // Syncronize scene for all players
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
+    private void Start()
+    {
+        // Initialise ui manager reference
+        uiManager = FindObjectOfType<UIManager>();
+
+        // Connect to server on start game
+        if (!PhotonNetwork.IsConnected) { PhotonNetwork.ConnectUsingSettings(); }
+
+        // Generate random nickname for player
+        PhotonNetwork.NickName = "JUGADOR_" + GenerateRandomText(2);
+    }
+
+    private void Update()
+    {
+        // Check if client is busy connecting to the server or joining a game
+        isBusy =
+        PhotonNetwork.NetworkClientState == ClientState.Authenticating
+        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToGameServer
+        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToMasterServer
+        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToNameServer
+        || PhotonNetwork.NetworkClientState == ClientState.Disconnecting
+        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromGameServer
+        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromMasterServer
+        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromNameServer
+        || PhotonNetwork.NetworkClientState == ClientState.Joining
+        || PhotonNetwork.NetworkClientState == ClientState.JoiningLobby
+        || PhotonNetwork.NetworkClientState == ClientState.Leaving;
+
+        // Enable loading gif if client is busy
+        if (uiManager) { uiManager.EnableLoadingGIF(isBusy); }
+    }
     #endregion
 
     #region Public Methods
@@ -38,14 +69,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void DisconnectFromServerAndCloseGame()
     {
+        // Do nothing if client is busy
+        if (isBusy) { return; }
+
+        // Disconnect from server and close application window
         PhotonNetwork.Disconnect();
         Application.Quit();
     }
 
     public void CreateRoom(int maxPlayers, int numRounds)
     {
-        // Do nothing if client is busy
-        if (isBusy) { return; }
+        // Do nothing if client is busy or already connected to the game server
+        if (isBusy || PhotonNetwork.NetworkingClient.Server == ServerConnection.GameServer) { return; }
 
         // Create and set room options
         RoomOptions roomOptions = new RoomOptions();
@@ -58,8 +93,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void JoinRoom(string roomName)
     {
-        // Do nothing if client is busy
-        if (isBusy) { return; }
+        // Do nothing if client is busy or already connected to the game server
+        if (isBusy || PhotonNetwork.NetworkingClient.Server == ServerConnection.GameServer) { return; }
 
         // Join room called roomName
         PhotonNetwork.JoinRoom(roomName);
@@ -67,48 +102,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
+        // Do nothing if client is busy or already connected to the master server
+        if (isBusy || PhotonNetwork.NetworkingClient.Server == ServerConnection.MasterServer) { return; }
+
+        // Leave current room
         PhotonNetwork.LeaveRoom();
     }
-
-    /// <summary>
-    /// Inicia la partida si el jugador es el creador de la sala
-    /// (es el MasterClient)
-    /// </summary>
-
-
     #endregion
 
     #region Private Methods
-    private void UpdateRoomState()
-    {
-        /* foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-        {
-            if (!player.CustomProperties.ContainsKey("character")) { continue; }
-
-            foreach (var character in charaterPrefabs)
-            {
-                if ((string)player.CustomProperties["character"] == character.name)
-                {
-
-                }
-            }
-        } */
-
-        // Display player names and characters
-        if (_playerList)
-        {
-            _playerList.text = "JUGADORES EN PARTIDA";
-
-            // Add room players to the list
-            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-                _playerList.text += "\n" + player.NickName;
-        }
-
-        // Update start game button state
-        if (_startGameBtn)
-            _startGameBtn.interactable = PhotonNetwork.LocalPlayer.IsMasterClient;
-    }
-
     private string GenerateRandomText(int length)
     {
         string usedCharacters = "qwertyuiopasdfghjklzxcvbnm0123456789";
@@ -141,52 +143,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         hash.Add("character", characterNames[Random.Range(0, characterNames.Count)]);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
-
-    #endregion
-
-    #region Unity Callbacks
-
-    private void Awake()
-    {
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
-
-    private void Start()
-    {
-        // Initialise ui manager reference
-        uiManager = FindObjectOfType<UIManager>();
-
-        // Connect to server on start game
-        if (!PhotonNetwork.IsConnected) { PhotonNetwork.ConnectUsingSettings(); }
-
-        // Generate random nickname for player
-        PhotonNetwork.NickName = "JUGADOR_" + GenerateRandomText(2);
-    }
-
-    private void Update()
-    {
-        // Check if client is busy connecting to the server or joining a game
-        isBusy = 
-        PhotonNetwork.NetworkClientState == ClientState.Authenticating
-        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToGameServer
-        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToMasterServer
-        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToNameServer
-        || PhotonNetwork.NetworkClientState == ClientState.Disconnecting
-        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromGameServer
-        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromMasterServer
-        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromNameServer
-        || PhotonNetwork.NetworkClientState == ClientState.Joining
-        || PhotonNetwork.NetworkClientState == ClientState.JoiningLobby
-        || PhotonNetwork.NetworkClientState == ClientState.Leaving;
-
-        // Enable loading gif if client is busy
-        if (uiManager) { uiManager.EnableLoadingGIF(isBusy); }
-    }
-
     #endregion
 
     #region Photon Callbacks
-
     public override void OnConnectedToMaster()
     {
         // Join lobby
@@ -226,13 +185,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         Debug.Log(newPlayer.NickName + " entered the room.");
-        UpdateRoomState();
+        if (uiManager)
+        {
+            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
+            bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
+
+            uiManager.UpdateRoomUI(roomName, enablePlayBtn);
+        }
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         Debug.Log(otherPlayer.NickName + " left the room.");
-        UpdateRoomState();
+        if (uiManager)
+        {
+            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
+            bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
+
+            uiManager.UpdateRoomUI(roomName, enablePlayBtn);
+        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -248,7 +219,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         if (uiManager) { uiManager.HandleError(returnCode); }
     }
-
     #endregion
 
 }
