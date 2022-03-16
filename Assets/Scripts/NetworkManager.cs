@@ -113,7 +113,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     #region Private Methods
     private string GenerateRandomText(int length)
     {
-        string usedCharacters = "qwertyuiopasdfghjklzxcvbnm0123456789";
+        string usedCharacters = "qwertyuipasdfghjklzxcvbnm123456789"; // Don't include o and 0 because they're very similar in the used font
         string randomTxt = "";
 
         for (int i = 0; i < length; i++)
@@ -132,16 +132,41 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         characterNames.Add("Character 3");
 
         // Remove from the list the characters that have already been assigned to a player
-        foreach (var player in PhotonNetwork.PlayerList)
+        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
         {
-            if (!player.CustomProperties.ContainsKey("character")) { continue; }
-            characterNames.Remove((string)player.CustomProperties["character"]);
+            if (!player.CustomProperties.ContainsKey("ch")) { continue; }
+            characterNames.Remove((string)player.CustomProperties["ch"]);
         }
 
         // Select random character from the remaining character names in the list
         PhotonHashtable hash = new PhotonHashtable();
-        hash.Add("character", characterNames[Random.Range(0, characterNames.Count)]);
+        hash.Add("ch", characterNames[Random.Range(0, characterNames.Count)]);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    private void UpdateRoomState()
+    {
+        if (uiManager)
+        {
+            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
+            bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
+
+            List<string> characters = new List<string>();
+            List<string> nicknames = new List<string>();
+
+            foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+            {
+                // Get room players selected characters
+                if (player.CustomProperties.ContainsKey("ch"))
+                    characters.Add((string)player.CustomProperties["ch"]);
+
+                // Get room players nicknames
+                if (player.NickName != "")
+                    nicknames.Add(player.NickName);
+            }
+
+            uiManager.UpdateRoomUI(roomName, enablePlayBtn, characters, nicknames);
+        }
     }
     #endregion
 
@@ -167,43 +192,21 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to room " + PhotonNetwork.CurrentRoom.Name);
 
-        if (uiManager) 
-        { 
-            // Enable room menu panel
-            uiManager.EnableRoom();
-
-            // Update room ui elements
-            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
-            bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
-            uiManager.UpdateRoomUI(roomName, enablePlayBtn);
-        }
-
         // Select random character for player that joined the room
         SelectRandomCharacter();
+
+        // Enable room menu panel
+        if (uiManager) { uiManager.EnableRoom(); }
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         Debug.Log(newPlayer.NickName + " entered the room.");
-        if (uiManager)
-        {
-            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
-            bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
-
-            uiManager.UpdateRoomUI(roomName, enablePlayBtn);
-        }
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         Debug.Log(otherPlayer.NickName + " left the room.");
-        if (uiManager)
-        {
-            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
-            bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
-
-            uiManager.UpdateRoomUI(roomName, enablePlayBtn);
-        }
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -218,6 +221,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Debug.Log("Failed to join room " + returnCode + ": " + message);
 
         if (uiManager) { uiManager.HandleError(returnCode); }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+
+        // Update current room UI
+        UpdateRoomState();
     }
     #endregion
 

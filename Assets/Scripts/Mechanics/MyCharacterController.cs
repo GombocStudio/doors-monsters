@@ -8,7 +8,11 @@ public class MyCharacterController : MonoBehaviour
 {
     // Character movement related variables
     private float _speed = 6.0f;
+    private float _rotSpeed = 5f;
     private Vector3 _movement = new Vector3(0, 0, 0);
+
+    private Vector3 _networkPosition;
+    private Quaternion _networkRotation;
 
     // Character's current game score
     public int score;
@@ -46,11 +50,25 @@ public class MyCharacterController : MonoBehaviour
     public void FixedUpdate()
     {
         // Check if character has a rigidbody component assign to it
-        if (!_rigidbody) { return; }
+        /* if (!_rigidbody) { return; }
 
         // Updates transform position of character if current view is from the local player
         if (_view && _view.IsMine)
-            _rigidbody.velocity = _movement * _speed;
+            _rigidbody.velocity = _movement * _speed; */
+
+        Transform playerTransform = transform;
+        if (_view && _view.IsMine)
+        {
+            playerTransform.Rotate(Vector3.up * _movement.x * _rotSpeed);
+            playerTransform.Translate(Vector3.forward * _movement.y * _speed);
+        }
+        else
+        {
+            playerTransform.position =
+                Vector3.MoveTowards(transform.position, _networkPosition, _speed);
+            playerTransform.rotation =
+                Quaternion.RotateTowards(transform.rotation, _networkRotation, _rotSpeed);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -87,4 +105,20 @@ public class MyCharacterController : MonoBehaviour
         // Interact with collider gameobject
         interactable.Deinteract(this.gameObject);
     }
+
+    #region PhotonMethods
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            _networkPosition = (Vector3)stream.ReceiveNext();
+            _networkRotation = (Quaternion)stream.ReceiveNext();
+        }
+    }
+    #endregion
 }

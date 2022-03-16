@@ -4,7 +4,9 @@ using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 using Newtonsoft.Json;
 using UnityEngine;
 using Photon.Pun;
-
+using Cinemachine;
+using StarterAssets;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
@@ -28,32 +30,18 @@ public class GameManager : MonoBehaviourPunCallbacks
 
             // Add serialized terrain data to the room properties
             PhotonHashtable hash = new PhotonHashtable();
-            hash.Add("terrainData", terrainData);
+            hash.Add("td", terrainData);
             PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
-
-        // Initialise mobile UI if needed
-#if UNITY_IOS || UNITY_ANDROID
-            UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
-
-            if (UI)
-            {
-                UI.gameObject.SetActive(true);
-                UI.starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
-
-                MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
-                mobile.playerInput = player.GetComponent<PlayerInput>();
-            }
-#endif
     }
 
     public void SpawnPlayers()
     {
         // Check if terrain data is ready
-        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("terrainData")) { return; }
+        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("td")) { return; }
 
         // Get terrain data from room properties and deserialize it
-        TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["terrainData"]);
+        TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["td"]);
         if (terrainData.GetLength(0) == 0 || terrainData.GetLength(1) == 0) { return; }
 
         // Compute spawning positions from terrain data
@@ -70,23 +58,41 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 // Get player selected character
                 string character = "Character 0";
-                if(PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("character"))
-                    character = (string)PhotonNetwork.PlayerList[i].CustomProperties["character"];
+                if(PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("ch"))
+                    character = (string)PhotonNetwork.PlayerList[i].CustomProperties["ch"];
 
                 // Instantiate player instance and compute player id
                 GameObject player = PhotonNetwork.Instantiate(character, terrainCorners[i], Quaternion.identity);
                 if (!player) { return; }
 
                 // Instantiate player camera
-                GameObject camera = new GameObject("Camera");
-                camera.AddComponent<Camera>();
+                CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
+                if (camera)
+                {
+                    camera.LookAt = player.transform;
+                    camera.Follow = player.transform;
+                }
 
-                camera.transform.SetParent(player.transform);
-
-                camera.transform.localPosition = new Vector3(0, 14, -16);
-                camera.transform.rotation = Quaternion.AngleAxis(60, Vector3.right);
+                // Initialise mobile UI if needed
+                InitMobileUI(player);
             }
         }
+    }
+
+    public void InitMobileUI(GameObject player)
+    {
+#if UNITY_IOS || UNITY_ANDROID
+            UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
+
+            if (UI)
+            {
+                UI.gameObject.SetActive(true);
+                UI.starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
+
+                MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
+                mobile.playerInput = player.GetComponent<PlayerInput>();
+            }
+#endif
     }
 
     public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)

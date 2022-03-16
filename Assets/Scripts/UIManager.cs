@@ -22,6 +22,9 @@ public class UIManager : MonoBehaviour
     [Header("Room menu variables")]
     public Text _roomNameTxt;
     public Button _startGameBtn;
+    public List<GameObject> characterPlatforms;
+    public List<GameObject> characterPrefabs;
+    public List<Text> playerNicknameTxts;
 
     [Header("Error popup variables")]
     public Text _errorTxt;
@@ -123,10 +126,44 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    public void UpdateRoomUI(string roomName, bool enablePlayBtn)
+    public void UpdateRoomUI(string roomName, bool enablePlayBtn, List<string> characters, List<string> nicknames)
     {
+        // Update room name text
         if (_roomNameTxt) { _roomNameTxt.text = roomName; }
+
+        // Update play button state
         if (_startGameBtn) { _startGameBtn.interactable = enablePlayBtn; }
+
+        // Reset diplayed prefabs position
+        foreach (GameObject prefab in characterPrefabs)
+            prefab.transform.position += new Vector3(9999.0f, 0, 0);
+
+        // Update displayed character prefabs
+        for (int i = 0; i < characters.Count; i++)
+        {
+            for (int j = 0; j < characterPrefabs.Count; j++)
+            {
+                if (characters[i] != characterPrefabs[j].name) { continue; }
+
+                // Display character prefab
+                if (i < characterPlatforms.Count && characterPlatforms[i])
+                {
+                    Vector3 displayPosition = new Vector3(characterPlatforms[i].transform.position.x, characterPrefabs[j].transform.position.y, characterPlatforms[i].transform.position.z);
+                    characterPrefabs[j].transform.position = displayPosition;
+                }
+                break;
+            }
+        }
+
+        foreach (Text nickname in playerNicknameTxts)
+            nickname.text = "";
+
+        // Display player nickname
+        for (int i = 0; i < nicknames.Count; i++)
+        {
+            if (i < playerNicknameTxts.Count && playerNicknameTxts[i])
+                playerNicknameTxts[i].text = nicknames[i];
+        }
     }
 
     public void ToUpperCase(InputField inputField)
