@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 1
   RotationSmoothTime: 0.12
+  localMode: 0
 --- !u!114 &536369260
 MonoBehaviour:
   m_ObjectHideFlags: 0
