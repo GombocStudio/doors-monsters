@@ -1,149 +1,100 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine;
-using UnityEngine.UI;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
+
+using UnityEngine.UI;
+using UnityEngine;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     #region Properties
-
-    // UI panel references
-    [Header("UI Menu Panels")]
-    [SerializeField] private GameObject _menuPanel;
-    [SerializeField] private GameObject _lobbyPanel;
-    [SerializeField] private GameObject _roomPanel;
-    [SerializeField] private GameObject _errorPanel;
-
-    // Game scene
-    [Header("Game Scene")]
-    [SerializeField] private string _gameSceneName;
-
-    // Lobby UI variables
-    [Header("Lobby UI Variables")]
-    [SerializeField] private InputField _roomNameIF;
-    [SerializeField] private Dropdown _maxPlayers;
 
     // Room UI variables
     [Header("Room UI Variables")]
     [SerializeField] private Text _playerList;
     [SerializeField] private Text _roomName;
     [SerializeField] private Button _startGameBtn;
+    public List<GameObject> charaterPrefabs;
+    public List<Vector3> prefabPositions;
 
-    // Error UI variables
-    [Header("Error UI Variables")]
-    [SerializeField] private Text _error;
+    // Game scene
+    [Header("Game Scene")]
+    [SerializeField] private string _gameSceneName;
 
-    private List<GameObject> _menuList;
-    private GameObject _activeMenu;
+    private bool isBusy = false;
+
+    private UIManager uiManager;
 
     #endregion
 
     #region Public Methods
-    /// <summary>
-    /// Conecta con los servidores de Photon al pulsar
-    /// en el boton "Jugar".
-    /// </summary>
-    public void OnClickConnect()
+    public void StartGame()
     {
-        // If player already connected do nothing
-        if (PhotonNetwork.IsConnected) { return; }
-
-        // Connect to server
-        PhotonNetwork.ConnectUsingSettings();
-
-        // Generate random nickname
-        PhotonNetwork.NickName = "Jugador_" + GenerateRandomText(2);
+        PhotonNetwork.LoadLevel(_gameSceneName);
     }
 
-    /// <summary>
-    /// Crar una sala con un nombre aleatorio
-    /// </summary>
-    public void OnClickCreateRoom()
+    public void DisconnectFromServerAndCloseGame()
     {
-        // Don't create a new room is client is already joining one
-        if (PhotonNetwork.NetworkClientState == ClientState.Authenticating 
-        || PhotonNetwork.NetworkClientState == ClientState.Joining
-        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToGameServer) 
-        { return; }
+        PhotonNetwork.Disconnect();
+        Application.Quit();
+    }
 
-        // Create room options
+    public void CreateRoom(int maxPlayers, int numRounds)
+    {
+        // Do nothing if client is busy
+        if (isBusy) { return; }
+
+        // Create and set room options
         RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = (byte)(maxPlayers);
+        // roomOptions.CustomRoomProperties.Add("nr", numRounds);
 
-        // Set max number of players in the room
-        if (!_maxPlayers) { return; }
-        roomOptions.MaxPlayers = (byte) (/*_maxPlayers.value + 2*/ 4);
-        // Debug.Log("Max players: " + roomOptions.MaxPlayers);
-
-        // Create the room
-        PhotonNetwork.CreateRoom(GenerateRandomText(7), roomOptions, TypedLobby.Default, null);
+        // Create room with specified options
+        PhotonNetwork.CreateRoom(GenerateRandomText(5), roomOptions, TypedLobby.Default, null);
     }
 
-    /// <summary>
-    /// Se une a una sala con el nombre contenido en roomName.text
-    /// </summary>
-    public void OnClickJoinRoom()
+    public void JoinRoom(string roomName)
     {
-        // Don't try to join room if client is already joining
-        if (PhotonNetwork.NetworkClientState == ClientState.Joining) { return; }
+        // Do nothing if client is busy
+        if (isBusy) { return; }
 
-        // Display error message if text in input field is empty
-        if (!_roomNameIF) { return; }
+        // Join room called roomName
+        PhotonNetwork.JoinRoom(roomName);
+    }
 
-        if (_roomNameIF.text == "")
-        {
-            DisplayError("El nombre de la partida a la que pretendes unirte no puede estar vacio.");
-            return;
-        }
-
-        // Join room
-        PhotonNetwork.JoinRoom(_roomNameIF.text.ToLower());
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
     }
 
     /// <summary>
     /// Inicia la partida si el jugador es el creador de la sala
     /// (es el MasterClient)
     /// </summary>
-    public void OnClickStartGame()
-    {
-        PhotonNetwork.LoadLevel(_gameSceneName);
-    }
 
-    public void OnClickGoBack()
-    {
-        // Go back to main menu
-        if (_activeMenu == _lobbyPanel)
-            PhotonNetwork.Disconnect();
-
-        // Go back to lobby
-        else if (_activeMenu == _roomPanel)
-            PhotonNetwork.LeaveRoom();
-    }
-
-    public void OnClickCloseError()
-    {
-        // Disable error panel
-        if (!_errorPanel) { return; }
-        _errorPanel.SetActive(false);
-    }
-
-    public void SelectCharacter(string characterName)
-    {
-        PhotonHashtable hash = new PhotonHashtable();
-        hash.Add("character", characterName);
-        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-    }
 
     #endregion
 
     #region Private Methods
-
     private void UpdateRoomState()
     {
-        // Update player list text content
+        /* foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
+        {
+            if (!player.CustomProperties.ContainsKey("character")) { continue; }
+
+            foreach (var character in charaterPrefabs)
+            {
+                if ((string)player.CustomProperties["character"] == character.name)
+                {
+
+                }
+            }
+        } */
+
+        // Display player names and characters
         if (_playerList)
         {
             _playerList.text = "JUGADORES EN PARTIDA";
@@ -158,32 +109,37 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             _startGameBtn.interactable = PhotonNetwork.LocalPlayer.IsMasterClient;
     }
 
-    private void EnableMenu(GameObject menu)
-    {
-        for (int i = 0; i < _menuList.Count; i++)
-            _menuList[i].SetActive(_menuList[i] == menu ? true : false);
-
-        _activeMenu = menu;
-    }
-
     private string GenerateRandomText(int length)
     {
         string usedCharacters = "qwertyuiopasdfghjklzxcvbnm0123456789";
-        string roomName = "";
+        string randomTxt = "";
 
         for (int i = 0; i < length; i++)
-            roomName += usedCharacters[UnityEngine.Random.Range(0, usedCharacters.Length)];
+            randomTxt += usedCharacters[UnityEngine.Random.Range(0, usedCharacters.Length)];
         
-        return roomName;
+        return randomTxt.ToUpper();
     }
 
-    private void DisplayError(string errorMsg)
+    private void SelectRandomCharacter()
     {
-        // Enable error panel
-        if (_errorPanel) { _errorPanel.SetActive(true); }
-            
-        // Add error message to the content of the panel
-        if (_error) { _error.text = errorMsg; }
+        // Initialise list with all character names in it
+        List<string> characterNames = new List<string>();
+        characterNames.Add("Character 0");
+        characterNames.Add("Character 1");
+        characterNames.Add("Character 2");
+        characterNames.Add("Character 3");
+
+        // Remove from the list the characters that have already been assigned to a player
+        foreach (var player in PhotonNetwork.PlayerList)
+        {
+            if (!player.CustomProperties.ContainsKey("character")) { continue; }
+            characterNames.Remove((string)player.CustomProperties["character"]);
+        }
+
+        // Select random character from the remaining character names in the list
+        PhotonHashtable hash = new PhotonHashtable();
+        hash.Add("character", characterNames[Random.Range(0, characterNames.Count)]);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
     }
 
     #endregion
@@ -197,15 +153,34 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        // Add panels to menu list
-        _menuList = new List<GameObject>();
-        _menuList.Add(_menuPanel);
-        _menuList.Add(_lobbyPanel);
-        _menuList.Add(_roomPanel);
-        _activeMenu = _menuPanel;
+        // Initialise ui manager reference
+        uiManager = FindObjectOfType<UIManager>();
 
-        // Set default character selection as Character 0
-        SelectCharacter("Character 0");
+        // Connect to server on start game
+        if (!PhotonNetwork.IsConnected) { PhotonNetwork.ConnectUsingSettings(); }
+
+        // Generate random nickname for player
+        PhotonNetwork.NickName = "JUGADOR_" + GenerateRandomText(2);
+    }
+
+    private void Update()
+    {
+        // Check if client is busy connecting to the server or joining a game
+        isBusy = 
+        PhotonNetwork.NetworkClientState == ClientState.Authenticating
+        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToGameServer
+        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToMasterServer
+        || PhotonNetwork.NetworkClientState == ClientState.ConnectingToNameServer
+        || PhotonNetwork.NetworkClientState == ClientState.Disconnecting
+        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromGameServer
+        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromMasterServer
+        || PhotonNetwork.NetworkClientState == ClientState.DisconnectingFromNameServer
+        || PhotonNetwork.NetworkClientState == ClientState.Joining
+        || PhotonNetwork.NetworkClientState == ClientState.JoiningLobby
+        || PhotonNetwork.NetworkClientState == ClientState.Leaving;
+
+        // Enable loading gif if client is busy
+        if (uiManager) { uiManager.EnableLoadingGIF(isBusy); }
     }
 
     #endregion
@@ -214,87 +189,38 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("Connected to Master Server.");
+        // Join lobby
         PhotonNetwork.JoinLobby();
-        EnableMenu(_lobbyPanel);
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarning("Disconnected: " + cause);
-
-        // Enable menu panel if possible
-        if (!_menuPanel) { return; }
-        EnableMenu(_menuPanel);
+        Debug.LogWarning("Disconnected: " + cause);        
     }
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("Joined lobby: " + (PhotonNetwork.CurrentLobby.IsDefault ? "Default lobby" : PhotonNetwork.CurrentLobby.Name));
-    }
-
-
-    /*public override void OnRoomListUpdate(List<RoomInfo> roomList)
-    {
-        String rooms = "Room List:\n";
-        foreach (RoomInfo ri in roomList)
-        {
-            rooms += ri.Name + "\n";
-        }
-        Debug.Log(rooms);
-    }*/
-
-    public override void OnCreatedRoom()
-    {
-        base.OnCreatedRoom();
-        Debug.Log("Created room " + PhotonNetwork.CurrentRoom.Name);
-    }
-
-    public override void OnCreateRoomFailed(short returnCode, string message)
-    {
-        // If room already exist, try to create it again
-        if (returnCode == 32766)
-            PhotonNetwork.CreateRoom(GenerateRandomText(7));
-
-        // Display create room erro message
-        else
-            DisplayError("Ha ocurrido un error inesperado al intentar crear la partida. Por favor, vuelve a intentarlo.");
-
-        Debug.Log("Failed to create room " + returnCode + ": " + message);
+        // Enable lobby panel
+        if (uiManager) { uiManager.EnableLobby(); }
     }
 
     public override void OnJoinedRoom()
     {
         Debug.Log("Connected to room " + PhotonNetwork.CurrentRoom.Name);
 
-        if (_roomName)
-            _roomName.text = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
+        if (uiManager) 
+        { 
+            // Enable room menu panel
+            uiManager.EnableRoom();
 
-        EnableMenu(_roomPanel);
-        UpdateRoomState();
-    }
-
-    public override void OnLeftRoom()
-    {
-        // Enable lobby panel if possible
-        if (!_lobbyPanel) { return; }
-        EnableMenu(_lobbyPanel);
-    }
-
-    public override void OnJoinRoomFailed(short returnCode, string message)
-    {
-        // Display join room error message
-        switch (returnCode)
-        {
-            case 32758:
-                DisplayError("La partida a la que intentas unirte no existe.");
-                break;
-            default:
-                DisplayError("Ha ocurrido un error inesperado al intentar unirte a la partida. Por favor, asegurate de que el nombre introducido es correcto.");
-                break;
+            // Update room ui elements
+            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
+            bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
+            uiManager.UpdateRoomUI(roomName, enablePlayBtn);
         }
 
-        Debug.Log("Failed to join room " + returnCode + ": " + message);        
+        // Select random character for player that joined the room
+        SelectRandomCharacter();
     }
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
@@ -309,5 +235,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateRoomState();
     }
 
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed to create room " + returnCode + ": " + message);
+
+        if (uiManager) { uiManager.HandleError(returnCode); }
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        Debug.Log("Failed to join room " + returnCode + ": " + message);
+
+        if (uiManager) { uiManager.HandleError(returnCode); }
+    }
+
     #endregion
+
 }
