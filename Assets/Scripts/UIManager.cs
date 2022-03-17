@@ -147,10 +147,8 @@ public class UIManager : MonoBehaviour
 
                 // Display character prefab
                 if (i < characterPlatforms.Count && characterPlatforms[i])
-                {
-                    Vector3 displayPosition = new Vector3(characterPlatforms[i].transform.position.x, characterPrefabs[j].transform.position.y, characterPlatforms[i].transform.position.z);
-                    characterPrefabs[j].transform.position = displayPosition;
-                }
+                    characterPrefabs[j].transform.position = characterPlatforms[i].transform.position;
+
                 break;
             }
         }

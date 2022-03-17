@@ -8,13 +8,18 @@ public class MyCharacterController : MonoBehaviour
 {
     // Character movement related variables
     public float _speed = 1.0f;
-    private float _rotSpeed = 5f;
-    //private Vector3 _movement = new Vector3(0, 0, 0);
     private Vector2 _movement;
-    private float _rotationVelocity;
-    private float _targetRotation;
 
     private Vector3 _networkPosition;
+
+    // Character rotation related varibles
+    [Tooltip("How fast the character turns to face movement direction")]
+    [Range(0.0f, 0.3f)]
+    public float RotationSmoothTime = 0.12f;
+    private float _rotationVelocity;
+    private float _targetRotation;
+    private float _rotSpeed = 5f;
+
     private Quaternion _networkRotation;
 
     // Character's current game score
@@ -26,18 +31,14 @@ public class MyCharacterController : MonoBehaviour
     // Door control time in seconds
     public float doorControlTime;
 
-    [Tooltip("How fast the character turns to face movement direction")]
-    [Range(0.0f, 0.3f)]
-    public float RotationSmoothTime = 0.12f;
-
     // Reference to character's rigidbody
     private Rigidbody _rigidbody;
 
+    // Reference to the animator component of the character
+    private Animator _anim;
+
     // Reference to photonview component of the character. Prevents input from local player to influence every character in the scene.
     private PhotonView _view;
-
-    //
-    private Animator _anim;
 
     // Start is called before the first frame update
     private void Start()
@@ -48,16 +49,15 @@ public class MyCharacterController : MonoBehaviour
         // Initialize rigid body component reference
         _rigidbody = GetComponent<Rigidbody>();
 
-        //
+        // Initialize animtor component reference
         _anim = GetComponent<Animator>();
     }
 
     // Method triggered when any of the characterActions.InputActions specified movement keys is pressed
-    public void Move(InputAction.CallbackContext context)
+    public void OnMove(InputAction.CallbackContext context)
     {
         // Updates movment vector if current view is from the local player
         if (_view && _view.IsMine)
-            //_movement = new Vector3(context.ReadValue<Vector2>().x, 0, context.ReadValue<Vector2>().y);
             _movement = context.ReadValue<Vector2>();
     }
 
@@ -74,12 +74,8 @@ public class MyCharacterController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Transform playerTransform = transform;
         if (_view && _view.IsMine)
         {
-            //playerTransform.Rotate(Vector3.up * _movement.x * _rotSpeed);
-            //playerTransform.Translate(Vector3.forward * _movement.y * _speed);
-
             float speed = 0.0f;
             if (_movement != Vector2.zero)
             {
@@ -94,9 +90,9 @@ public class MyCharacterController : MonoBehaviour
         }
         else
         {
-            playerTransform.position =
+            transform.position =
                 Vector3.MoveTowards(transform.position, _networkPosition, _speed);
-            playerTransform.rotation =
+            transform.rotation =
                 Quaternion.RotateTowards(transform.rotation, _networkRotation, _rotSpeed);
         }
     }
