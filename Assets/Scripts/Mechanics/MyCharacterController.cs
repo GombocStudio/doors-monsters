@@ -37,6 +37,13 @@ public class MyCharacterController : MonoBehaviour
 
         // Initialize rigid body component reference
         _rigidbody = GetComponent<Rigidbody>();
+
+        // Initialize minimap camera to follow the player
+        if (_view && _view.IsMine)
+        {
+            MinimapCameraController minimapCamera = FindObjectOfType<MinimapCameraController>();
+            minimapCamera.playerTransform = this.transform;
+        }
     }
 
     // Method triggered when any of the characterActions.InputActions specified movement keys is pressed
