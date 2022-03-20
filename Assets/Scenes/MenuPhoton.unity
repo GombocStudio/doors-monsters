@@ -2044,7 +2044,7 @@ GameObject:
   - component: {fileID: 748551589}
   - component: {fileID: 748551591}
   m_Layer: 0
-  m_Name: '@NetworkManager'
+  m_Name: '@MenuNetworkManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5220,7 +5220,7 @@ GameObject:
   - component: {fileID: 1609679386}
   - component: {fileID: 1609679385}
   m_Layer: 0
-  m_Name: '@UIManager'
+  m_Name: '@MenuUIManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

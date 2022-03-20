@@ -202,11 +202,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
         Debug.Log(newPlayer.NickName + " entered the room.");
+
+        // Update current room UI
+        UpdateRoomState();
     }
 
     public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
     {
         Debug.Log(otherPlayer.NickName + " left the room.");
+
+        // Update current room UI
+        UpdateRoomState();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
