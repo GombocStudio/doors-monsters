@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class MonsterController : MonoBehaviour
     private System.DateTime lastSpawnedTime = System.DateTime.Now;
     
     public bool paused = false;
+    public int maxMonsters = 50;
+    private int activeMonsters = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,33 +31,31 @@ public class MonsterController : MonoBehaviour
         while (room == null)
         {
             int r = Random.Range(0, rows);
-            int c = Random.Range(0, cols);
-            Debug.LogFormat("{0} - {1}", r, c);
+            int c = Random.Range(0, cols);            
             if (mapData[r, c].type == CellType.Room)
             {
                 room = mapData[r, c];
             }
-        }
-
-        Debug.LogFormat("Found room: {0}", room);
+        }        
         return room.Value;
     }
     private void SpawnMonster()        
     {
+        activeMonsters++;
         var room = GetRandomRoom();
         var spawnPos = room.position;
         spawnPos.x += Random.Range(-1f, 1f);        
         spawnPos.z += Random.Range(-1f, 1f);
+        spawnPos.y = 8.0f;
         var monster = Instantiate(monsterPrefab, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
-        monster.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        monster.transform.Translate(new Vector3(0, 0.5f));
+        monster.GetComponent<MonsterScript>().mapGenerator = mapGenerator;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (paused) return;
+        if (paused || activeMonsters >= maxMonsters) return;
 
         if (System.DateTime.Now - lastSpawnedTime > System.TimeSpan.FromMilliseconds(1000))
         {

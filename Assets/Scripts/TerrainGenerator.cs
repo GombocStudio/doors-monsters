@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Unity.AI.Navigation;
+using UnityEngine.AI;
 
 [System.Serializable]
 public struct TerrainStructure
@@ -62,9 +64,12 @@ public class TerrainGenerator : MonoBehaviour
 
     [Header("Terrain data generation")]
     private TerrainDataGenerator dataGenerator;
-    private TerrainStructure[,] terrainData;
+    public TerrainStructure[,] terrainData;
 
     private Dictionary<string, GameObject> structureDictionary = null;
+
+    [Header("NavMesh")]
+    public NavMeshSurface navMeshSurface;
 
     public void GenerateTerrain()
     {
@@ -115,6 +120,9 @@ public class TerrainGenerator : MonoBehaviour
                 SpawnCorridorTiles(terrainData[i, j], neighborData);
             }
         }
+
+        // update navMesh now that the geometry is generated        
+        navMeshSurface.BuildNavMesh();
     }
 
     TerrainStructure[] ComputeNeighborData(int i, int j)
