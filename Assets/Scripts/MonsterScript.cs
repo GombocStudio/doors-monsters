@@ -1,32 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MonsterScript : MonoBehaviour
-{
-    public Vector3 targetPosition;
+{    
     public float speed;
-    
-    private void GenerateTargetPosition()
+    public TerrainGenerator mapGenerator;
+        
+    private Vector3 GetDestination()
     {
-        var random = Random.onUnitSphere;
-        targetPosition = new Vector3(random.x, 0, random.z);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        GenerateTargetPosition();
-        speed = Random.Range(0.4f, 1f);
-    }
+        var mapData = mapGenerator.terrainData;
+        int r = Random.Range(0, mapData.GetLength(0));
+        int c = Random.Range(0, mapData.GetLength(1));
+        var room = mapData[r, c];
 
-    // Update is called once per frame
+        return room.position;
+    }
+   
+    void Start()
+    {     
+        var agent = GetComponent<NavMeshAgent>();
+        agent.destination = GetDestination();
+        agent.acceleration = Random.Range(2, 10);
+        agent.enabled = true;
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.GoodQualityObstacleAvoidance;
+    }
+   
     void Update()
     {
-        if (Vector3.Distance(transform.position, targetPosition) < 1)
+        var agent = GetComponent<NavMeshAgent>();
+        if (Vector3.Distance(transform.position, agent.destination) < 5)
         {
-            GenerateTargetPosition();
-        }
-
-        transform.Translate(targetPosition * (speed / 250));
+            agent.destination = GetDestination();
+        }        
     }
 }
