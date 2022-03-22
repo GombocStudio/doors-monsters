@@ -110,11 +110,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5725839245109118695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6180ee6b137c1c7428aabef2bd9bf183, type: 3}
+  m_Script: {fileID: 11500000, guid: 251759ea7069e2747a21e6e9c1dc4106, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPosition: {x: 0, y: 0, z: 0}
   speed: 0
+  mapGenerator: {fileID: 0}
 --- !u!195 &5280412558208220961
 NavMeshAgent:
   m_ObjectHideFlags: 0

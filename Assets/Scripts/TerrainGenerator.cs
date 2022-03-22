@@ -71,6 +71,9 @@ public class TerrainGenerator : MonoBehaviour
     [Header("NavMesh")]
     public NavMeshSurface navMeshSurface;
 
+    [Header("Debug")]
+    public bool usePhoton = true;
+
     public void GenerateTerrain()
     {
         // Initialize terrain parent
@@ -161,7 +164,15 @@ public class TerrainGenerator : MonoBehaviour
     {
         if (element.prefab != "" && !terrainParent) { return; }
 
-        GameObject structure = PhotonNetwork.Instantiate(element.prefab, element.position, element.rotation);
+        GameObject structure;
+        if (usePhoton)
+        {
+            structure = PhotonNetwork.Instantiate(element.prefab, element.position, element.rotation);
+        } else
+        {
+            var prefab = structureDictionary[element.prefab];
+            structure = Instantiate(prefab, element.position, element.rotation);
+        }
         structure.transform.SetParent(terrainParent.transform);
     }
 
@@ -177,7 +188,15 @@ public class TerrainGenerator : MonoBehaviour
 
         System.Action<Vector3, Quaternion> spawnCorridor = (position, rotation) =>
         {
-            GameObject tile = PhotonNetwork.Instantiate(corridorTile.name, position, rotation);
+            GameObject tile;
+            if (usePhoton)
+            {
+                tile = PhotonNetwork.Instantiate(corridorTile.name, position, rotation);
+            }
+            else
+            {                
+                tile = Instantiate(corridorTile, position, rotation);
+            }            
             tile.transform.SetParent(terrainParent.transform);
         };
 
