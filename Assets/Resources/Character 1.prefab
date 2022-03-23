@@ -1294,7 +1294,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 136ccc89f9f16ef4fb176d5edea66c5b, type: 2}
+  - {fileID: 2100000, guid: 0b849fb644795504988b97c6193f8d69, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2026,6 +2026,8 @@ MonoBehaviour:
   score: 0
   material: {fileID: 2100000, guid: 136ccc89f9f16ef4fb176d5edea66c5b, type: 2}
   doorControlTime: 10
+  powerUpTime: 5
+  isPoweredUp: 0
 --- !u!114 &2490537938329803880
 MonoBehaviour:
   m_ObjectHideFlags: 0
