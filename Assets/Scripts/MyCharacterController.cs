@@ -34,7 +34,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private Animator _anim;
 
     // Reference to photonview component of the character. Prevents input from local player to influence every character in the scene.
-    private PhotonView _view;
+    // private PhotonView _view;
     #endregion
 
     #region Unity Default Methods
@@ -42,10 +42,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         // Initialize photon view reference
-        _view = GetComponent<PhotonView>();
+        // _view = GetComponent<PhotonView>();
 
         // Disable player input if view is not mine
-        this.GetComponent<PlayerInput>().enabled = _view.IsMine;
+        // this.GetComponent<PlayerInput>().enabled = _view.IsMine;
 
         // Initialize animtor component reference
         _anim = GetComponent<Animator>();

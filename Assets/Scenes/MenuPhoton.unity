@@ -2044,7 +2044,7 @@ GameObject:
   - component: {fileID: 748551589}
   - component: {fileID: 748551591}
   m_Layer: 0
-  m_Name: '@MenuNetworkManager'
+  m_Name: '@MNetworkManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5220,7 +5220,7 @@ GameObject:
   - component: {fileID: 1609679386}
   - component: {fileID: 1609679385}
   m_Layer: 0
-  m_Name: '@MenuUIManager'
+  m_Name: '@MUIManager'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5265,7 +5265,7 @@ MonoBehaviour:
   _errorTxt: {fileID: 1061976871}
   _loadingGIF: {fileID: 1796254898}
   _transitionPnl: {fileID: 1500430937}
-  _transitionTime: 1.1
+  _transitionTime: 1.3
 --- !u!4 &1609679386
 Transform:
   m_ObjectHideFlags: 0
@@ -6033,7 +6033,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1796254899
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6628,7 +6628,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 318863710}
   m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0

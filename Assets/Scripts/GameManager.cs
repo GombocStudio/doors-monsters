@@ -1,26 +1,81 @@
 using System.Collections;
 using System.Collections.Generic;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
-using Newtonsoft.Json;
-using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using Newtonsoft.Json;
 using Cinemachine;
-using StarterAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine;
+
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    // Terrain generator reference
     TerrainGenerator terrainGenerator;
 
+    // Round manager reference
+    RoundManager roundManager;
+
+    // Character instance spawned by local player
+    private GameObject characterInstance;
+
+    #region Unity Default Methods
     // Start is called before the first frame update
     void Start()
     {
-        // Initialise terrain generator and generate terrain
-        terrainGenerator = GetComponent<TerrainGenerator>();
-        if (!terrainGenerator) { return; }
+        // Initialise terrain generator reference
+        terrainGenerator = FindObjectOfType<TerrainGenerator>();
 
+        // Initialise round manager reference
+        roundManager = FindObjectOfType<RoundManager>();
+
+        // Set round manager number of rounds
+        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("nr"))
+            roundManager.SetNumberOfRounds((int)PhotonNetwork.CurrentRoom.CustomProperties["nr"]);
+
+        // Start game
+        StartGame();
+    }
+
+    #endregion
+
+    #region Public methods
+
+    public void StartGame()
+    {
+        // Generate game terrain
+        GenerateNewTerrain();
+    }
+
+    public void EnablePlayerInput(bool value)
+    {
+        if (characterInstance)
+        {
+            PlayerInput playerInput = characterInstance.GetComponent<PlayerInput>();
+            if (playerInput) { playerInput.enabled = value; }
+        }
+    }
+
+    public void LeaveGame()
+    {
+        // Leave current room
+        PhotonNetwork.Disconnect();
+    }
+
+    #endregion
+
+    #region Private Methods
+
+    private void GenerateNewTerrain()
+    {
+        // Create terrain and add terrain data to room properties
         if (PhotonNetwork.IsMasterClient)
         {
+            if (!terrainGenerator) { return; }
+
             // Generate terrain
             terrainGenerator.GenerateTerrain();
 
@@ -28,18 +83,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
             string terrainData = JsonConvert.SerializeObject(terrainGenerator.GetTerrainData(), Formatting.None, settings);
 
-            // Add serialized terrain data to the room properties
+            // Reset room custom properties in case old terrain data already exists
+            // PhotonHashtable hash = new PhotonHashtable();
+            // PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+
+            // Add serialized new terrain data to the room properties
             PhotonHashtable hash = new PhotonHashtable();
             hash.Add("td", terrainData);
             PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
         }
     }
 
-    public void SpawnPlayers()
+    private void SpawnPlayers()
     {
-        // Check if terrain data is ready
-        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("td")) { return; }
-
         // Get terrain data from room properties and deserialize it
         TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["td"]);
         if (terrainData.GetLength(0) == 0 || terrainData.GetLength(1) == 0) { return; }
@@ -57,49 +113,95 @@ public class GameManager : MonoBehaviourPunCallbacks
             if (PhotonNetwork.PlayerList[i].IsLocal && i < terrainCorners.Count)
             {
                 // Get player selected character
-                string character = "Character 0";
+                string characterName = "Character 0";
                 if(PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("ch"))
-                    character = (string)PhotonNetwork.PlayerList[i].CustomProperties["ch"];
+                    characterName = (string)PhotonNetwork.PlayerList[i].CustomProperties["ch"];
+
+                // Destroy character instance if it was already spawned in a past round
+                if (characterInstance) { PhotonNetwork.Destroy(characterInstance); }
 
                 // Instantiate player instance and compute player id
-                GameObject player = PhotonNetwork.Instantiate(character, terrainCorners[i], Quaternion.identity);
-                if (!player) { return; }
+                characterInstance = PhotonNetwork.Instantiate(characterName, terrainCorners[i], Quaternion.identity);
+                if (!characterInstance) { return; }
 
                 // Instantiate player camera
                 CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
                 if (camera)
                 {
-                    camera.LookAt = player.transform;
-                    camera.Follow = player.transform;
+                    camera.LookAt = characterInstance.transform;
+                    camera.Follow = characterInstance.transform;
                 }
 
                 // Initialise mobile UI if needed
-                InitMobileUI(player);
+                // InitMobileUI(player);
             }
         }
     }
 
-    public void InitMobileUI(GameObject player)
-    {
-#if UNITY_IOS || UNITY_ANDROID
-            UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
+    #endregion
 
-            if (UI)
-            {
-                UI.gameObject.SetActive(true);
-                UI.starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
-
-                MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
-                mobile.playerInput = player.GetComponent<PlayerInput>();
-            }
-#endif
-    }
-
+    #region Photon Callbacks
     public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
 
+        Debug.Log("Room properties updated!");
+
+        foreach (string key in propertiesThatChanged.Keys)
+            Debug.Log(key);
+
+        // When terrain data is available in room custom properties, trigger start game coroutine
+        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("td")) { return; }
+            StartCoroutine(StartGameCR());
+    }
+
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+
+        // Load menu scene
+        SceneManager.LoadScene("MenuPhoton");
+    }
+
+    #endregion
+
+    #region Coroutines
+    IEnumerator StartGameCR()
+    {
         // Spawn players in terrain
         SpawnPlayers();
+
+        // Wait...
+        yield return new WaitForSeconds(1.0f);
+
+        // Start round from the round manager
+        if (roundManager) { roundManager.StartRound(); }
     }
+    #endregion
+
+    /* public void InitMobileUI(GameObject player)
+{
+#if UNITY_IOS || UNITY_ANDROID
+        UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
+
+        if (UI)
+        {
+            UI.gameObject.SetActive(true);
+            UI.starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
+
+            MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
+            mobile.playerInput = player.GetComponent<PlayerInput>();
+        }
+#endif
+} */
 }
