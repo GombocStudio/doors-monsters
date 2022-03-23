@@ -1,12 +1,14 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterScript : MonoBehaviour
+public class MonsterScript : Interactable
 {    
     public float speed;
     public TerrainGenerator mapGenerator;
+    public MonsterController monsterController;
         
     private Vector3 GetDestination()
     {
@@ -34,5 +36,13 @@ public class MonsterScript : MonoBehaviour
         {
             agent.destination = GetDestination();
         }        
+    }
+
+    public override void Interact(GameObject player) {
+        monsterController.MonsterCollision(this);        
+    }
+
+    public override void Deinteract(GameObject player) {
+
     }
 }

@@ -57,6 +57,7 @@ public class MonsterController : MonoBehaviour
             monster = Instantiate(monsterPrefab, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
         }
         monster.GetComponent<MonsterScript>().mapGenerator = mapGenerator;
+        monster.GetComponent<MonsterScript>().monsterController = this;
     }
 
 
@@ -73,4 +74,12 @@ public class MonsterController : MonoBehaviour
             lastSpawnedTime = System.DateTime.Now;
         }
     }
+
+    public void MonsterCollision(MonsterScript monster)
+    {
+        PhotonNetwork.Destroy(monster.gameObject);
+        activeMonsters--;
+        // ScoreManager.instance.AddPoint(50);
+    }
+
 }

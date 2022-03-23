@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 2716827574465769690}
   - component: {fileID: 7357088279471931869}
   - component: {fileID: 3872028049788816563}
+  - component: {fileID: 5657170321237932753}
   m_Layer: 0
   m_Name: Bicho
   m_TagString: Untagged
@@ -728,6 +729,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &5657170321237932753
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5255076712804916016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5547672256436257289
 GameObject:
   m_ObjectHideFlags: 0
