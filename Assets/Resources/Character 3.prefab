@@ -904,6 +904,8 @@ MonoBehaviour:
   score: 0
   material: {fileID: 2100000, guid: f04849a549ce9fe4584e093e287343ef, type: 2}
   doorControlTime: 10
+  powerUpTime: 5
+  isPoweredUp: 0
 --- !u!114 &-5950670298474013065
 MonoBehaviour:
   m_ObjectHideFlags: 0

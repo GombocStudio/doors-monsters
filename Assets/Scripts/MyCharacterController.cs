@@ -29,6 +29,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     public float doorControlTime;
     #endregion
 
+    // Abilities
+    public float powerUpTime = 5.0f;
+    public bool isPoweredUp = false;
     #region Character Components
     // Reference to the animator component of the character
     private Animator _anim;
@@ -72,6 +75,26 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
             transform.Translate(Vector3.forward * _speed * Time.deltaTime);
         }
     }
+
+    void Update()
+    {
+        if (isPoweredUp && powerUpTime > 0)
+        {
+            // If opened start decreasing controlled time
+            powerUpTime -= Time.deltaTime;
+
+            // When controlled time is over reset door properties
+            if (powerUpTime <= 0)
+            {
+                _speed = 3.0f;
+                isPoweredUp = false;
+                Debug.Log("normalSpeed");
+
+            }
+
+        }
+    }
+
     #endregion
 
     #region Input System Methods

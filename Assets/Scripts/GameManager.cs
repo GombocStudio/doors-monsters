@@ -7,14 +7,26 @@ using Photon.Pun;
 using Cinemachine;
 using StarterAssets;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.OnScreen;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
     TerrainGenerator terrainGenerator;
 
+    public static TerrainStructure[,] terrain;
     // Start is called before the first frame update
     void Start()
     {
+        // Initialise mobile UI if needed
+
+#if !UNITY_IOS && !UNITY_ANDROID
+                GameObject UI = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.transform.parent.gameObject;
+
+                if (UI)
+                {
+                    UI.gameObject.SetActive(false);
+                }
+#endif
         // Initialise terrain generator and generate terrain
         terrainGenerator = GetComponent<TerrainGenerator>();
         if (!terrainGenerator) { return; }
@@ -43,6 +55,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Get terrain data from room properties and deserialize it
         TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["td"]);
         if (terrainData.GetLength(0) == 0 || terrainData.GetLength(1) == 0) { return; }
+
+        terrain = terrainData;
 
         // Compute spawning positions from terrain data
         List<Vector3> terrainCorners = new List<Vector3>();
@@ -73,26 +87,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                     camera.Follow = player.transform;
                 }
 
-                // Initialise mobile UI if needed
-                InitMobileUI(player);
+
             }
         }
-    }
-
-    public void InitMobileUI(GameObject player)
-    {
-#if UNITY_IOS || UNITY_ANDROID
-            UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
-
-            if (UI)
-            {
-                UI.gameObject.SetActive(true);
-                UI.starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
-
-                MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
-                mobile.playerInput = player.GetComponent<PlayerInput>();
-            }
-#endif
     }
 
     public override void OnRoomPropertiesUpdate(PhotonHashtable propertiesThatChanged)
