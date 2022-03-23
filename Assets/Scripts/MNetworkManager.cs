@@ -5,14 +5,13 @@ using Photon.Pun;
 using Photon.Realtime;
 using PhotonHashtable = ExitGames.Client.Photon.Hashtable;
 
-using UnityEngine.UI;
 using UnityEngine;
 
-public class NetworkManager : MonoBehaviourPunCallbacks
+public class MNetworkManager : MonoBehaviourPunCallbacks
 {
     #region Variables
     // UI manager class reference
-    private UIManager uiManager;
+    private MUIManager uiManager;
 
     // Online client state variable
     private bool isBusy = false;
@@ -31,13 +30,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         // Initialise ui manager reference
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager = FindObjectOfType<MUIManager>();
 
         // Connect to server on start game
-        if (!PhotonNetwork.IsConnected) { PhotonNetwork.ConnectUsingSettings(); }
+        if (!PhotonNetwork.IsConnected) 
+        { 
+            PhotonNetwork.ConnectUsingSettings();
 
-        // Generate random nickname for player
-        PhotonNetwork.NickName = "JUGADOR_" + GenerateRandomText(2);
+            // Generate random nickname for player
+            PhotonNetwork.NickName = "JUGADOR_" + GenerateRandomText(2);
+        }
+        else
+        {
+            OnJoinedLobby();
+        }
     }
 
     private void Update()
@@ -74,7 +80,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         // Disconnect from server and close application window
         PhotonNetwork.Disconnect();
-        Application.Quit();
     }
 
     public void CreateRoom(int maxPlayers, int numRounds)
@@ -85,7 +90,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         // Create and set room options
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = (byte)(maxPlayers);
-        // roomOptions.CustomRoomProperties.Add("nr", numRounds);
+
+        PhotonHashtable hash = new PhotonHashtable();
+        hash.Add("nr", numRounds);
+        roomOptions.CustomRoomProperties = hash;
 
         // Create room with specified options
         PhotonNetwork.CreateRoom(GenerateRandomText(5), roomOptions, TypedLobby.Default, null);
@@ -179,7 +187,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogWarning("Disconnected: " + cause);        
+        Debug.LogWarning("Disconnected: " + cause);
+
+        if (cause == DisconnectCause.DisconnectByClientLogic || cause == DisconnectCause.DisconnectByServerLogic)
+            Application.Quit();
     }
 
     public override void OnJoinedLobby()
@@ -237,5 +248,4 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateRoomState();
     }
     #endregion
-
 }
