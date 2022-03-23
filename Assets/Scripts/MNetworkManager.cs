@@ -40,6 +40,10 @@ public class MNetworkManager : MonoBehaviourPunCallbacks
             // Generate random nickname for player
             PhotonNetwork.NickName = "JUGADOR_" + GenerateRandomText(2);
         }
+        else
+        {
+            OnJoinedLobby();
+        }
     }
 
     private void Update()

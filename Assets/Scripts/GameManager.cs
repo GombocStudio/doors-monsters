@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public void LeaveGame()
     {
         // Leave current room
-        PhotonNetwork.Disconnect();
+        PhotonNetwork.LeaveRoom();
     }
 
     #endregion
@@ -158,6 +158,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+        SceneManager.LoadScene("MenuPhoton");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)

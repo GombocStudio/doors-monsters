@@ -12,7 +12,7 @@ public class RoundManager : MonoBehaviour
 
     private bool _startTimer = false;
     private float _currentRoundTime = 0;
-    private float _roundDuration = 5;
+    private float _roundDuration = 3;
 
     // Start is called before the first frame update
     void Start()
