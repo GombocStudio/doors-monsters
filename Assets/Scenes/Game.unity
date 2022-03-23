@@ -821,7 +821,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5056f6de4e3f7804e88ad35980d428e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterPrefab: {fileID: 5725839245109118695, guid: 7981a6372b9654d4fa1e6e0848faec04, type: 3}
+  monsters:
+  - {fileID: 5255076712804916016, guid: 67692c0db06b1a24ba7d6996ffd01222, type: 3}
+  - {fileID: 3830601237474015446, guid: 1ceb34ebdcbb4604782acff0364ee019, type: 3}
   terrainGenerator: {fileID: 399204288}
   paused: 0
   maxMonsters: 10

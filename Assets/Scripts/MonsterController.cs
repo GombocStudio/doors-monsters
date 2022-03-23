@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
-    public GameObject monsterPrefab;
+    public GameObject[] monsters;
     public GameObject terrainGenerator;
     public bool paused = false;
     public int maxMonsters = 50;
@@ -48,6 +48,7 @@ public class MonsterController : MonoBehaviour
         spawnPos.z += Random.Range(-1f, 1f);
         spawnPos.y = 8.0f;
         GameObject monster;
+        GameObject monsterPrefab = monsters[Random.Range(0, monsters.Length)];
         if (usePhoton)
         {
             monster = PhotonNetwork.Instantiate(monsterPrefab.name, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
