@@ -32,6 +32,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     #endregion
 
     // Abilities
+    public GameObject projectile;
+    public float launchVel = 700f;
+
     public float speedUpTime = 5.0f;
     public bool isSpeedUp = false;
 
@@ -238,7 +241,19 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void OnAttack(InputAction.CallbackContext context)
     {
         // Play animation attack
-        if (_anim && !isFrozen) { _anim.SetBool("isAttacking", context.ReadValueAsButton()); }
+        if (_anim && !isFrozen) 
+        { 
+            _anim.SetBool("isAttacking", context.ReadValueAsButton());
+
+            // Launch projectile
+            GameObject bullet = Instantiate(projectile, transform.position + Vector3.up * 0.75f + Vector3.right * 0.35f,
+                                              transform.rotation);
+
+            bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));
+
+        }
+
+        
     }
     #endregion
 

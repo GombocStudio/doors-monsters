@@ -1647,6 +1647,8 @@ MonoBehaviour:
   score: 0
   material: {fileID: 2100000, guid: 1658bb0ad026d7c4890e6ec789801668, type: 2}
   doorControlTime: 10
+  projectile: {fileID: 6367202931326633606, guid: 63dc52ef00a70a94ba7bbd81eae73810, type: 3}
+  launchVel: 700
   speedUpTime: 5
   isSpeedUp: 0
   mapOutTime: 5
@@ -1656,6 +1658,8 @@ MonoBehaviour:
   doublePointsTime: 5
   scoreMul: 1
   isDoublePoints: 0
+  frozenTime: 5
+  isFrozen: 0
   openDoorsTime: 5
   isOpenDoors: 0
 --- !u!114 &-8362944345496774685
