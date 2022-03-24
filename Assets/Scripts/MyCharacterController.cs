@@ -246,12 +246,16 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
 
             // Launch projectile
-            GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position + Vector3.up * 0.65f + Vector3.right * 0.4f,
+            GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position,
                                               transform.rotation);
+            Quaternion rotAdjust = projectile.transform.localRotation;
+            Vector3 posAdjust = Vector3.up * 0.65f + Vector3.right * 0.4f;
 
+            PhotonView v = bullet.GetPhotonView();
+            v.transform.localRotation *= rotAdjust;
+            v.transform.position += posAdjust;
             bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));
-            Quaternion rotAdjust = projectile.transform.rotation;
-            bullet.transform.rotation = rotAdjust;
+           
 
         }
 
