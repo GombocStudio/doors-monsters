@@ -1880,7 +1880,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.25
+  m_Radius: 0.35
   m_Height: 1.75
   m_Direction: 1
   m_Center: {x: 0, y: 0.875, z: 0}
@@ -2028,6 +2028,20 @@ MonoBehaviour:
   doorControlTime: 10
   powerUpTime: 5
   isPoweredUp: 0
+  speedUpTime: 5
+  isSpeedUp: 0
+  miniMap: {fileID: 0}
+  mapOutTime: 5
+  isMapOut: 0
+  lightOutTime: 5
+  isLightOut: 0
+  doublePointsTime: 5
+  scoreMul: 1
+  isDoublePoints: 0
+  reversedControlsTime: 5
+  isReversedControls: 0
+  openDoorsTime: 5
+  isOpenDoors: 0
 --- !u!114 &2490537938329803880
 MonoBehaviour:
   m_ObjectHideFlags: 0

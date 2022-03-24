@@ -20,12 +20,15 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Initialise mobile UI if needed
 
 #if !UNITY_IOS && !UNITY_ANDROID
-                GameObject UI = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.transform.parent.gameObject;
+        GameObject stick = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.gameObject;
+        GameObject button = FindObjectOfType<OnScreenButton>().gameObject;
 
-                if (UI)
-                {
-                    UI.gameObject.SetActive(false);
-                }
+        if (stick && button)
+        {
+            stick.gameObject.SetActive(false);
+            button.gameObject.SetActive(false);
+        }
+
 #endif
         // Initialise terrain generator and generate terrain
         terrainGenerator = GetComponent<TerrainGenerator>();

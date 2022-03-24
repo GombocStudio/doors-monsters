@@ -4,8 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PowerUp : Interactable
+public class SpeedUp : Interactable
 {
+
     // Start is called before the first frame update
     public override void Interact(GameObject player)
     {
@@ -18,8 +19,8 @@ public class PowerUp : Interactable
         Destroy(gameObject);
         MyCharacterController character = player.GetComponent<MyCharacterController>();
         character._speed = 6.75f;
-        character.isPoweredUp = true;
-        character.powerUpTime = 5.0f;
+        character.isSpeedUp = true;
+        character.speedUpTime = 5.0f;
         Debug.Log("speed");
 
     }
