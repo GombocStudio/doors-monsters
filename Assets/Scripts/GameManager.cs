@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     TerrainGenerator terrainGenerator;
 
+    //static variable to access terrain from any script
     public static TerrainStructure[,] terrain;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +61,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["td"]);
         if (terrainData.GetLength(0) == 0 || terrainData.GetLength(1) == 0) { return; }
 
+        // Static variable equals the newly generated terrain
         terrain = terrainData;
 
         // Compute spawning positions from terrain data
