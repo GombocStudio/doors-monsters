@@ -27,11 +27,36 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
 
     // Door control time in seconds
     public float doorControlTime;
-    #endregion
 
     // Abilities
     public float powerUpTime = 5.0f;
     public bool isPoweredUp = false;
+
+    // Allow using the player without photon for testing
+    public bool testLocal = false;
+
+    // Melee weapon collider
+    public Collider weaponCollider;
+
+    // Time the player is stunned after melee attack (in secons)
+    public float stunTime = 2.0f;
+
+    // Time the player is invencible when stunned (in seconds)
+    public float invencibleTime = 3.0f;
+
+    // Is player stunned
+    private bool _stunned = false;
+
+    // Is player invencible
+    private bool _invencible = false;
+
+    // When the player will stop being stunned
+    private float _timeStunned = 0.0f;
+
+    // When the player will stop being invencible
+    private float _timeInvencible = 0.0f;
+    #endregion
+
     #region Character Components
     // Reference to the animator component of the character
     private Animator _anim;
@@ -48,16 +73,19 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
         _view = GetComponent<PhotonView>();
 
         // Initialize minimap camera to follow the player
-        if (_view && _view.IsMine)
+        if (_view && _view.IsMine && !testLocal)
         {
             MinimapCameraController minimapCamera = FindObjectOfType<MinimapCameraController>();
             minimapCamera.playerTransform = this.transform;
         }
         // Disable player input if view is not mine
-        this.GetComponent<PlayerInput>().enabled = _view.IsMine;
+        this.GetComponent<PlayerInput>().enabled = _view.IsMine || testLocal;
 
         // Initialize animtor component reference
         _anim = GetComponent<Animator>();
+
+        // Disable weapon collider
+        weaponCollider.enabled = false;
     }
 
     public void FixedUpdate()
@@ -93,6 +121,16 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
             }
 
         }
+
+        if (_stunned)
+        {
+            _stunned = Time.time <= _timeStunned;
+        }
+
+        if (_invencible)
+        {
+            _invencible = Time.time <= _timeInvencible;
+        }
     }
 
     #endregion
@@ -101,6 +139,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     // Method triggered when any of the characterActions.InputActions specified movement keys is pressed
     public void OnMove(InputAction.CallbackContext context)
     {
+        // If player is stunned don't move
+        if (_stunned) { return; }
+
         // Updates movment vector if current view is from the local player
         _movement = context.ReadValue<Vector2>();
         if (_anim) { _anim.SetBool("isWalking", (_movement.x != 0 || _movement.y != 0)); }
@@ -109,6 +150,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     // Method triggered when the characterActions.InputActions specified attack key is pressed
     public void OnAttack(InputAction.CallbackContext context)
     {
+        // If player is stunned don't attack
+        if (_stunned) { return; }
+
         // Play animation attack
         if (_anim) { _anim.SetBool("isAttacking", context.ReadValueAsButton()); }
     }
@@ -119,10 +163,12 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     {
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        if (!interactable) { return; }
-
-        // Interact with collider gameobject
-        interactable.Interact(this.gameObject);
+        if (interactable)
+        {
+            // Interact with collider gameobject
+            interactable.Interact(this.gameObject);
+        }
+        
     }
     private void OnTriggerStay(Collider other)
     {
@@ -159,5 +205,39 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
             transform.rotation = (Quaternion)stream.ReceiveNext();
         } */
     }
+    #endregion
+
+    #region Melee interaction Methods
+
+    public void EnableMeleeCollider()
+    {
+        weaponCollider.enabled = true;
+    }
+
+    public void DisableMeleeCollider()
+    {
+        weaponCollider.enabled = false;
+    }
+
+    // When the player is hit by a melee attack, this function is called
+    public void MeleeHit()
+    {
+        if (!_invencible)
+        {
+            _stunned = true;
+            _invencible = true;
+            _timeStunned = Time.time + stunTime;
+            _timeInvencible = Time.time + invencibleTime;
+
+            Debug.Log("MeleeHit(): Reducir score y soltar monstruos");
+        }
+    }
+
+    // When the player capture a monster, thsi function is called
+    public void CaptureMonster()
+    {
+        Debug.Log("CaptureMonster(): Modificar score");
+    }
+
     #endregion
 }

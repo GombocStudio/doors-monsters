@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Door
   - CinemachineTarget
+  - Melee
+  - Monster
   layers:
   - Default
   - TransparentFX

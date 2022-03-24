@@ -706,7 +706,7 @@ GameObject:
   - component: {fileID: 1088810313681913176}
   m_Layer: 7
   m_Name: Character 3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -906,6 +906,10 @@ MonoBehaviour:
   doorControlTime: 10
   powerUpTime: 5
   isPoweredUp: 0
+  testLocal: 0
+  weaponCollider: {fileID: 6712164335852415074}
+  stunTime: 2
+  invencibleTime: 3
 --- !u!114 &-5950670298474013065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1737,6 +1741,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6852462209216359286}
+  - component: {fileID: 6712164335852415074}
+  - component: {fileID: 2967299680592223620}
   m_Layer: 7
   m_Name: Net_end
   m_TagString: Untagged
@@ -1758,6 +1764,32 @@ Transform:
   m_Father: {fileID: 2441643007688353825}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6712164335852415074
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569164307704254040}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.012, y: 0.015, z: 0.01}
+  m_Center: {x: 0, y: -0.005, z: 0}
+--- !u!114 &2967299680592223620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7569164307704254040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 7835470431707920565}
 --- !u!1 &7679216787682914421
 GameObject:
   m_ObjectHideFlags: 0

@@ -1503,6 +1503,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6954545647850337382}
+  - component: {fileID: 8118835183511959894}
+  - component: {fileID: 4418721182007374045}
   m_Layer: 7
   m_Name: CloseWeapon_end
   m_TagString: Untagged
@@ -1524,6 +1526,32 @@ Transform:
   m_Father: {fileID: 9184587602159447908}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8118835183511959894
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252515907769197963}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.012, y: 0.015, z: 0.01}
+  m_Center: {x: 0, y: -0.005, z: 0}
+--- !u!114 &4418721182007374045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252515907769197963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 6300880902946192515}
 --- !u!1 &6409769037455708898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,7 +1571,7 @@ GameObject:
   - component: {fileID: 5676558325581065410}
   m_Layer: 7
   m_Name: Character 2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1739,6 +1767,10 @@ MonoBehaviour:
   doorControlTime: 10
   powerUpTime: 5
   isPoweredUp: 0
+  testLocal: 0
+  weaponCollider: {fileID: 8118835183511959894}
+  stunTime: 2
+  invencibleTime: 3
 --- !u!114 &-1729126493680421984
 MonoBehaviour:
   m_ObjectHideFlags: 0

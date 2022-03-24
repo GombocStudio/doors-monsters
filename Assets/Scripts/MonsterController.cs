@@ -63,4 +63,9 @@ public class MonsterController : MonoBehaviour
             lastSpawnedTime = System.DateTime.Now;
         }
     }
+
+    public void Destroy()
+    {
+        // Usar PhotonNetwork.Destroy(view) para destruir los monstruos en online
+    }
 }
