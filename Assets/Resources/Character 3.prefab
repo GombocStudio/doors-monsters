@@ -904,7 +904,7 @@ MonoBehaviour:
   score: 0
   material: {fileID: 2100000, guid: f04849a549ce9fe4584e093e287343ef, type: 2}
   doorControlTime: 10
-  projectile: {fileID: 7477973442010662947, guid: 894b963f8296c604a9b179156e24960b, type: 3}
+  projectile: {fileID: 6958180364659660244, guid: 440a3513379b5fe409e34e57dd561760, type: 3}
   launchVel: 700
   speedUpTime: 5
   isSpeedUp: 0
