@@ -11,6 +11,7 @@ public class PowerUpController : MonoBehaviour
 
     public GameObject miniMap;
     public GameObject lightsOff;
+    public GameObject iceCubePrefab;
     // Start is called before the first frame update
     TerrainGenerator terrainGenerator;
 

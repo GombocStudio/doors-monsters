@@ -3,6 +3,7 @@ using Photon.Pun;
 using UnityEngine.InputSystem;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using UnityEngine.InputSystem.OnScreen;
 
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventCallback
@@ -11,6 +12,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     // Character movement related variables
     public float _speed = 3.0f;
     private Vector2 _movement;
+    ////////////////////////////
+    private RectTransform stick;
 
     // Character rotation related varibles
     [Tooltip("How fast the character turns to face movement direction")]
@@ -32,6 +35,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     #endregion
 
     // Abilities
+
     public GameObject projectile;
     public float launchVel = 700f;
 
@@ -53,6 +57,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     private float reversedControlsTime = 5.0f;
     private bool isReversedControls = false;
 
+    private GameObject iceCube;
+    private GameObject iceCubePrefab;
     public float frozenTime = 5.0f;
     public bool isFrozen = false;
 
@@ -82,6 +88,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             PowerUpController puCntrlr = FindObjectOfType<PowerUpController>();
             miniMap = puCntrlr.miniMap;
             lightsOff = puCntrlr.lightsOff;
+            //iceCube = puCntrlr.iceCubePrefab;
+
+            //iceCube.transform.SetParent(transform);
+            //iceCube.transform.position = transform.position + Vector3.up * 0.8f;
         }
         // Disable player input if view is not mine
         this.GetComponent<PlayerInput>().enabled = _view.IsMine;
@@ -89,12 +99,27 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         // Initialize animtor component reference
         _anim = GetComponent<Animator>();
 
+        // Get Joystick (mobile)
+        stick = FindObjectOfType<OnScreenStick>().gameObject.GetComponent<RectTransform>();
+
+
     }
 
     public void FixedUpdate()
     {
+        // Mobile controls
+#if UNITY_IOS || UNITY_ANDROID
+
+        if (stick.localPosition == Vector3.zero)
+        {
+            _movement = Vector2.zero;
+            _anim.SetBool("isWalking", false);
+        }
+
+#endif
         if (_movement != Vector2.zero)
         {
+
             // Compute current smooth rotation
             _targetRotation = Mathf.Atan2(_movement.x, _movement.y) * Mathf.Rad2Deg;
             float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
@@ -110,6 +135,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     void Update()
     {
+
         //Speed
         if (isSpeedUp && speedUpTime > 0)
         {
@@ -128,10 +154,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         //Map
         if (isMapOut && mapOutTime > 0)
         {
-            if (miniMap.activeSelf)
-            {
-                miniMap.SetActive(false);
-            }
+            
             // If opened start decreasing controlled time
             mapOutTime -= Time.deltaTime;
 
@@ -147,10 +170,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         //Lights
         if (isLightOut && lightOutTime > 0)
         {
-            if (!lightsOff.activeSelf)
-            {
-                lightsOff.SetActive(true);
-            }
+            
             // If opened start decreasing controlled time
             lightOutTime -= Time.deltaTime;
 
@@ -209,12 +229,19 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         //Freeze
         if (isFrozen && frozenTime > 0)
         {
+            //if (!iceCube.activeSelf)
+            //{
+                //iceCube.SetActive(true);
+            //}
+
             // If opened start decreasing controlled time
             frozenTime -= Time.deltaTime;
 
             if (frozenTime <= 0)
             {
                 isFrozen = false;
+                //iceCube.SetActive(false);
+                PhotonNetwork.Destroy(iceCube);
 
             }
 
@@ -225,15 +252,43 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     #region Input System Methods
     // Method triggered when any of the characterActions.InputActions specified movement keys is pressed
+    Vector2 lastMov;
     public void OnMove(InputAction.CallbackContext context)
     {
         // Updates movment vector if current view is from the local player
         _movement = context.ReadValue<Vector2>();
+
+        // Mobile controls
+#if UNITY_IOS || UNITY_ANDROID
+
+        if (_movement.x < -0.3) { _movement.x = -1.0f; }
+        if (_movement.x > 0.3) { _movement.x = 1.0f; }
+        if (_movement.y < -0.3) { _movement.y = -1.0f; }
+        if (_movement.y > 0.3) { _movement.y = 1.0f; }
+
+        _movement.Normalize();
+
+        if (_movement == Vector2.zero)// && lastMov != null)
+        {
+
+            _movement = lastMov;
+
+        }
+
+        lastMov = _movement;
+#endif
+
+        Debug.Log(_movement.ToString());
+        Debug.Log(stick.localPosition.ToString());
+
+        // Power up effects
         if (isFrozen) { _movement = Vector2.zero; }
         if (isReversedControls)
         {
             _movement = -_movement;
         }
+
+
         if (_anim) { _anim.SetBool("isWalking", (_movement.x != 0 || _movement.y != 0)); }
     }
 
@@ -249,21 +304,20 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position,
                                               transform.rotation);
             Quaternion rotAdjust = projectile.transform.localRotation;
-            Vector3 posAdjust = Vector3.up * 0.65f + Vector3.right * 0.4f;
+            Vector3 posAdjust = Vector3.up * 0.65f + Vector3.right * 0.4f + Vector3.forward * 0.25f ;
 
             PhotonView v = bullet.GetPhotonView();
             v.transform.localRotation *= rotAdjust;
             v.transform.position += posAdjust;
-            bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));
-           
+            bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));        
 
         }
 
 
     }
-    #endregion
+#endregion
 
-    #region Trigger and Collider Events
+#region Trigger and Collider Events
     private void OnTriggerEnter(Collider other)
     {
         // Check if other collider gameobject is interactable
@@ -292,9 +346,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         // Interact with collider gameobject
         interactable.Deinteract(this.gameObject);
     }
-    #endregion
+#endregion
 
-    #region Photon Methods
+#region Photon Methods
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         /* if (stream.IsWriting)
@@ -313,30 +367,44 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
+        int data = (int)photonEvent.CustomData;
 
-        switch (eventCode)
+        if (data != GetInstanceID())
         {
-            case 1:
-                isMapOut = true;
-                mapOutTime = 5.0f;
-                break;
-            case 2:
-                isLightOut = true;
-                lightOutTime = 5.0f;
-                break;
-            case 3:
-                isReversedControls = true;
-                reversedControlsTime = 5.0f;
-                break;
-            case 4:
-                isFrozen = true;
-                frozenTime = 5.0f;
-                break;
-            default:
-                break;
+        switch (eventCode)
+            {
+                case 1:
+                    isMapOut = true;
+                    mapOutTime = 5.0f;
+                    if (miniMap.activeSelf)
+                    {
+                        miniMap.SetActive(false);
+                    }
+                    break;
+                case 2:
+                    isLightOut = true;
+                    lightOutTime = 5.0f;
+                    if (!lightsOff.activeSelf)
+                    {
+                        lightsOff.SetActive(true);
+                    }
+                    break;
+                case 3:
+                    isReversedControls = true;
+                    reversedControlsTime = 5.0f;
+                    break;
+                case 4:
+                    isFrozen = true;
+                    frozenTime = 5.0f;
+                    iceCube = PhotonNetwork.Instantiate(iceCubePrefab.name, transform.position + Vector3.up * 0.8f, transform.rotation);
+                    break;
+                default:
+                    break;
+            }
         }
+        
     }
 
 
-    #endregion
+#endregion
 }

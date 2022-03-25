@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 2907358723201494170}
   - component: {fileID: -4942019184089368965}
   - component: {fileID: 3086415210267772208}
+  - component: {fileID: 3568951988458064521}
+  - component: {fileID: 2795729777609063007}
   m_Layer: 0
   m_Name: Shuriken
   m_TagString: Untagged
@@ -134,7 +136,33 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: -4942019184089368965}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &3568951988458064521
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6367202931326633606}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.15, y: 0.15, z: 0.010000028}
+  m_Center: {x: -0.0003692243, y: 1.9658551e-10, z: 0.0050000013}
+--- !u!114 &2795729777609063007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6367202931326633606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d198b3855afe57a48abcd8e0a0d4cc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

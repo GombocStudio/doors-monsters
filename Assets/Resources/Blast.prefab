@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9049996772969090995}
   - component: {fileID: 1347696806988327544}
   - component: {fileID: -7294883586479120462}
+  - component: {fileID: 5989471799854548076}
   m_Layer: 0
   m_Name: Blast
   m_TagString: Untagged
@@ -94,7 +95,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6958180364659660244}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -154,3 +155,15 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &5989471799854548076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958180364659660244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d198b3855afe57a48abcd8e0a0d4cc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
