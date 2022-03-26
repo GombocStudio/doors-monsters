@@ -76,11 +76,8 @@ public class TerrainGenerator : MonoBehaviour
 
     public void GenerateTerrain()
     {
-        // Destroy current terrain parent if another terrain was already spawned
-        if (terrainParent) { PhotonNetwork.Destroy(terrainParent); }
-
         // Initialize terrain parent
-        terrainParent = new GameObject("TerrainParent");
+        if (!terrainParent) { terrainParent = new GameObject("TerrainParent"); }
 
         // Initialize terrain grid
         dataGenerator = new TerrainDataGenerator();
@@ -129,6 +126,18 @@ public class TerrainGenerator : MonoBehaviour
 
         // update navMesh now that the geometry is generated        
         navMeshSurface.BuildNavMesh();
+    }
+
+    public void DestroyTerrain()
+    {
+        // Destroy current terrain parent if another terrain was already spawned
+        if (terrainParent)
+        {
+            for (int i = 0; i < terrainParent.transform.childCount; i++)
+            {
+                PhotonNetwork.Destroy(terrainParent.transform.GetChild(i).gameObject);
+            }
+        }
     }
 
     TerrainStructure[] ComputeNeighborData(int i, int j)

@@ -9,8 +9,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-using UnityEngine.SceneManagement;
-
 public class GameManager : MonoBehaviourPunCallbacks
 {
     // Terrain generator reference
@@ -18,6 +16,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     // Round manager reference
     RoundManager roundManager;
+
+    // Score manager reference
+    ScoreManager scoreManager;
 
     // Character instance spawned by local player
     private GameObject characterInstance;
@@ -31,6 +32,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // Initialise round manager reference
         roundManager = FindObjectOfType<RoundManager>();
+
+        // Initialise score manager reference
+        scoreManager = FindObjectOfType<ScoreManager>();
 
         // Set round manager number of rounds
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("nr"))
@@ -65,27 +69,38 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom();
     }
 
+    public GameObject GetCharacterInstance()
+    {
+        return characterInstance;
+    }
+
+    public void UpdatePlayerOnlineScore(int playerScore)
+    {
+        PhotonHashtable hash = new PhotonHashtable();
+        hash.Add("sc", playerScore);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
     #endregion
 
     #region Private Methods
 
     private void GenerateNewTerrain()
     {
+        if (!terrainGenerator) { return; }
+
+        // Destroy old terrain from past round
+        terrainGenerator.DestroyTerrain();
+
         // Create terrain and add terrain data to room properties
         if (PhotonNetwork.IsMasterClient)
         {
-            if (!terrainGenerator) { return; }
-
             // Generate terrain
             terrainGenerator.GenerateTerrain();
 
             // Get terrain data and serialize it
             JsonSerializerSettings settings = new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
             string terrainData = JsonConvert.SerializeObject(terrainGenerator.GetTerrainData(), Formatting.None, settings);
-
-            // Reset room custom properties in case old terrain data already exists
-            // PhotonHashtable hash = new PhotonHashtable();
-            // PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
 
             // Add serialized new terrain data to the room properties
             PhotonHashtable hash = new PhotonHashtable();
@@ -110,30 +125,39 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Compute player spawning position and ID
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
+            // Get player selected character
+            string characterName = "Character 0";
+            if (PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("ch"))
+                characterName = (string)PhotonNetwork.PlayerList[i].CustomProperties["ch"];
+
+            // Add character to the score manager
+            if (scoreManager) { scoreManager.AddCharacter(characterName); }
+
             if (PhotonNetwork.PlayerList[i].IsLocal && i < terrainCorners.Count)
             {
-                // Get player selected character
-                string characterName = "Character 0";
-                if(PhotonNetwork.PlayerList[i].CustomProperties.ContainsKey("ch"))
-                    characterName = (string)PhotonNetwork.PlayerList[i].CustomProperties["ch"];
-
-                // Destroy character instance if it was already spawned in a past round
-                if (characterInstance) { PhotonNetwork.Destroy(characterInstance); }
-
-                // Instantiate player instance and compute player id
-                characterInstance = PhotonNetwork.Instantiate(characterName, terrainCorners[i], Quaternion.identity);
-                if (!characterInstance) { return; }
-
-                // Instantiate player camera
-                CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
-                if (camera)
+                // If character instance already exist from a past round, move it to the starting position
+                if (characterInstance) 
                 {
-                    camera.LookAt = characterInstance.transform;
-                    camera.Follow = characterInstance.transform;
+                    characterInstance.transform.position = terrainCorners[i];
+                    characterInstance.transform.rotation = Quaternion.identity;
                 }
+                else
+                {
+                    // Instantiate player instance and compute player id
+                    characterInstance = PhotonNetwork.Instantiate(characterName, terrainCorners[i], Quaternion.identity);
+                    if (!characterInstance) { return; }
 
-                // Initialise mobile UI if needed
-                // InitMobileUI(player);
+                    // Instantiate player camera
+                    CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
+                    if (camera)
+                    {
+                        camera.LookAt = characterInstance.transform;
+                        camera.Follow = characterInstance.transform;
+                    }
+
+                    // Initialise mobile UI if needed
+                    // InitMobileUI(player);
+                }
             }
         }
     }
@@ -155,22 +179,51 @@ public class GameManager : MonoBehaviourPunCallbacks
             StartCoroutine(StartGameCR());
     }
 
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, PhotonHashtable changedProps)
+    {
+        base.OnPlayerPropertiesUpdate(targetPlayer, changedProps);
+
+        string characterName = "Character 0";
+        int newScore = 0;
+
+        // Get player selected character
+        if (targetPlayer.CustomProperties.ContainsKey("ch"))
+            characterName = (string)targetPlayer.CustomProperties["ch"];
+
+        // Get playe updated score
+        if (targetPlayer.CustomProperties.ContainsKey("sc"))
+            newScore = (int)targetPlayer.CustomProperties["sc"];
+
+        // Update player score in other player's machines
+        if (scoreManager) { scoreManager.UpdateScoreList(characterName, newScore); }
+    }
+
     public override void OnLeftRoom()
     {
         base.OnLeftRoom();
+
+        // When aplayer leaves the room send them to the lobby
         SceneManager.LoadScene("MenuPhoton");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
+
+        // Remove player character from the score manager
+        if (otherPlayer.CustomProperties.ContainsKey("ch"))
+        {
+            string characterName = (string)otherPlayer.CustomProperties["ch"];
+            if (scoreManager) { scoreManager.RemoveCharacter(characterName); }
+        }
+
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
 
-        // Load menu scene
+        // When a player disconnects in the middle of the game we send them to try to reconnect
         SceneManager.LoadScene("MenuPhoton");
     }
 

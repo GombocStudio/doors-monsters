@@ -1941,7 +1941,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   RotationSmoothTime: 0.12
-  score: 0
   material: {fileID: 2100000, guid: 136ccc89f9f16ef4fb176d5edea66c5b, type: 2}
   doorControlTime: 10
 --- !u!114 &2490537938329803880
