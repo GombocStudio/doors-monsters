@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Score manager reference
     ScoreManager scoreManager;
 
+    // Monster controller reference
+    MonsterController monsterController;
+
     // Character instance spawned by local player
     private GameObject characterInstance;
 
@@ -35,6 +38,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // Initialise score manager reference
         scoreManager = FindObjectOfType<ScoreManager>();
+
+        // Initialise score manager reference
+        monsterController = FindObjectOfType<MonsterController>();
 
         // Set round manager number of rounds
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("nr"))
@@ -87,14 +93,21 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void GenerateNewTerrain()
     {
-        if (!terrainGenerator) { return; }
-
-        // Destroy old terrain from past round
-        terrainGenerator.DestroyTerrain();
-
         // Create terrain and add terrain data to room properties
         if (PhotonNetwork.IsMasterClient)
         {
+            if (!terrainGenerator) { return; }
+
+            // Destroy old terrain from past round
+            terrainGenerator.DestroyTerrain();
+
+            // Remove old terrain data from monster controller and destroy remaining monsters
+            if (monsterController) 
+            {
+                monsterController.DestroyRemainingMonsters();
+                monsterController.ResetTerrainData(); 
+            }
+
             // Generate terrain
             terrainGenerator.GenerateTerrain();
 
@@ -112,7 +125,8 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void SpawnPlayers()
     {
         // Get terrain data from room properties and deserialize it
-        TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["td"]);
+        TerrainStructure[,] terrainData = terrainGenerator.GetTerrainData();
+
         if (terrainData.GetLength(0) == 0 || terrainData.GetLength(1) == 0) { return; }
 
         // Compute spawning positions from terrain data
@@ -232,6 +246,15 @@ public class GameManager : MonoBehaviourPunCallbacks
     #region Coroutines
     IEnumerator StartGameCR()
     {
+        // Get terrain data from room properties and deserialize it
+        TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["td"]);
+
+        // Set terrain generator local component terrain data
+        if (terrainGenerator) { terrainGenerator.SetTerrainData(terrainData); }
+
+        // Set local monster controller terrain data
+        if (monsterController && PhotonNetwork.IsMasterClient) { monsterController.SetTerrainData(terrainData); }
+
         // Spawn players in terrain
         SpawnPlayers();
 

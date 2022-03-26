@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -44,8 +44,15 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void UpdatePlayerScore(int scoreToAdd)
+    public void UpdatePlayerScore(GameObject player, int scoreToAdd)
     {
+        // Check if player that interacted with the egg is not null
+        if (!player) { return; }
+
+        // Get photon view component and check if view is mine
+        PhotonView view = player.GetPhotonView();
+        if (!view || !view.IsMine) { return; }
+
         // Update local player score
         myScore += scoreToAdd;
 

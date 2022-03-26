@@ -6,37 +6,42 @@ using UnityEngine.AI;
 
 public class MonsterController : MonoBehaviour
 {
-    public GameObject[] monsters;
-    public GameObject terrainGenerator;
+    private GameObject monstersParent;
+
+    public GameObject[] monsterPrefabs;
     public bool paused = false;
     public int maxMonsters = 50;
 
-    private TerrainGenerator mapGenerator;
     private System.DateTime lastSpawnedTime = System.DateTime.Now;        
     private int activeMonsters = 0;
     private bool usePhoton = true;
 
+    private TerrainStructure[,] terrainData;
+    private bool terrainDataReady = false;
+
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
-        mapGenerator = terrainGenerator.GetComponent<TerrainGenerator>();        
+        if (!PhotonNetwork.IsMasterClient) { return; }
+
+        // Initialize monster parent game object
+        monstersParent = new GameObject("MonstersParent");
     }
 
     private TerrainStructure GetRandomRoom()
     {
-        var mapData = mapGenerator.GetTerrainData();
-        int rows = mapData.GetLength(0);
-        int cols = mapData.GetLength(1);
+        int rows = terrainData.GetLength(0);
+        int cols = terrainData.GetLength(1);
         TerrainStructure? room = null;
         while (room == null)
         {
             int r = Random.Range(0, rows);
-            int c = Random.Range(0, cols);            
-            if (mapData[r, c].type == CellType.Room)
+            int c = Random.Range(0, cols);
+            if (terrainData[r, c].type == CellType.Room)
             {
-                room = mapData[r, c];
+                room = terrainData[r, c];
             }
-        }        
+        }
         return room.Value;
     }
     private void SpawnMonster()        
@@ -47,26 +52,35 @@ public class MonsterController : MonoBehaviour
         spawnPos.x += Random.Range(-1f, 1f);        
         spawnPos.z += Random.Range(-1f, 1f);
         spawnPos.y = 8.0f;
-        GameObject monster;
-        GameObject monsterPrefab = monsters[Random.Range(0, monsters.Length)];
+        GameObject monsterClone;
+        GameObject monsterPrefab = monsterPrefabs[Random.Range(0, monsterPrefabs.Length)];
+        
+        // Only spawn if client is master client
         if (usePhoton)
         {
-            monster = PhotonNetwork.Instantiate(monsterPrefab.name, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
+            monsterClone = PhotonNetwork.Instantiate(monsterPrefab.name, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
         } else
         {
-            monster = Instantiate(monsterPrefab, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
+            monsterClone = Instantiate(monsterPrefab, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
         }
-        monster.GetComponent<MonsterScript>().mapGenerator = mapGenerator;
-        monster.GetComponent<MonsterScript>().monsterController = this;
+
+        if (monsterClone)
+        {
+            // Set spawned monster as child of monstersParent
+            if (monstersParent) { monsterClone.transform.SetParent(monstersParent.transform); }
+
+           // Set spawned monster controller
+            MonsterScript ss = monsterClone.GetComponent<MonsterScript>();
+            if (ss) { ss.SetController(this); }
+        }
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (paused 
-            || activeMonsters >= maxMonsters
-            || !PhotonNetwork.IsMasterClient) return;
+        // Only spawn monsters if client is master and terrain data is ready
+        if (paused || activeMonsters >= maxMonsters || !PhotonNetwork.IsMasterClient || !terrainDataReady) { return; }
 
         if (System.DateTime.Now - lastSpawnedTime > System.TimeSpan.FromMilliseconds(1000))
         {
@@ -79,7 +93,37 @@ public class MonsterController : MonoBehaviour
     {
         PhotonNetwork.Destroy(monster.gameObject);
         activeMonsters--;
-        // ScoreManager.instance.AddPoint(50);
     }
 
+    public TerrainStructure[,] GetTerrainData()
+    {
+        return terrainData;
+    }
+
+    public void SetTerrainData(TerrainStructure[,] td)
+    {
+        terrainData = td;
+        terrainDataReady = true;
+    }
+
+    public void ResetTerrainData()
+    {
+        terrainData = new TerrainStructure[0, 0];
+        terrainDataReady = false;
+    }
+
+    public void DestroyRemainingMonsters()
+    {
+        // Destroy remaining monsters before starting a new round
+        if (monstersParent)
+        {
+            // Set active monsters to 0
+            activeMonsters = 0;
+
+            for (int i = 0; i < monstersParent.transform.childCount; i++)
+            {
+                PhotonNetwork.Destroy(monstersParent.transform.GetChild(i).gameObject);
+            }
+        }
+    }
 }

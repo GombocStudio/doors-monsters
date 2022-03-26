@@ -64,7 +64,7 @@ public class TerrainGenerator : MonoBehaviour
 
     [Header("Terrain data generation")]
     private TerrainDataGenerator dataGenerator;
-    public TerrainStructure[,] terrainData;
+    private TerrainStructure[,] terrainData;
 
     private Dictionary<string, GameObject> structureDictionary = null;
 
@@ -330,6 +330,11 @@ public class TerrainGenerator : MonoBehaviour
     public TerrainStructure[,] GetTerrainData()
     {
         return terrainData;
+    }
+
+    public void SetTerrainData(TerrainStructure[,] td)
+    {
+        terrainData = td;
     }
 
     public void InitStructureDictionary()
