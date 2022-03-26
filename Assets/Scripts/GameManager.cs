@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
-using StarterAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.OnScreen;
 
