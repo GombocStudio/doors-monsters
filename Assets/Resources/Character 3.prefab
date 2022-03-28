@@ -819,7 +819,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   RotationSmoothTime: 0.12
-  score: 0
   material: {fileID: 2100000, guid: f04849a549ce9fe4584e093e287343ef, type: 2}
   doorControlTime: 10
 --- !u!114 &-5950670298474013065
@@ -841,9 +840,9 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 7835470431707920565}
   - {fileID: 694220670207724710}
   - {fileID: 1088810313681913176}
-  - {fileID: 7835470431707920565}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -896,10 +895,10 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isWalking
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isAttacking
   m_SynchronizeLayers:
   - SynchronizeType: 0

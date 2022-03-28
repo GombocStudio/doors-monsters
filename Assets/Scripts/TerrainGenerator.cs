@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
-using UnityEngine.AI;
+using UnityEngine;
 
 [System.Serializable]
 public struct TerrainStructure
@@ -64,7 +62,7 @@ public class TerrainGenerator : MonoBehaviour
 
     [Header("Terrain data generation")]
     private TerrainDataGenerator dataGenerator;
-    public TerrainStructure[,] terrainData;
+    private TerrainStructure[,] terrainData;
 
     private Dictionary<string, GameObject> structureDictionary = null;
 
@@ -80,7 +78,7 @@ public class TerrainGenerator : MonoBehaviour
         if (terrainParent) { PhotonNetwork.Destroy(terrainParent); }
 
         // Initialize terrain parent
-        terrainParent = new GameObject("TerrainParent");
+        if (!terrainParent) { terrainParent = new GameObject("TerrainParent"); }
 
         // Initialize terrain grid
         dataGenerator = new TerrainDataGenerator();
@@ -129,6 +127,18 @@ public class TerrainGenerator : MonoBehaviour
 
         // update navMesh now that the geometry is generated        
         navMeshSurface.BuildNavMesh();
+    }
+
+    public void DestroyTerrain()
+    {
+        // Destroy current terrain parent if another terrain was already spawned
+        if (terrainParent)
+        {
+            for (int i = 0; i < terrainParent.transform.childCount; i++)
+            {
+                PhotonNetwork.Destroy(terrainParent.transform.GetChild(i).gameObject);
+            }
+        }
     }
 
     TerrainStructure[] ComputeNeighborData(int i, int j)
@@ -321,6 +331,11 @@ public class TerrainGenerator : MonoBehaviour
     public TerrainStructure[,] GetTerrainData()
     {
         return terrainData;
+    }
+
+    public void SetTerrainData(TerrainStructure[,] td)
+    {
+        terrainData = td;
     }
 
     public void InitStructureDictionary()
