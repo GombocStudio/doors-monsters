@@ -15,7 +15,7 @@ public class Door : Interactable
     public int characterId = -1;
 
     // Control bool variable to handle open and close animations
-    private bool isOpen = false;
+    private bool isOpen = true;
 
     // Time left until door is released from the control of the controlling character
     private float controlledTime;
@@ -114,6 +114,14 @@ public class Door : Interactable
         // Reset door default material
         if (doorMesh && defaultMaterial)
             doorMesh.material = defaultMaterial;
+
+        /**** PLAY OPEN ANIMATION ****/
+        // Play open door animation
+        if (_anim && !isOpen)
+        {
+            isOpen = true;
+            _anim.Play("Open");
+        }
 
         /**** RESET DOOR ID ****/
         // Reset controlling character ID

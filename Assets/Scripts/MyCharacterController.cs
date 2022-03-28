@@ -17,11 +17,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private float _rotationVelocity;
     private float _targetRotation;
 
-    // Lag compensation movement and rotation variables
-
-    // Character's current game score
-    public int score;
-
     // Character's material
     public Material material;
 
@@ -34,7 +29,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private Animator _anim;
 
     // Reference to photonview component of the character. Prevents input from local player to influence every character in the scene.
-    private PhotonView _view;
+    // private PhotonView _view;
     #endregion
 
     #region Unity Default Methods
@@ -42,10 +37,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private void Start()
     {
         // Initialize photon view reference
-        _view = GetComponent<PhotonView>();
+        // _view = GetComponent<PhotonView>();
 
         // Disable player input if view is not mine
-        this.GetComponent<PlayerInput>().enabled = _view.IsMine;
+        // this.GetComponent<PlayerInput>().enabled = _view.IsMine;
 
         // Initialize animtor component reference
         _anim = GetComponent<Animator>();
@@ -97,6 +92,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     }
     private void OnTriggerStay(Collider other)
     {
+        if (other.gameObject.tag != "Door") { return; }
+
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }

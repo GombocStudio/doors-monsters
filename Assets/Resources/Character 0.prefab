@@ -1530,7 +1530,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6600232904626469939}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1643,7 +1643,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   RotationSmoothTime: 0.12
-  score: 0
   material: {fileID: 2100000, guid: 1658bb0ad026d7c4890e6ec789801668, type: 2}
   doorControlTime: 10
 --- !u!114 &-8362944345496774685
@@ -1665,9 +1664,9 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 5430020314100938559}
   - {fileID: 2295372232355134537}
   - {fileID: 7144929330046359094}
-  - {fileID: 5430020314100938559}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

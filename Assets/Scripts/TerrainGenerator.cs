@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
-using UnityEngine.AI;
+using UnityEngine;
 
 [System.Serializable]
 public struct TerrainStructure
@@ -43,8 +41,12 @@ public class TerrainGenerator : MonoBehaviour
     private GameObject terrainParent;
 
     [Header("Terrain grid size")]
-    public int terrainRows;
-    public int terrainColumns;
+    public int minRows;
+    public int maxRows;
+    public int minColumns;
+    public int maxColumns;
+    private int terrainRows;
+    private int terrainColumns;
 
     [Header("Max room size")]
     public int maxRoomWidth;
@@ -64,19 +66,25 @@ public class TerrainGenerator : MonoBehaviour
 
     [Header("Terrain data generation")]
     private TerrainDataGenerator dataGenerator;
-    public TerrainStructure[,] terrainData;
+    private TerrainStructure[,] terrainData;
 
     private Dictionary<string, GameObject> structureDictionary = null;
 
     [Header("NavMesh")]
     public NavMeshSurface navMeshSurface;
 
+    [Header("Debug")]
+    public bool usePhoton = true;
+
     public void GenerateTerrain()
     {
         // Initialize terrain parent
-        terrainParent = new GameObject("TerrainParent");
+        if (!terrainParent) { terrainParent = new GameObject("TerrainParent"); }
 
         // Initialize terrain grid
+        terrainRows = Random.Range(minRows, maxRows + 1);
+        terrainColumns = Random.Range(minColumns, maxColumns + 1);
+
         dataGenerator = new TerrainDataGenerator();
         terrainData = dataGenerator.FromDimensions(terrainRows, terrainColumns);
 
@@ -125,6 +133,18 @@ public class TerrainGenerator : MonoBehaviour
         navMeshSurface.BuildNavMesh();
     }
 
+    public void DestroyTerrain()
+    {
+        // Destroy current terrain parent if another terrain was already spawned
+        if (terrainParent)
+        {
+            for (int i = 0; i < terrainParent.transform.childCount; i++)
+            {
+                PhotonNetwork.Destroy(terrainParent.transform.GetChild(i).gameObject);
+            }
+        }
+    }
+
     TerrainStructure[] ComputeNeighborData(int i, int j)
     {
         TerrainStructure[] neighborData = new TerrainStructure[4];
@@ -161,7 +181,15 @@ public class TerrainGenerator : MonoBehaviour
     {
         if (element.prefab != "" && !terrainParent) { return; }
 
-        GameObject structure = PhotonNetwork.Instantiate(element.prefab, element.position, element.rotation);
+        GameObject structure;
+        if (usePhoton)
+        {
+            structure = PhotonNetwork.Instantiate(element.prefab, element.position, element.rotation);
+        } else
+        {
+            var prefab = structureDictionary[element.prefab];
+            structure = Instantiate(prefab, element.position, element.rotation);
+        }
         structure.transform.SetParent(terrainParent.transform);
     }
 
@@ -177,7 +205,15 @@ public class TerrainGenerator : MonoBehaviour
 
         System.Action<Vector3, Quaternion> spawnCorridor = (position, rotation) =>
         {
-            GameObject tile = PhotonNetwork.Instantiate(corridorTile.name, position, rotation);
+            GameObject tile;
+            if (usePhoton)
+            {
+                tile = PhotonNetwork.Instantiate(corridorTile.name, position, rotation);
+            }
+            else
+            {                
+                tile = Instantiate(corridorTile, position, rotation);
+            }            
             tile.transform.SetParent(terrainParent.transform);
         };
 
@@ -299,6 +335,11 @@ public class TerrainGenerator : MonoBehaviour
     public TerrainStructure[,] GetTerrainData()
     {
         return terrainData;
+    }
+
+    public void SetTerrainData(TerrainStructure[,] td)
+    {
+        terrainData = td;
     }
 
     public void InitStructureDictionary()

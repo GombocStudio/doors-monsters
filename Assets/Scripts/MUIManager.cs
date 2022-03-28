@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class MUIManager : MonoBehaviour
 {
     // Network manager reference
-    private NetworkManager networkManager;
+    private MNetworkManager networkManager;
 
     [Header("Menu panels")]
     public GameObject _mainPnl;
@@ -41,16 +41,10 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         // Initialise network manager reference
-        networkManager = FindObjectOfType<NetworkManager>();
+        networkManager = FindObjectOfType<MNetworkManager>();
 
         // Initialise transition panel animator
         if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void EnableMain()
@@ -75,7 +69,50 @@ public class UIManager : MonoBehaviour
         _loadingGIF.SetActive(value);
     }
 
-    #region ButtonEvents
+    public void UpdateRoomUI(string roomName, bool enablePlayBtn, List<string> characters, List<string> nicknames)
+    {
+        // Update room name text
+        if (_roomNameTxt) { _roomNameTxt.text = roomName; }
+
+        // Update play button state
+        if (_startGameBtn) { _startGameBtn.interactable = enablePlayBtn; }
+
+        // Reset diplayed prefabs position
+        foreach (GameObject prefab in characterPrefabs)
+            prefab.transform.position += new Vector3(9999.0f, 0, 0);
+
+        // Update displayed character prefabs
+        for (int i = 0; i < characters.Count; i++)
+        {
+            for (int j = 0; j < characterPrefabs.Count; j++)
+            {
+                if (characters[i] != characterPrefabs[j].name) { continue; }
+
+                // Display character prefab
+                if (i < characterPlatforms.Count && characterPlatforms[i])
+                    characterPrefabs[j].transform.position = characterPlatforms[i].transform.position;
+
+                break;
+            }
+        }
+
+        foreach (Text nickname in playerNicknameTxts)
+            nickname.text = "";
+
+        // Display player nickname
+        for (int i = 0; i < nicknames.Count; i++)
+        {
+            if (i < playerNicknameTxts.Count && playerNicknameTxts[i])
+                playerNicknameTxts[i].text = nicknames[i];
+        }
+    }
+
+    public void ToUpperCase(InputField inputField)
+    {
+        if (inputField) { inputField.text = inputField.text.ToUpper(); }
+    }
+
+    #region Button Events
     public void OnClickStartGame()
     {
         StartCoroutine(StartGameCR());
@@ -126,49 +163,6 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    public void UpdateRoomUI(string roomName, bool enablePlayBtn, List<string> characters, List<string> nicknames)
-    {
-        // Update room name text
-        if (_roomNameTxt) { _roomNameTxt.text = roomName; }
-
-        // Update play button state
-        if (_startGameBtn) { _startGameBtn.interactable = enablePlayBtn; }
-
-        // Reset diplayed prefabs position
-        foreach (GameObject prefab in characterPrefabs)
-            prefab.transform.position += new Vector3(9999.0f, 0, 0);
-
-        // Update displayed character prefabs
-        for (int i = 0; i < characters.Count; i++)
-        {
-            for (int j = 0; j < characterPrefabs.Count; j++)
-            {
-                if (characters[i] != characterPrefabs[j].name) { continue; }
-
-                // Display character prefab
-                if (i < characterPlatforms.Count && characterPlatforms[i])
-                    characterPrefabs[j].transform.position = characterPlatforms[i].transform.position;
-
-                break;
-            }
-        }
-
-        foreach (Text nickname in playerNicknameTxts)
-            nickname.text = "";
-
-        // Display player nickname
-        for (int i = 0; i < nicknames.Count; i++)
-        {
-            if (i < playerNicknameTxts.Count && playerNicknameTxts[i])
-                playerNicknameTxts[i].text = nicknames[i];
-        }
-    }
-
-    public void ToUpperCase(InputField inputField)
-    {
-        if (inputField) { inputField.text = inputField.text.ToUpper(); }
-    }
-
     #region Coroutines
 
     IEnumerator EnableMainCR()
@@ -216,15 +210,12 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(_transitionTime);
 
-        // if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
-
         if (networkManager) { networkManager.StartGame(); }
     }
 
     #endregion
 
-
-    #region ErrorHandler
+    #region Error Handler
 
     public void HandleError(short errorCode)
     {
@@ -244,6 +235,10 @@ public class UIManager : MonoBehaviour
 
             case 32762:
                 DisplayErrorMsg("Los servidores del juego están completos.");
+                break;
+
+            case 32764:
+                DisplayErrorMsg("La partida a la que intentas unirte ya está en curso.");
                 break;
 
             default:
