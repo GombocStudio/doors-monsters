@@ -15,6 +15,7 @@ public class MUIManager : MonoBehaviour
     public GameObject _errorPnl;
 
     [Header("Lobby menu variables")]
+    public InputField _nicknameInputField;
     public InputField _roomNameInputField;
     public Dropdown _maxPlayersDropdown;
     public Dropdown _numRoundsDropdown;
@@ -69,6 +70,12 @@ public class MUIManager : MonoBehaviour
         _loadingGIF.SetActive(value);
     }
 
+    public void UpdateNicknameInputField(string newNickname)
+    {
+        if (!_nicknameInputField) { return; }
+
+        _nicknameInputField.text = newNickname;
+    }
     public void UpdateRoomUI(string roomName, bool enablePlayBtn, List<string> characters, List<string> nicknames)
     {
         // Update room name text
@@ -120,23 +127,29 @@ public class MUIManager : MonoBehaviour
 
     public void OnClickCreateRoom()
     {
+        // Get local player nickname
+        string nickname = (_nicknameInputField) ? _nicknameInputField.text : "";
+
         // Get max players an num rounds from UI
         int maxPlayers = (_maxPlayersDropdown) ? _maxPlayersDropdown.value + 2 : 4;
         int numRounds = (_numRoundsDropdown) ? _numRoundsDropdown.value + 2 : 2;
 
         // Create room with specified parameters from network manager
-        if (networkManager) { networkManager.CreateRoom(maxPlayers, numRounds); }
+        if (networkManager) { networkManager.CreateRoom(maxPlayers, numRounds, nickname); }
     }
 
     public void OnClickJoinRoom()
     {
+        // Get local player nickname
+        string nickname = (_nicknameInputField) ? _nicknameInputField.text : "";
+
         // Get room name from UI
         string roomName = (_roomNameInputField) ? _roomNameInputField.text : "";
 
         if (roomName == "") { DisplayErrorMsg("Por favor, introduce el nombre de la partida a la que quieres unirte."); return; }
 
         // Join room with specified name
-        if (networkManager) { networkManager.JoinRoom(roomName); }
+        if (networkManager) { networkManager.JoinRoom(roomName, nickname); }
     }
 
     public void OnClickGoBack()
