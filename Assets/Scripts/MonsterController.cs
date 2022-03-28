@@ -48,19 +48,25 @@ public class MonsterController : MonoBehaviour
     }
     private void SpawnMonster()        
     {
+        // Increase number of active monsters
         activeMonsters++;
-        var room = GetRandomRoom();
-        var spawnPos = room.position;
-        spawnPos.x += Random.Range(-room.width * 0.4f, room.width * 0.4f);        
-        spawnPos.z += Random.Range(-room.depth * 0.4f, room.depth * 0.4f);
-        spawnPos.y = 1.0f;
+
+        // Select random monster to spawn
         GameObject monsterClone;
         GameObject monsterPrefab = monsterPrefabs[Random.Range(0, monsterPrefabs.Length)];
-        
+
+        // Compute spawning room and position
+        var room = GetRandomRoom();
+        var spawnPos = room.position;
+        spawnPos.x += Random.Range(-room.width * 0.4f, room.width * 0.4f);
+        spawnPos.z += Random.Range(-room.depth * 0.4f, room.depth * 0.4f);
+        spawnPos.y = monsterPrefab.transform.position.y;
+
         // Only spawn if client is master client
         if (usePhoton)
         {
-            monsterClone = PhotonNetwork.Instantiate(monsterPrefab.name, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
+            monsterClone = PhotonNetwork.Instantiate(monsterPrefab.name, spawnPos, monsterPrefab.transform.localRotation);
+
         } else
         {
             monsterClone = Instantiate(monsterPrefab, spawnPos, Quaternion.AngleAxis(0, Vector3.right));
