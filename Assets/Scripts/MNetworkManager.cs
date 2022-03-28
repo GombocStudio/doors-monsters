@@ -38,12 +38,15 @@ public class MNetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
 
             // Generate random nickname for player
-            PhotonNetwork.NickName = "JUGADOR_" + GenerateRandomText(2);
+            PhotonNetwork.LocalPlayer.NickName = "JUGADOR_" + GenerateRandomText(2);
         }
         else
         {
             OnJoinedLobby();
         }
+
+        // Update nickname input field UI in lobby
+        if (uiManager) { uiManager.UpdateNicknameInputField(PhotonNetwork.LocalPlayer.NickName); }
     }
 
     private void Update()
@@ -83,10 +86,13 @@ public class MNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
     }
 
-    public void CreateRoom(int maxPlayers, int numRounds)
+    public void CreateRoom(int maxPlayers, int numRounds, string nickname)
     {
         // Do nothing if client is busy or already connected to the game server
         if (isBusy || PhotonNetwork.NetworkingClient.Server == ServerConnection.GameServer) { return; }
+
+        // Set local player nickame
+        if (nickname != "") { PhotonNetwork.LocalPlayer.NickName = nickname; }
 
         // Create and set room options
         RoomOptions roomOptions = new RoomOptions();
@@ -100,10 +106,13 @@ public class MNetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(GenerateRandomText(5), roomOptions, TypedLobby.Default, null);
     }
 
-    public void JoinRoom(string roomName)
+    public void JoinRoom(string roomName, string nickname)
     {
         // Do nothing if client is busy or already connected to the game server
         if (isBusy || PhotonNetwork.NetworkingClient.Server == ServerConnection.GameServer) { return; }
+
+        // Set local player nickame
+        if (nickname != "") { PhotonNetwork.LocalPlayer.NickName = nickname; }
 
         // Join room called roomName
         PhotonNetwork.JoinRoom(roomName);
