@@ -1,32 +1,75 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class MonsterScript : MonoBehaviour
-{
-    public Vector3 targetPosition;
+public class MonsterScript : Interactable
+{    
     public float speed;
-    
-    private void GenerateTargetPosition()
+    public int points;
+
+    private ScoreManager scoreManager;
+    private MonsterController monsterController;
+
+    private Vector3 GetDestination()
     {
-        var random = Random.onUnitSphere;
-        targetPosition = new Vector3(random.x, 0, random.z);
+        if (!monsterController) { return transform.position; }
+
+        TerrainStructure[,] terrainData = monsterController.GetTerrainData();
+
+        int r = Random.Range(0, terrainData.GetLength(0));
+        int c = Random.Range(0, terrainData.GetLength(1));
+        var room = terrainData[r, c];
+
+        return room.position;
     }
-    // Start is called before the first frame update
+   
     void Start()
     {
-        GenerateTargetPosition();
-        speed = Random.Range(0.4f, 1f);
-    }
+        // Initialize score manager component
+        scoreManager = FindObjectOfType<ScoreManager>();
 
-    // Update is called once per frame
+        // Monsters only move on the master client
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var agent = GetComponent<NavMeshAgent>();
+            agent.destination = GetDestination();
+            agent.acceleration = Random.Range(2, 10);
+            agent.enabled = true;
+            agent.obstacleAvoidanceType = ObstacleAvoidanceType.GoodQualityObstacleAvoidance;
+        }
+    }
+   
     void Update()
     {
-        if (Vector3.Distance(transform.position, targetPosition) < 1)
+        // Monsters only move on the master client
+        if (PhotonNetwork.IsMasterClient)
         {
-            GenerateTargetPosition();
+            var agent = GetComponent<NavMeshAgent>();
+            if (Vector3.Distance(transform.position, agent.destination) < 5)
+            {
+                agent.destination = GetDestination();
+            }
         }
-
-        transform.Translate(targetPosition * (speed / 250));
     }
+
+    public void SetController(MonsterController mc)
+    {
+        monsterController = mc;
+    }
+
+    #region Interactable Interface Methods
+    public override void Interact(GameObject player) 
+    {
+        // Increase score of the player that interacted with the egg
+        if (scoreManager) { scoreManager.UpdatePlayerScore(player, points); }
+
+        // Destroy monster and update monster contoller status
+        if (monsterController) { monsterController.MonsterCollision(this); }
+    }
+
+    public override void Deinteract(GameObject player) {}
+
+    #endregion
 }
