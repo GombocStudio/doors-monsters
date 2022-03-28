@@ -1116,8 +1116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce52cf7efd3d5284492de0ff1464740c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainRows: 3
-  terrainColumns: 3
+  minRows: 2
+  maxRows: 3
+  minColumns: 2
+  maxColumns: 4
   maxRoomWidth: 9
   maxRoomDepth: 9
   roomChance: 0.65
