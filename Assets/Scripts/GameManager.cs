@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Character instance spawned by local player
     private GameObject characterInstance;
 
+    // Variable to manage when the game has finished
+    private bool isGameFinished = false;
+
     #region Unity Default Methods
     // Start is called before the first frame update
     void Start()
@@ -85,6 +88,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonHashtable hash = new PhotonHashtable();
         hash.Add("sc", playerScore);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+    }
+
+    public void SetGameAsFinished()
+    {
+        isGameFinished = true;
     }
 
     #endregion
@@ -183,11 +191,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
 
-        Debug.Log("Room properties updated!");
-
-        foreach (string key in propertiesThatChanged.Keys)
-            Debug.Log(key);
-
         // When terrain data is available in room custom properties, trigger start game coroutine
         if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("td")) { return; }
             StartCoroutine(StartGameCR());
@@ -239,6 +242,14 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // When a player disconnects in the middle of the game we send them to try to reconnect
         SceneManager.LoadScene("MenuPhoton");
+    }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        base.OnMasterClientSwitched(newMasterClient);
+
+        // If master client has disconnected and game is not finished, kick all players from game
+        if (!isGameFinished) { LeaveGame(); }
     }
 
     #endregion

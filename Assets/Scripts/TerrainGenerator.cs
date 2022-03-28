@@ -41,8 +41,12 @@ public class TerrainGenerator : MonoBehaviour
     private GameObject terrainParent;
 
     [Header("Terrain grid size")]
-    public int terrainRows;
-    public int terrainColumns;
+    public int minRows;
+    public int maxRows;
+    public int minColumns;
+    public int maxColumns;
+    private int terrainRows;
+    private int terrainColumns;
 
     [Header("Max room size")]
     public int maxRoomWidth;
@@ -78,6 +82,9 @@ public class TerrainGenerator : MonoBehaviour
         if (!terrainParent) { terrainParent = new GameObject("TerrainParent"); }
 
         // Initialize terrain grid
+        terrainRows = Random.Range(minRows, maxRows + 1);
+        terrainColumns = Random.Range(minColumns, maxColumns + 1);
+
         dataGenerator = new TerrainDataGenerator();
         terrainData = dataGenerator.FromDimensions(terrainRows, terrainColumns);
 
