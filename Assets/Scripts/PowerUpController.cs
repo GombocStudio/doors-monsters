@@ -21,7 +21,10 @@ public class PowerUpController : MonoBehaviour
         // Initialise terrain generator and generate terrain
         //terrainGenerator = FindObjectOfType<TerrainGenerator>();
         //if (!terrainGenerator) { return; }
-        StartCoroutine(Spawn());
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(Spawn());
+        }
     }
 
         // Update is called once per frame

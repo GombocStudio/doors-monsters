@@ -32,7 +32,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     // Door control time in seconds
     public float doorControlTime;
-    #endregion
 
     // Abilities
 
@@ -64,6 +63,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     public float openDoorsTime = 5.0f;
     public bool isOpenDoors = false;
+    #endregion
+
+
     #region Character Components
     // Reference to the animator component of the character
     private Animator _anim;
@@ -88,10 +90,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             PowerUpController puCntrlr = FindObjectOfType<PowerUpController>();
             miniMap = puCntrlr.miniMap;
             lightsOff = puCntrlr.lightsOff;
-            //iceCube = puCntrlr.iceCubePrefab;
+            iceCube = puCntrlr.iceCubePrefab;
 
-            //iceCube.transform.SetParent(transform);
-            //iceCube.transform.position = transform.position + Vector3.up * 0.8f;
+            iceCube.transform.SetParent(transform);
+            iceCube.transform.position = transform.position + Vector3.up * 0.8f;
+            iceCube.SetActive(false);
         }
         // Disable player input if view is not mine
         this.GetComponent<PlayerInput>().enabled = _view.IsMine;
@@ -240,8 +243,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             if (frozenTime <= 0)
             {
                 isFrozen = false;
-                //iceCube.SetActive(false);
-                PhotonNetwork.Destroy(iceCube);
+                iceCube.SetActive(false);
+                //PhotonNetwork.Destroy(iceCube);
 
             }
 
@@ -277,9 +280,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
         lastMov = _movement;
 #endif
-
-        Debug.Log(_movement.ToString());
-        Debug.Log(stick.localPosition.ToString());
 
         // Power up effects
         if (isFrozen) { _movement = Vector2.zero; }
@@ -367,42 +367,39 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void OnEvent(EventData photonEvent)
     {
         byte eventCode = photonEvent.Code;
-        int data = (int)photonEvent.CustomData;
 
-        if (data != GetInstanceID())
-        {
         switch (eventCode)
-            {
-                case 1:
-                    isMapOut = true;
-                    mapOutTime = 5.0f;
-                    if (miniMap.activeSelf)
-                    {
-                        miniMap.SetActive(false);
-                    }
-                    break;
-                case 2:
-                    isLightOut = true;
-                    lightOutTime = 5.0f;
-                    if (!lightsOff.activeSelf)
-                    {
-                        lightsOff.SetActive(true);
-                    }
-                    break;
-                case 3:
-                    isReversedControls = true;
-                    reversedControlsTime = 5.0f;
-                    break;
-                case 4:
-                    isFrozen = true;
-                    frozenTime = 5.0f;
-                    iceCube = PhotonNetwork.Instantiate(iceCubePrefab.name, transform.position + Vector3.up * 0.8f, transform.rotation);
-                    break;
-                default:
-                    break;
-            }
+        {
+            case 1:
+                isMapOut = true;
+                mapOutTime = 5.0f;
+                if (miniMap.activeSelf)
+                {
+                    miniMap.SetActive(false);
+                }
+                break;
+            case 2:
+                isLightOut = true;
+                lightOutTime = 5.0f;
+                if (!lightsOff.activeSelf)
+                {
+                    lightsOff.SetActive(true);
+                }
+                break;
+            case 3:
+                isReversedControls = true;
+                reversedControlsTime = 5.0f;
+                break;
+            case 4:
+                isFrozen = true;
+                frozenTime = 5.0f;
+                iceCube.SetActive(true);// = PhotonNetwork.Instantiate(iceCubePrefab.name, transform.position + Vector3.up * 0.8f, transform.rotation);
+                break;
+            default:
+                break;
         }
-        
+
+
     }
 
 
