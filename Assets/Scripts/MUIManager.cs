@@ -237,6 +237,10 @@ public class MUIManager : MonoBehaviour
                 DisplayErrorMsg("Los servidores del juego están completos.");
                 break;
 
+            case 32764:
+                DisplayErrorMsg("La partida a la que intentas unirte ya está en curso.");
+                break;
+
             default:
                 DisplayErrorMsg("Ha ocurrido un error inesperado.");
                 break;

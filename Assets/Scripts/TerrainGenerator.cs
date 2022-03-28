@@ -74,9 +74,6 @@ public class TerrainGenerator : MonoBehaviour
 
     public void GenerateTerrain()
     {
-        // Destroy current terrain parent if another terrain was already spawned
-        if (terrainParent) { PhotonNetwork.Destroy(terrainParent); }
-
         // Initialize terrain parent
         if (!terrainParent) { terrainParent = new GameObject("TerrainParent"); }
 

@@ -182,7 +182,6 @@ public class GUIManager : MonoBehaviour
     #endregion
 
     #region Coroutines
-
     IEnumerator StartRoundUICR()
     {
         // Start fade out transition
@@ -225,7 +224,11 @@ public class GUIManager : MonoBehaviour
     IEnumerator EndGameUICR()
     {
         // Disable player input so players can't move
-        if (gameManager) { gameManager.EnablePlayerInput(false); }
+        if (gameManager) 
+        {
+            gameManager.SetGameAsFinished();
+            gameManager.EnablePlayerInput(false); 
+        }
 
         // Play start round UI animation
         if (_roundPnlAnim) { _roundPnlAnim.Play("EndRound"); }
