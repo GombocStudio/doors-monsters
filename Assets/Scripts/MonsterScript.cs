@@ -34,6 +34,8 @@ public class MonsterScript : Interactable
         if (PhotonNetwork.IsMasterClient)
         {
             var agent = GetComponent<NavMeshAgent>();
+            if (!agent) { return; } // Remember that eggs dont move around the map
+
             agent.destination = GetDestination();
             agent.acceleration = Random.Range(2, 10);
             agent.enabled = true;
@@ -47,6 +49,8 @@ public class MonsterScript : Interactable
         if (PhotonNetwork.IsMasterClient)
         {
             var agent = GetComponent<NavMeshAgent>();
+            if (!agent) { return; } // Remember that eggs dont move around the map
+
             if (Vector3.Distance(transform.position, agent.destination) < 5)
             {
                 agent.destination = GetDestination();
