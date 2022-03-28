@@ -7,7 +7,11 @@ using UnityEngine;
 public class PowerUpController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject powerUp;
+    private GameObject[] powerUps;
+
+    public GameObject miniMap;
+    public GameObject lightsOff;
+    public GameObject iceCubePrefab;
     // Start is called before the first frame update
     TerrainGenerator terrainGenerator;
 
@@ -28,6 +32,7 @@ public class PowerUpController : MonoBehaviour
 
     IEnumerator Spawn()
     {
+        GameObject powerUp = powerUps[Random.Range(0, powerUps.Length)];
         yield return new WaitForSeconds(4.0f);
 
         //if (playing)

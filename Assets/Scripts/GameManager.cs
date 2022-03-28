@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
-using StarterAssets;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.OnScreen;
 
@@ -13,19 +12,24 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     TerrainGenerator terrainGenerator;
 
+    //static variable to access terrain from any script
     public static TerrainStructure[,] terrain;
+
     // Start is called before the first frame update
     void Start()
     {
         // Initialise mobile UI if needed
 
 #if !UNITY_IOS && !UNITY_ANDROID
-                GameObject UI = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.transform.parent.gameObject;
+        GameObject stick = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.gameObject;
+        GameObject button = FindObjectOfType<OnScreenButton>().gameObject;
 
-                if (UI)
-                {
-                    UI.gameObject.SetActive(false);
-                }
+        if (stick && button)
+        {
+            stick.gameObject.SetActive(false);
+            button.gameObject.SetActive(false);
+        }
+
 #endif
         // Initialise terrain generator and generate terrain
         terrainGenerator = GetComponent<TerrainGenerator>();
@@ -56,6 +60,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         TerrainStructure[,] terrainData = JsonConvert.DeserializeObject<TerrainStructure[,]>((string)PhotonNetwork.CurrentRoom.CustomProperties["td"]);
         if (terrainData.GetLength(0) == 0 || terrainData.GetLength(1) == 0) { return; }
 
+        // Static variable equals the newly generated terrain
         terrain = terrainData;
 
         // Compute spawning positions from terrain data

@@ -59,7 +59,7 @@ public class Door : Interactable
 
         /**** PLAY OPEN ANIMATION ****/
         // Play open door animation
-        if (characterId != view.ViewID) { return; }
+        if (characterId != view.ViewID && !player.gameObject.GetComponent<MyCharacterController>().isOpenDoors) { return; }
 
         if (_anim && !isOpen)
         {
