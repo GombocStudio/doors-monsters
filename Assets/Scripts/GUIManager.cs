@@ -7,6 +7,7 @@ public class GUIManager : MonoBehaviour
 {
     private GameManager gameManager;
     private RoundManager roundManager;
+    private ScoreManager scoreManager;
 
     [Header("UI panels")]
     public GameObject _gamePnl;
@@ -24,16 +25,25 @@ public class GUIManager : MonoBehaviour
         
     [Header("In game UI variables")]
     public Text _timeTxt;
-    public Text _scoreTxt;
-    public Text _scoreTxt01;
-    public Text _scoreTxt02;
-    public Text _scoreTxt03;
+    public GameObject _pinkScoreUI;
+    public GameObject _yellowScoreUI;
+    public GameObject _orangeScoreUI;
+    public GameObject _redScoreUI;
+    private int firstRankPos = 440;
+    private int distanceBtwScores = 100;
+
+    [Header("End game panel UI variables")]
+    public Image statusImage;
+    public Sprite winSprite;
+    public Sprite loseSprite;
+    public List<Text> rankingTexts;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         roundManager = FindObjectOfType<RoundManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
 
         if (_roundPnl) { _roundPnlAnim = _roundPnl.GetComponent<Animator>(); }
         if (_transitionPnl) { _transitionPnlAnim = _transitionPnl.GetComponent<Animator>(); }
@@ -67,6 +77,101 @@ public class GUIManager : MonoBehaviour
         _timeTxt.text = niceTime;
     }
 
+    public void UpdateScoreListUI(List<KeyValuePair<string, KeyValuePair<string, int>>> scoreList)
+    {
+        // Disable all scores
+        if (_yellowScoreUI) { _yellowScoreUI.SetActive(false); }
+        if (_redScoreUI) { _redScoreUI.SetActive(false); }
+        if (_orangeScoreUI) { _orangeScoreUI.SetActive(false); }
+        if (_redScoreUI) { _pinkScoreUI.SetActive(false); }
+
+        // Display ordered score UI list
+        int rankYPosition = firstRankPos;
+        foreach (KeyValuePair<string, KeyValuePair<string, int>> pair in scoreList)
+        {
+            switch (pair.Key)
+            {
+                // Ninja
+                case "Character 0":
+                    if (!_yellowScoreUI) { break; }
+                    _yellowScoreUI.SetActive(true);
+                    _yellowScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
+                    _yellowScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
+                    break;
+
+                // India
+                case "Character 1":
+                    if (!_redScoreUI) { break; }
+                    _redScoreUI.SetActive(true);
+                    _redScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
+                    _redScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
+                    break;
+
+                // Punky
+                case "Character 2":
+                    if (!_pinkScoreUI) { break; }
+                    _pinkScoreUI.SetActive(true);
+                    _pinkScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
+                    _pinkScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
+                    break;
+
+                // Space hunter
+                case "Character 3":
+                    if (!_orangeScoreUI) { break; }
+                    _orangeScoreUI.SetActive(true);
+                    _orangeScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
+                    _orangeScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
+                    break;
+
+                default:
+                    break;
+            }
+
+            // Update rank screen position
+            rankYPosition -= distanceBtwScores; 
+        }
+    }
+
+    private void DisplayFinalPlayerScores()
+    {
+        // Disable game UI and enable end game panel
+        if (_gamePnl) { _gamePnl.SetActive(false); }
+        if (_endGamePnl) { _endGamePnl.SetActive(true); }
+
+        if (!scoreManager) { return; }
+
+        // Get my local score and sorted score list from score manager
+        int myScore = scoreManager.GetMyScore();
+        List<KeyValuePair<string, KeyValuePair<string, int>>> scoreList = scoreManager.GetScoreList();
+
+        // Check if local player has the highest score
+        if (statusImage && scoreList.Count > 0)
+        { 
+            // Local player has the highest score, set "Has ganado" title text
+            if (myScore == scoreList[0].Value.Value)
+            {
+                statusImage.sprite = winSprite;
+            }
+            // Local player doesn't have the highest score, set "Has perdido" title text
+            else
+            {
+                statusImage.sprite = loseSprite;
+            }
+        }
+
+        // Display sorted score list in end game panel
+        for (int i = 0; i < scoreList.Count; i++)
+        {
+            if (i >= rankingTexts.Count) { return; }
+
+            if (rankingTexts[i])
+            {
+                rankingTexts[i].enabled = true;
+                rankingTexts[i].text = scoreList[i].Value.Key + "      " + scoreList[i].Value.Value.ToString();
+            }
+        }
+    }
+
     #region Button Events
     
     public void OnClickContinue()
@@ -80,6 +185,12 @@ public class GUIManager : MonoBehaviour
 
     IEnumerator StartRoundUICR()
     {
+        // Start fade out transition
+        if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeIn"); }
+
+        // Wait until fade out is completely done
+        yield return new WaitForSeconds(_transitionTime);
+
         // Play start round UI animation
         if (_roundPnlAnim) { _roundPnlAnim.Play("StartRound"); }
 
@@ -109,12 +220,6 @@ public class GUIManager : MonoBehaviour
 
         // Start new round (Instantiate characters and terrain)
         if (gameManager) { gameManager.StartGame(); }
-
-        // Wait util new round terrain and characters have been spawned
-        yield return new WaitForSeconds(0.5f);
-
-        // Start fade in transition
-        if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeIn"); }
     }
 
     IEnumerator EndGameUICR()
@@ -126,7 +231,7 @@ public class GUIManager : MonoBehaviour
         if (_roundPnlAnim) { _roundPnlAnim.Play("EndRound"); }
 
         // Wait...
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
 
         // Start fade out transition
         if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeOut"); }
@@ -134,12 +239,9 @@ public class GUIManager : MonoBehaviour
         // Wait until fade out is completely done
         yield return new WaitForSeconds(_transitionTime);
 
-       // Enable end game panel where player scores are displayed
-       if (_gamePnl) { _gamePnl.SetActive(false); }
-       if (_endGamePnl) { _endGamePnl.SetActive(true); }
+        // Enable end game panel where player scores are displayed
+        DisplayFinalPlayerScores();
 
-        // Wait util new round terrain and characters have been spawned
-        // yield return new WaitForSeconds(0.5f);
 
         // Start fade in transition
         if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeIn"); }

@@ -4886,7 +4886,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5265,7 +5265,7 @@ MonoBehaviour:
   _errorTxt: {fileID: 1061976871}
   _loadingGIF: {fileID: 1796254898}
   _transitionPnl: {fileID: 1500430937}
-  _transitionTime: 1.3
+  _transitionTime: 2
 --- !u!4 &1609679386
 Transform:
   m_ObjectHideFlags: 0

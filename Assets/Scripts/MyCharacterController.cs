@@ -17,11 +17,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private float _rotationVelocity;
     private float _targetRotation;
 
-    // Lag compensation movement and rotation variables
-
-    // Character's current game score
-    public int score;
-
     // Character's material
     public Material material;
 
@@ -97,6 +92,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     }
     private void OnTriggerStay(Collider other)
     {
+        if (other.gameObject.tag != "Door") { return; }
+
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
