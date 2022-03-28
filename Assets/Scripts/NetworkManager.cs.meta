@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: 7bb68e9cc5a0084419c507ab127e59fd
+<<<<<<< HEAD:Assets/Scripts/NetworkManager.cs.meta
+guid: 3aceef3ab57a79b40afff5a33bf3dcba
+=======
+guid: 9a86162c65d3f124697bf91747416c3f
+>>>>>>> main:Assets/Scripts/Egg.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
