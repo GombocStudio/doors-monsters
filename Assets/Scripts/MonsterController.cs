@@ -51,8 +51,8 @@ public class MonsterController : MonoBehaviour
         activeMonsters++;
         var room = GetRandomRoom();
         var spawnPos = room.position;
-        spawnPos.x += Random.Range(-1f, 1f);        
-        spawnPos.z += Random.Range(-1f, 1f);
+        spawnPos.x += Random.Range(-room.width * 0.4f, room.width * 0.4f);        
+        spawnPos.z += Random.Range(-room.depth * 0.4f, room.depth * 0.4f);
         spawnPos.y = 1.0f;
         GameObject monsterClone;
         GameObject monsterPrefab = monsterPrefabs[Random.Range(0, monsterPrefabs.Length)];

@@ -18,6 +18,6 @@ public class Egg : Interactable
 
         //Make object disappear
         // PhotonNetwork.Destroy(this.gameObject);
-        Destroy(this.gameObject);
+        // Destroy(this.gameObject);
     }
 }

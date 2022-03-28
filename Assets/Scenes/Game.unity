@@ -1122,7 +1122,7 @@ MonoBehaviour:
   maxColumns: 4
   maxRoomWidth: 9
   maxRoomDepth: 9
-  roomChance: 0.65
+  roomChance: 0.85
   cornerRooms:
   - {fileID: 7528944740460675877, guid: 67401e274e3bc484da71ee94aea5e915, type: 3}
   - {fileID: 5968963788454281245, guid: 31b303b3031dccd45ae9e013ae02e879, type: 3}
@@ -1227,6 +1227,7 @@ MonoBehaviour:
   monsterPrefabs:
   - {fileID: 5255076712804916016, guid: 67692c0db06b1a24ba7d6996ffd01222, type: 3}
   - {fileID: 3830601237474015446, guid: 1ceb34ebdcbb4604782acff0364ee019, type: 3}
+  - {fileID: 8979046212769408021, guid: 3b8ddab1cdf742640899f4b74ea277d2, type: 3}
   paused: 0
   maxMonsters: 10
 --- !u!1 &580016846
