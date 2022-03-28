@@ -30,23 +30,27 @@ public class MonsterScript : Interactable
         // Initialize score manager component
         scoreManager = FindObjectOfType<ScoreManager>();
 
-        if (!PhotonNetwork.IsMasterClient) { return; }
-        
-        var agent = GetComponent<NavMeshAgent>();
-        agent.destination = GetDestination();
-        agent.acceleration = Random.Range(2, 10);
-        agent.enabled = true;
-        agent.obstacleAvoidanceType = ObstacleAvoidanceType.GoodQualityObstacleAvoidance;
+        // Monsters only move on the master client
+        if (PhotonNetwork.IsMasterClient)
+        {
+            var agent = GetComponent<NavMeshAgent>();
+            agent.destination = GetDestination();
+            agent.acceleration = Random.Range(2, 10);
+            agent.enabled = true;
+            agent.obstacleAvoidanceType = ObstacleAvoidanceType.GoodQualityObstacleAvoidance;
+        }
     }
    
     void Update()
     {
-        if (!PhotonNetwork.IsMasterClient) { return; }
-
-        var agent = GetComponent<NavMeshAgent>();
-        if (Vector3.Distance(transform.position, agent.destination) < 5)
+        // Monsters only move on the master client
+        if (PhotonNetwork.IsMasterClient)
         {
+            var agent = GetComponent<NavMeshAgent>();
+            if (Vector3.Distance(transform.position, agent.destination) < 5)
+            {
                 agent.destination = GetDestination();
+            }
         }
     }
 
@@ -55,14 +59,17 @@ public class MonsterScript : Interactable
         monsterController = mc;
     }
 
+    #region Interactable Interface Methods
     public override void Interact(GameObject player) 
     {
         // Increase score of the player that interacted with the egg
         if (scoreManager) { scoreManager.UpdatePlayerScore(player, points); }
 
         // Destroy monster and update monster contoller status
-        if (monsterController && PhotonNetwork.IsMasterClient) { monsterController.MonsterCollision(this); }
+        if (monsterController) { monsterController.MonsterCollision(this); }
     }
 
     public override void Deinteract(GameObject player) {}
+
+    #endregion
 }

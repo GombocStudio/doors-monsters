@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
-using UnityEngine.AI;
+using UnityEngine;
 
 [System.Serializable]
 public struct TerrainStructure

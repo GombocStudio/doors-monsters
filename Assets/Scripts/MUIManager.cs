@@ -210,8 +210,6 @@ public class MUIManager : MonoBehaviour
 
         yield return new WaitForSeconds(_transitionTime);
 
-        // if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
-
         if (networkManager) { networkManager.StartGame(); }
     }
 

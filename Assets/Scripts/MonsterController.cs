@@ -22,7 +22,9 @@ public class MonsterController : MonoBehaviour
     // Start is called before the first frame update
     void Start() 
     {
-        if (!PhotonNetwork.IsMasterClient) { return; }
+        // Disable this component in all players but the master client
+        // if (!PhotonNetwork.IsMasterClient) { return; }
+        this.enabled = PhotonNetwork.IsMasterClient;
 
         // Initialize monster parent game object
         monstersParent = new GameObject("MonstersParent");
@@ -51,7 +53,7 @@ public class MonsterController : MonoBehaviour
         var spawnPos = room.position;
         spawnPos.x += Random.Range(-1f, 1f);        
         spawnPos.z += Random.Range(-1f, 1f);
-        spawnPos.y = 8.0f;
+        spawnPos.y = 1.0f;
         GameObject monsterClone;
         GameObject monsterPrefab = monsterPrefabs[Random.Range(0, monsterPrefabs.Length)];
         
@@ -80,7 +82,7 @@ public class MonsterController : MonoBehaviour
     void Update()
     {
         // Only spawn monsters if client is master and terrain data is ready
-        if (paused || activeMonsters >= maxMonsters || !PhotonNetwork.IsMasterClient || !terrainDataReady) { return; }
+        if (paused || activeMonsters >= maxMonsters || !terrainDataReady) { return; }
 
         if (System.DateTime.Now - lastSpawnedTime > System.TimeSpan.FromMilliseconds(1000))
         {

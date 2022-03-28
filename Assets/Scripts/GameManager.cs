@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 characterName = (string)PhotonNetwork.PlayerList[i].CustomProperties["ch"];
 
             // Add character to the score manager
-            if (scoreManager) { scoreManager.AddCharacter(characterName); }
+            if (scoreManager) { scoreManager.AddCharacter(characterName, PhotonNetwork.PlayerList[i].NickName); }
 
             if (PhotonNetwork.PlayerList[i].IsLocal && i < terrainCorners.Count)
             {
@@ -209,7 +209,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             newScore = (int)targetPlayer.CustomProperties["sc"];
 
         // Update player score in other player's machines
-        if (scoreManager) { scoreManager.UpdateScoreList(characterName, newScore); }
+        if (scoreManager) { scoreManager.UpdateScoreList(characterName, targetPlayer.NickName, newScore); }
     }
 
     public override void OnLeftRoom()
@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (terrainGenerator) { terrainGenerator.SetTerrainData(terrainData); }
 
         // Set local monster controller terrain data
-        if (monsterController && PhotonNetwork.IsMasterClient) { monsterController.SetTerrainData(terrainData); }
+        if (monsterController) { monsterController.SetTerrainData(terrainData); }
 
         // Spawn players in terrain
         SpawnPlayers();

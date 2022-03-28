@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -8,6 +7,7 @@ public class GUIManager : MonoBehaviour
 {
     private GameManager gameManager;
     private RoundManager roundManager;
+    private ScoreManager scoreManager;
 
     [Header("UI panels")]
     public GameObject _gamePnl;
@@ -32,12 +32,18 @@ public class GUIManager : MonoBehaviour
     private int firstRankPos = 440;
     private int distanceBtwScores = 100;
 
+    [Header("End game panel UI variables")]
+    public Image statusImage;
+    public Sprite winSprite;
+    public Sprite loseSprite;
+    public List<Text> rankingTexts;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         roundManager = FindObjectOfType<RoundManager>();
+        scoreManager = FindObjectOfType<ScoreManager>();
 
         if (_roundPnl) { _roundPnlAnim = _roundPnl.GetComponent<Animator>(); }
         if (_transitionPnl) { _transitionPnlAnim = _transitionPnl.GetComponent<Animator>(); }
@@ -71,7 +77,7 @@ public class GUIManager : MonoBehaviour
         _timeTxt.text = niceTime;
     }
 
-    public void UpdateScoreListUI(Dictionary<string, int> scoreDictionary)
+    public void UpdateScoreListUI(List<KeyValuePair<string, KeyValuePair<string, int>>> scoreList)
     {
         // Disable all scores
         if (_yellowScoreUI) { _yellowScoreUI.SetActive(false); }
@@ -79,13 +85,9 @@ public class GUIManager : MonoBehaviour
         if (_orangeScoreUI) { _orangeScoreUI.SetActive(false); }
         if (_redScoreUI) { _pinkScoreUI.SetActive(false); }
 
-        // Move score dictionary into a list and sort it
-        List<KeyValuePair<string, int>> scoreList = new List<KeyValuePair<string, int>>(scoreDictionary);
-        scoreList = scoreList.OrderByDescending(x => x.Value).ToList();
-
         // Display ordered score UI list
         int rankYPosition = firstRankPos;
-        foreach (KeyValuePair<string, int> pair in scoreList)
+        foreach (KeyValuePair<string, KeyValuePair<string, int>> pair in scoreList)
         {
             switch (pair.Key)
             {
@@ -93,7 +95,7 @@ public class GUIManager : MonoBehaviour
                 case "Character 0":
                     if (!_yellowScoreUI) { break; }
                     _yellowScoreUI.SetActive(true);
-                    _yellowScoreUI.GetComponentInChildren<Text>().text = pair.Value.ToString();
+                    _yellowScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
                     _yellowScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
                     break;
 
@@ -101,7 +103,7 @@ public class GUIManager : MonoBehaviour
                 case "Character 1":
                     if (!_redScoreUI) { break; }
                     _redScoreUI.SetActive(true);
-                    _redScoreUI.GetComponentInChildren<Text>().text = pair.Value.ToString();
+                    _redScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
                     _redScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
                     break;
 
@@ -109,7 +111,7 @@ public class GUIManager : MonoBehaviour
                 case "Character 2":
                     if (!_pinkScoreUI) { break; }
                     _pinkScoreUI.SetActive(true);
-                    _pinkScoreUI.GetComponentInChildren<Text>().text = pair.Value.ToString();
+                    _pinkScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
                     _pinkScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
                     break;
 
@@ -117,7 +119,7 @@ public class GUIManager : MonoBehaviour
                 case "Character 3":
                     if (!_orangeScoreUI) { break; }
                     _orangeScoreUI.SetActive(true);
-                    _orangeScoreUI.GetComponentInChildren<Text>().text = pair.Value.ToString();
+                    _orangeScoreUI.GetComponentInChildren<Text>().text = pair.Value.Value.ToString();
                     _orangeScoreUI.transform.localPosition = new Vector2(800, rankYPosition);
                     break;
 
@@ -127,6 +129,46 @@ public class GUIManager : MonoBehaviour
 
             // Update rank screen position
             rankYPosition -= distanceBtwScores; 
+        }
+    }
+
+    private void DisplayFinalPlayerScores()
+    {
+        // Disable game UI and enable end game panel
+        if (_gamePnl) { _gamePnl.SetActive(false); }
+        if (_endGamePnl) { _endGamePnl.SetActive(true); }
+
+        if (!scoreManager) { return; }
+
+        // Get my local score and sorted score list from score manager
+        int myScore = scoreManager.GetMyScore();
+        List<KeyValuePair<string, KeyValuePair<string, int>>> scoreList = scoreManager.GetScoreList();
+
+        // Check if local player has the highest score
+        if (statusImage && scoreList.Count > 0)
+        { 
+            // Local player has the highest score, set "Has ganado" title text
+            if (myScore == scoreList[0].Value.Value)
+            {
+                statusImage.sprite = winSprite;
+            }
+            // Local player doesn't have the highest score, set "Has perdido" title text
+            else
+            {
+                statusImage.sprite = loseSprite;
+            }
+        }
+
+        // Display sorted score list in end game panel
+        for (int i = 0; i < scoreList.Count; i++)
+        {
+            if (i >= rankingTexts.Count) { return; }
+
+            if (rankingTexts[i])
+            {
+                rankingTexts[i].enabled = true;
+                rankingTexts[i].text = scoreList[i].Value.Key + "      " + scoreList[i].Value.Value.ToString();
+            }
         }
     }
 
@@ -143,6 +185,12 @@ public class GUIManager : MonoBehaviour
 
     IEnumerator StartRoundUICR()
     {
+        // Start fade out transition
+        if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeIn"); }
+
+        // Wait until fade out is completely done
+        yield return new WaitForSeconds(_transitionTime);
+
         // Play start round UI animation
         if (_roundPnlAnim) { _roundPnlAnim.Play("StartRound"); }
 
@@ -172,12 +220,6 @@ public class GUIManager : MonoBehaviour
 
         // Start new round (Instantiate characters and terrain)
         if (gameManager) { gameManager.StartGame(); }
-
-        // Wait util new round terrain and characters have been spawned
-        yield return new WaitForSeconds(0.5f);
-
-        // Start fade in transition
-        if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeIn"); }
     }
 
     IEnumerator EndGameUICR()
@@ -189,7 +231,7 @@ public class GUIManager : MonoBehaviour
         if (_roundPnlAnim) { _roundPnlAnim.Play("EndRound"); }
 
         // Wait...
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(2.0f);
 
         // Start fade out transition
         if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeOut"); }
@@ -197,9 +239,9 @@ public class GUIManager : MonoBehaviour
         // Wait until fade out is completely done
         yield return new WaitForSeconds(_transitionTime);
 
-       // Enable end game panel where player scores are displayed
-       if (_gamePnl) { _gamePnl.SetActive(false); }
-       if (_endGamePnl) { _endGamePnl.SetActive(true); }
+        // Enable end game panel where player scores are displayed
+        DisplayFinalPlayerScores();
+
 
         // Start fade in transition
         if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeIn"); }

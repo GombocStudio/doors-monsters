@@ -666,7 +666,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!135 &5657170321237932753
 SphereCollider:
@@ -679,7 +679,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.65
   m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!95 &1532969989607758832
 Animator:
@@ -719,7 +719,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &2716827574465769690
@@ -735,7 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  points: 5
+  points: 10
 --- !u!114 &7357088279471931869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,8 +807,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowLayerWeightsInspector: 1
   ShowParameterInspector: 1
-  m_SynchronizeParameters: []
-  m_SynchronizeLayers: []
+  m_SynchronizeParameters:
+  - Type: 4
+    SynchronizeType: 1
+    Name: move
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &5547672256436257289
 GameObject:
   m_ObjectHideFlags: 0
