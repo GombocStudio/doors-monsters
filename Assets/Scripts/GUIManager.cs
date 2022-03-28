@@ -22,8 +22,9 @@ public class GUIManager : MonoBehaviour
     [Header("UI panels animators")]
     private Animator _roundPnlAnim;
     private Animator _transitionPnlAnim;
-        
+
     [Header("In game UI variables")]
+    public Text _roundText;
     public Text _timeTxt;
     public GameObject _pinkScoreUI;
     public GameObject _yellowScoreUI;
@@ -75,6 +76,14 @@ public class GUIManager : MonoBehaviour
 
         // Display new time
         _timeTxt.text = niceTime;
+    }
+
+    public void SetRoundUI(int numRounds, int currentRound)
+    {
+        if (!_roundText) { return; }
+
+        // Set current round UI
+        _roundText.text = "RONDA " + currentRound + "/" + numRounds;
     }
 
     public void UpdateScoreListUI(List<KeyValuePair<string, KeyValuePair<string, int>>> scoreList)
