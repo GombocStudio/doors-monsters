@@ -1680,6 +1680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 6258445932633915925}
+  meeleWeapon: 1
 --- !u!1 &6244657731006849395
 GameObject:
   m_ObjectHideFlags: 0
@@ -2032,6 +2033,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9da9b60e-a18e-4341-b712-7eaf89d4a001
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6258445932633915925}
+        m_TargetAssemblyTypeName: MyCharacterController, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 44c3376a-a172-4ccc-b76f-1bb9e8b7aec2
+    m_ActionName: Player/Shoot[/Mouse/rightButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2060,6 +2077,24 @@ MonoBehaviour:
   weaponCollider: {fileID: 5308088795601454118}
   stunTime: 2
   invencibleTime: 3
+  projectileTimeToLive: 5
+  projectileThrower: {fileID: 0}
+  projectileSpeed: 1000
+  projectile: {fileID: 7477973442010662947, guid: 894b963f8296c604a9b179156e24960b, type: 3}
+  launchVel: 700
+  speedUpTime: 5
+  isSpeedUp: 0
+  mapOutTime: 5
+  isMapOut: 0
+  lightOutTime: 5
+  isLightOut: 0
+  doublePointsTime: 5
+  scoreMul: 1
+  isDoublePoints: 0
+  frozenTime: 5
+  isFrozen: 0
+  openDoorsTime: 5
+  isOpenDoors: 0
 --- !u!114 &2490537938329803880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2139,6 +2174,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isAttacking
+  - Type: 4
+    SynchronizeType: 0
+    Name: isShooting
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

@@ -61,6 +61,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     // When the player will stop being invencible
     private float _timeInvencible = 0.0f;
 
+    public float projectileTimeToLive = 5.0f;
+    public Transform projectileThrower;
+    public float projectileSpeed = 1000.0f;
+    private GameObject _projectileInstance;
+
     public GameObject projectile;
     public float launchVel = 700f;
 
@@ -320,8 +325,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         lastMov = _movement;
 #endif
 
-        Debug.Log(_movement.ToString());
-        Debug.Log(stick.localPosition.ToString());
+        //Debug.Log(_movement.ToString());
+        //Debug.Log(stick.localPosition.ToString());
 
         // Power up effects
         if (isFrozen) { _movement = Vector2.zero; }
@@ -338,13 +343,13 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void OnAttack(InputAction.CallbackContext context)
     {
         // If player is stunned don't attack
-        if (_stunned) { return; }
+        if (_stunned || isFrozen) { return; }
 
         // Play animation attack
-        if (_anim && !isFrozen) 
+        if (_anim) 
         { 
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
-
+            /*
             // Launch projectile
             GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position,
                                               transform.rotation);
@@ -355,14 +360,20 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             v.transform.localRotation *= rotAdjust;
             v.transform.position += posAdjust;
             bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));        
-
+            */
         }
 
 
     }
+
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        _anim.SetBool("isShooting", context.ReadValueAsButton());
+    }
+
 #endregion
 
-#region Trigger and Collider Events
+    #region Trigger and Collider Events
     private void OnTriggerEnter(Collider other)
     {
         // Check if other collider gameobject is interactable
@@ -395,7 +406,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     }
 #endregion
 
-#region Photon Methods
+    #region Photon Methods
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         /* if (stream.IsWriting)
@@ -483,6 +494,32 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void CaptureMonster()
     {
         Debug.Log("CaptureMonster(): Modificar score");
+    }
+
+    #endregion
+
+    #region Shoot interaction Methods
+
+    public void InstantiateProjectile()
+    {
+        _projectileInstance = Instantiate(projectile, projectileThrower.position, projectileThrower.rotation);
+        _projectileInstance.transform.parent = projectileThrower;
+        _projectileInstance.GetComponent<Rigidbody>().useGravity = false;
+    }
+
+    public void ShootProjectile()
+    {
+        _projectileInstance.transform.parent = null;
+        Vector3 rotation = new Vector3(projectile.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 180.0f, projectile.transform.rotation.eulerAngles.z);
+        _projectileInstance.transform.rotation = Quaternion.Euler(rotation);
+        _projectileInstance.GetComponent<Rigidbody>().useGravity = true;
+        _projectileInstance.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileSpeed);
+        Destroy(_projectileInstance, projectileTimeToLive);
+    }
+
+    public void DistanceHit()
+    {
+        Debug.Log("Golpeado con arma a distancia");
     }
 
     #endregion

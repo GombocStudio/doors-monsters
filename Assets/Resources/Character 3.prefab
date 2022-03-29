@@ -910,6 +910,21 @@ MonoBehaviour:
   weaponCollider: {fileID: 6712164335852415074}
   stunTime: 2
   invencibleTime: 3
+  projectile: {fileID: 6958180364659660244, guid: 440a3513379b5fe409e34e57dd561760, type: 3}
+  launchVel: 700
+  speedUpTime: 5
+  isSpeedUp: 0
+  mapOutTime: 5
+  isMapOut: 0
+  lightOutTime: 5
+  isLightOut: 0
+  doublePointsTime: 5
+  scoreMul: 1
+  isDoublePoints: 0
+  frozenTime: 5
+  isFrozen: 0
+  openDoorsTime: 5
+  isOpenDoors: 0
 --- !u!114 &-5950670298474013065
 MonoBehaviour:
   m_ObjectHideFlags: 0
