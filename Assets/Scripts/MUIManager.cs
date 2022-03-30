@@ -146,7 +146,7 @@ public class MUIManager : MonoBehaviour
         // Get room name from UI
         string roomName = (_roomNameInputField) ? _roomNameInputField.text : "";
 
-        if (roomName == "") { DisplayErrorMsg("Por favor, introduce el nombre de la partida a la que quieres unirte."); return; }
+        if (roomName == "") { DisplayErrorMsg("Por favor, introduce el nombre de la sala a la que quieres unirte."); return; }
 
         // Join room with specified name
         if (networkManager) { networkManager.JoinRoom(roomName, nickname); }
@@ -186,6 +186,8 @@ public class MUIManager : MonoBehaviour
 
         if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
 
+        EnableLoadingGIF(false);
+
         if (_mainPnl) { _mainPnl.SetActive(true); }
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
@@ -199,6 +201,8 @@ public class MUIManager : MonoBehaviour
 
         if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
 
+        EnableLoadingGIF(false);
+
         if (_mainPnl) { _mainPnl.SetActive(false); }
         if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
@@ -211,6 +215,8 @@ public class MUIManager : MonoBehaviour
         yield return new WaitForSeconds(_transitionTime);
 
         if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
 
         if (_mainPnl) { _mainPnl.SetActive(false); }
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
@@ -239,11 +245,11 @@ public class MUIManager : MonoBehaviour
                 break;
 
             case 32758:
-                DisplayErrorMsg("La partida a la que intentas unirte no existe.");
+                DisplayErrorMsg("La sala a la que intentas unirte no existe.");
                 break;
 
             case 32765:
-                DisplayErrorMsg("La partida a la que intentas unirte está completa.");
+                DisplayErrorMsg("La sala a la que intentas unirte está completa.");
                 break;
 
             case 32762:
@@ -251,7 +257,7 @@ public class MUIManager : MonoBehaviour
                 break;
 
             case 32764:
-                DisplayErrorMsg("La partida a la que intentas unirte ya está en curso.");
+                DisplayErrorMsg("La sala a la que intentas unirte ya está en curso.");
                 break;
 
             default:

@@ -180,9 +180,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e51de6ab8fa4a2a42a6eb0d12e600c51, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8b43736b4593b1445b81390cc4affcf0, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -810,7 +810,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: NOMBRE PARTIDA
+  m_Text: NOMBRE DE SALA
 --- !u!222 &322212177
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2023,7 +2023,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NOMBRE DE PARTIDA...
+  m_Text: NOMBRE DE SALA...
 --- !u!222 &670760690
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3854,9 +3854,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8f868ec6f59b6864dbe88126f5040ff8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d2a5c98db7abde45beb051e41efa7dc, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -6200,14 +6200,14 @@ RectTransform:
   m_GameObject: {fileID: 1796254898}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 2030458444}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 840, y: 425}
+  m_AnchoredPosition: {x: 905, y: 410}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1796254900
@@ -6232,7 +6232,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 15cc3dd89c12b89449a342401e059a45, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -6273,7 +6273,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ff18ab75523f01c448d5e27127a106c8, type: 3}
   - {fileID: 21300000, guid: 4f0d31ea92375b540b3ca411917df7e2, type: 3}
   - {fileID: 21300000, guid: cf06373520b95964b9be75669629a7b9, type: 3}
-  framesPerSecond: 10
+  - {fileID: 21300000, guid: 121f216268de98b41939838d67df3377, type: 3}
+  - {fileID: 21300000, guid: b50a373d3451cd648b14a69c111d2322, type: 3}
+  framesPerSecond: 24
 --- !u!1 &1827556740
 GameObject:
   m_ObjectHideFlags: 0

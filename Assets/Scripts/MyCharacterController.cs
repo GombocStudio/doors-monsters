@@ -17,32 +17,31 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     private float _rotationVelocity;
     private float _targetRotation;
 
-    // Character's material
-    public Material material;
-
     // Door control time in seconds
     public float doorControlTime;
+
+    // Character's door texture
+    public Texture doorTexture;
+
     #endregion
 
     #region Character Components
+    // Reference to the rigid body component of the character;
+    private Rigidbody _rb;
+
     // Reference to the animator component of the character
     private Animator _anim;
 
-    // Reference to photonview component of the character. Prevents input from local player to influence every character in the scene.
-    // private PhotonView _view;
     #endregion
 
     #region Unity Default Methods
     // Start is called before the first frame update
     private void Start()
     {
-        // Initialize photon view reference
-        // _view = GetComponent<PhotonView>();
+        // Initialize rigid body component reference
+        _rb = GetComponent<Rigidbody>();
 
-        // Disable player input if view is not mine
-        // this.GetComponent<PlayerInput>().enabled = _view.IsMine;
-
-        // Initialize animtor component reference
+        // Initialize animator component reference
         _anim = GetComponent<Animator>();
     }
 
@@ -56,10 +55,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
 
             // Rotate character
             transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
-
-            // Translate character
-            transform.Translate(Vector3.forward * _speed * Time.deltaTime);
         }
+
+        // Set character's velocity
+        if (_rb) { _rb.velocity = new Vector3(_movement.x, 0, _movement.y) * _speed; }
     }
     #endregion
 
