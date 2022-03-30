@@ -66,7 +66,7 @@ public class MNetworkManager : MonoBehaviourPunCallbacks
         || PhotonNetwork.NetworkClientState == ClientState.Leaving;
 
         // Enable loading gif if client is busy
-        if (uiManager) { uiManager.EnableLoadingGIF(isBusy); }
+        if (uiManager && isBusy) { uiManager.EnableLoadingGIF(true); }
     }
     #endregion
 
@@ -166,7 +166,7 @@ public class MNetworkManager : MonoBehaviourPunCallbacks
     {
         if (uiManager)
         {
-            string roomName = "NOMBRE DE PARTIDA\n" + PhotonNetwork.CurrentRoom.Name;
+            string roomName = "NOMBRE DE SALA\n" + PhotonNetwork.CurrentRoom.Name;
             bool enablePlayBtn = PhotonNetwork.LocalPlayer.IsMasterClient;
 
             List<string> characters = new List<string>();

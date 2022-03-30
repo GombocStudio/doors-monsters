@@ -22,5 +22,5 @@ Material:
     m_Floats:
     - _IntersectionThresholdMax: 1
     m_Colors:
-    - _Color: {r: 0.42830187, g: 0.592583, b: 1, a: 0.36862746}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

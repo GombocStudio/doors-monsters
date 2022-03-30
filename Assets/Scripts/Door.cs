@@ -8,8 +8,8 @@ public class Door : Interactable
     // Door child mesh reference
     public MeshRenderer doorMesh;
 
-    // Door default material
-    public Material defaultMaterial;
+    // Door default texture
+    public Texture defaultTexture;
 
     // Controlling character id: -1 if door is not controlled by anyone
     public int characterId = -1;
@@ -67,16 +67,16 @@ public class Door : Interactable
             _anim.Play("Open");
         }
 
-        /**** SET DOOR MATERIAL ****/
+        /**** SET DOOR TEXTURE ****/
         // Get character component from player
         MyCharacterController cc = player.GetComponent<MyCharacterController>();
         if (!cc) { return; }
 
         // Set door material to the material of the character that opened it
-        if (!doorMesh || !cc.material) { return; }
+        if (!doorMesh || !cc.doorTexture) { return; }
 
-        if (doorMesh.material != cc.material)
-            doorMesh.material = cc.material;
+        if (doorMesh.material.mainTexture != cc.doorTexture)
+            doorMesh.material.mainTexture = cc.doorTexture;
     }
 
     public override void Deinteract(GameObject player)
@@ -110,10 +110,10 @@ public class Door : Interactable
 
     public void ResetDoorControl()
     {
-        /**** RESET DOOR MATERIAL ****/
-        // Reset door default material
-        if (doorMesh && defaultMaterial)
-            doorMesh.material = defaultMaterial;
+        /**** RESET DOOR TEXTURE ****/
+        // Reset door default texture
+        if (doorMesh && defaultTexture)
+            doorMesh.material.mainTexture = defaultTexture;
 
         /**** PLAY OPEN ANIMATION ****/
         // Play open door animation
