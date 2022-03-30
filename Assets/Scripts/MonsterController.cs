@@ -22,8 +22,7 @@ public class MonsterController : MonoBehaviour
     // Start is called before the first frame update
     void Start() 
     {
-        // Disable this component in all players but the master client
-        // if (!PhotonNetwork.IsMasterClient) { return; }
+        // Disable this component in all players but the master clients
         this.enabled = PhotonNetwork.IsMasterClient;
 
         // Initialize monster parent game object

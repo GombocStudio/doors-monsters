@@ -1943,6 +1943,21 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   doorControlTime: 3
   doorTexture: {fileID: 2800000, guid: bb3b05068b9a84621a4f2eba0bbb653b, type: 3}
+  projectile: {fileID: 7477973442010662947, guid: 894b963f8296c604a9b179156e24960b, type: 3}
+  launchVel: 700
+  speedUpTime: 5
+  isSpeedUp: 0
+  mapOutTime: 5
+  isMapOut: 0
+  lightOutTime: 5
+  isLightOut: 0
+  doublePointsTime: 5
+  scoreMul: 1
+  isDoublePoints: 0
+  frozenTime: 5
+  isFrozen: 0
+  openDoorsTime: 5
+  isOpenDoors: 0
 --- !u!114 &2490537938329803880
 MonoBehaviour:
   m_ObjectHideFlags: 0
