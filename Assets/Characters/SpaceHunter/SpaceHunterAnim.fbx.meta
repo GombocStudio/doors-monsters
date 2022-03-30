@@ -215,7 +215,7 @@ ModelImporter:
       - path: Armature
         weight: 0
       - path: Armature/Spine
-        weight: 1
+        weight: 0
       - path: Armature/Spine/Arm.L
         weight: 1
       - path: Armature/Spine/Arm.L/Arm.L_end

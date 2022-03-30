@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.InputSystem.OnScreen;
+using System.Collections;
 
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventCallback
@@ -299,9 +300,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     Vector2 lastMov;
     public void OnMove(InputAction.CallbackContext context)
     {
-        // If player is stunned don't move
-        if (_stunned) { return; }
-
         // Updates movment vector if current view is from the local player
         _movement = context.ReadValue<Vector2>();
 
@@ -329,7 +327,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         //Debug.Log(stick.localPosition.ToString());
 
         // Power up effects
-        if (isFrozen) { _movement = Vector2.zero; }
+        if (isFrozen || _stunned) { _movement = Vector2.zero; }
         if (isReversedControls)
         {
             _movement = -_movement;
@@ -461,6 +459,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         }
         
     }
+    private IEnumerator PhotonDestroyAfterTime(GameObject gameObject, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        PhotonNetwork.Destroy(gameObject.GetPhotonView());
+    }
 
     #endregion
 
@@ -502,7 +505,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     public void InstantiateProjectile()
     {
-        _projectileInstance = Instantiate(projectile, projectileThrower.position, projectileThrower.rotation);
+        _projectileInstance = PhotonNetwork.Instantiate(projectile.name, projectileThrower.position, projectileThrower.rotation);
         _projectileInstance.transform.parent = projectileThrower;
         _projectileInstance.GetComponent<Rigidbody>().useGravity = false;
     }
@@ -510,16 +513,34 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void ShootProjectile()
     {
         _projectileInstance.transform.parent = null;
-        Vector3 rotation = new Vector3(projectile.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 180.0f, projectile.transform.rotation.eulerAngles.z);
-        _projectileInstance.transform.rotation = Quaternion.Euler(rotation);
-        _projectileInstance.GetComponent<Rigidbody>().useGravity = true;
-        _projectileInstance.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileSpeed);
-        Destroy(_projectileInstance, projectileTimeToLive);
+        PhotonView projectileView = _projectileInstance.GetPhotonView();
+
+        RaycastHit hitInfo;
+        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation, 10.0f);
+        if (hitted && (hitInfo.transform.CompareTag("Player") || hitInfo.transform.CompareTag("Monster")))
+        {
+            Vector3 direction = (hitInfo.transform.position - this.transform.position).normalized;
+            projectileView.transform.rotation = Quaternion.LookRotation(-direction);
+            projectileView.GetComponent<Rigidbody>().AddForce(direction * projectileSpeed);
+        }
+        else
+        {
+            Vector3 rotation = new Vector3(projectile.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 180.0f, projectile.transform.rotation.eulerAngles.z);
+            projectileView.transform.rotation = Quaternion.Euler(rotation);
+            projectileView.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileSpeed);
+        }
+
+        StartCoroutine(PhotonDestroyAfterTime(_projectileInstance, projectileTimeToLive));
     }
 
     public void DistanceHit()
     {
         Debug.Log("Golpeado con arma a distancia");
+        if (!_stunned)
+        {
+            _stunned = true;
+            _timeStunned = Time.time + stunTime;
+        }
     }
 
     #endregion

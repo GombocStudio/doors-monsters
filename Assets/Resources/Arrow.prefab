@@ -169,4 +169,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 6258445932633915925, guid: 880da810f3b5fa044b335bea13f07f28, type: 3}
-  meeleWeapon: 0
+  meleeWeapon: 1

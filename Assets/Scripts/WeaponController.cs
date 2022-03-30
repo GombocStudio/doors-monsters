@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ public class WeaponController : MonoBehaviour
     public MyCharacterController playerController;
 
     // Weapon type --> True: meele, False: distance
-    public bool meeleWeapon = true;
+    public bool meleeWeapon = true;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,10 +18,11 @@ public class WeaponController : MonoBehaviour
         // Check if the attack has hit a monster
         if (enemy.CompareTag("Monster"))
         {
-            if (meeleWeapon)
+            if (meleeWeapon)
             {
                 playerController.CaptureMonster();
-                Destroy(enemy); // Seguramente haya que usar un metodo de photon
+                // TODO: Crear funcion en monster y destruir alli, asi se pueden poner particulas
+                Destroy(enemy); 
             }
             else
             {
@@ -31,12 +33,20 @@ public class WeaponController : MonoBehaviour
         // Check if the attack has hit another player
         if (enemy.CompareTag("Player"))
         {
-            if (meeleWeapon) enemy.GetComponent<MyCharacterController>().MeleeHit();
+            if (meleeWeapon) enemy.GetComponent<MyCharacterController>().MeleeHit();
             else
             {
-                Destroy(this.gameObject);
                 enemy.GetComponent<MyCharacterController>().DistanceHit();
             }
         }
+
+        // Destroy weapon if it is not of type melee (projectile)
+        if (meleeWeapon == false) PhotonNetwork.Destroy(this.gameObject.GetPhotonView());
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        if (!meleeWeapon == false) PhotonNetwork.Destroy(this.gameObject.GetPhotonView());
     }
 }
