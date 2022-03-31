@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.InputSystem;
+using System;
 
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
@@ -22,6 +23,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
 
     // Door control time in seconds
     public float doorControlTime;
+
+    //Character sounds
+    public Sound[] sounds;
     #endregion
 
     #region Character Components
@@ -77,6 +81,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     {
         // Play animation attack
         if (_anim) { _anim.SetBool("isAttacking", context.ReadValueAsButton()); }
+
+        // Play attack sound (short range)
+        Sound s = Array.Find(sounds, sound => sound.name == "ShortRangeAttack");
+        if (s != null) { s.source.Play(); }
     }
     #endregion
 

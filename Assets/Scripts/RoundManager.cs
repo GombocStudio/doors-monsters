@@ -77,6 +77,8 @@ public class RoundManager : MonoBehaviour
 
             // Start round UI counter animation
             uiManager.StartRoundUI();
+            // Start round counter sound
+            FindObjectOfType<AudioManager>().Play("StartGame");
         }
     }
 

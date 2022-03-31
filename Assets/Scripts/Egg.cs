@@ -16,6 +16,9 @@ public class Egg : Interactable
         // Increase score of the player that interacted with the egg
         if (scoreManager) { scoreManager.UpdatePlayerScore(player, 1); }
 
+        //Play the sound
+        FindObjectOfType<AudioManager>().Play("Egg");
+
         //Make object disappear
         // PhotonNetwork.Destroy(this.gameObject);
         // Destroy(this.gameObject);

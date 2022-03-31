@@ -67,6 +67,9 @@ public class Door : Interactable
             _anim.Play("Open");
         }
 
+        //Play opening door sound
+        FindObjectOfType<AudioManager>().Play("DoorOpen");
+
         /**** SET DOOR MATERIAL ****/
         // Get character component from player
         MyCharacterController cc = player.GetComponent<MyCharacterController>();
@@ -98,6 +101,9 @@ public class Door : Interactable
             isOpen = false;
             _anim.Play("Close");
         }
+
+        //Play closing door sound
+        FindObjectOfType<AudioManager>().Play("DoorClose");
 
         /**** SET DOOR CONTROLLED TIME ****/
         // Get character component from player

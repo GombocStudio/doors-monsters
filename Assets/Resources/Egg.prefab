@@ -112,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   points: 1
+  species: 1
 --- !u!114 &3707778520637236699
 MonoBehaviour:
   m_ObjectHideFlags: 0
