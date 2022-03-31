@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Cinemachine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem.OnScreen;
 using UnityEngine;
 
 public class GameManager : MonoBehaviourPunCallbacks
@@ -23,6 +24,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Monster controller reference
     MonsterController monsterController;
 
+    // Powerup controller reference
+    PowerUpController powerupController;
+
     // Character instance spawned by local player
     private GameObject characterInstance;
 
@@ -30,9 +34,24 @@ public class GameManager : MonoBehaviourPunCallbacks
     private bool isGameFinished = false;
 
     #region Unity Default Methods
+    private void Awake()
+    {
+        // Syncronize scene for all players
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        // Initialise mobile UI if needed
+        #if !UNITY_IOS && !UNITY_ANDROID
+        GameObject stick = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.gameObject;
+        GameObject button = FindObjectOfType<OnScreenButton>().gameObject;
+
+        if (stick) { stick.gameObject.SetActive(false); }
+        if (button) { button.gameObject.SetActive(false); }
+        #endif
+
         // Initialise terrain generator reference
         terrainGenerator = FindObjectOfType<TerrainGenerator>();
 
@@ -44,6 +63,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         // Initialise score manager reference
         monsterController = FindObjectOfType<MonsterController>();
+
+        // Initialise powerup controller reference
+        powerupController = FindObjectOfType<PowerUpController>();
 
         // Set round manager number of rounds
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("nr"))
@@ -116,6 +138,13 @@ public class GameManager : MonoBehaviourPunCallbacks
                 monsterController.ResetTerrainData(); 
             }
 
+            // Remove old terrain data from powerup controller and destroy remaining powerups
+            if (powerupController)
+            {
+                powerupController.DestroyRemainingPowerups();
+                powerupController.ResetTerrainData();
+            }
+
             // Generate terrain
             terrainGenerator.GenerateTerrain();
 
@@ -169,7 +198,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                     characterInstance = PhotonNetwork.Instantiate(characterName, terrainCorners[i], Quaternion.identity);
                     if (!characterInstance) { return; }
 
-                    // Instantiate player camera
+                    // Init player camera
                     CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
                     if (camera)
                     {
@@ -177,8 +206,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                         camera.Follow = characterInstance.transform;
                     }
 
-                    // Initialise mobile UI if needed
-                    // InitMobileUI(player);
+                    // Init minimap player camera
+                    MinimapCameraController minimapCamera = FindObjectOfType<MinimapCameraController>();
+                    if (minimapCamera) { minimapCamera.playerTransform = characterInstance.transform; }
                 }
             }
         }
@@ -220,7 +250,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         base.OnLeftRoom();
 
         // When aplayer leaves the room send them to the lobby
-        SceneManager.LoadScene("MenuPhoton");
+        SceneManager.LoadScene("Menu");
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -241,7 +271,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         base.OnDisconnected(cause);
 
         // When a player disconnects in the middle of the game we send them to try to reconnect
-        SceneManager.LoadScene("MenuPhoton");
+        SceneManager.LoadScene("Menu");
     }
 
     public override void OnMasterClientSwitched(Player newMasterClient)
@@ -266,6 +296,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Set local monster controller terrain data
         if (monsterController) { monsterController.SetTerrainData(terrainData); }
 
+        // Set local powerup controller terrain data
+        if (powerupController) { powerupController.SetTerrainData(terrainData); }
+
         // Spawn players in terrain
         SpawnPlayers();
 
@@ -276,20 +309,4 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (roundManager) { roundManager.StartRound(); }
     }
     #endregion
-
-    /* public void InitMobileUI(GameObject player)
-{
-#if UNITY_IOS || UNITY_ANDROID
-        UICanvasControllerInput UI = FindObjectOfType<UICanvasControllerInput>();
-
-        if (UI)
-        {
-            UI.gameObject.SetActive(true);
-            UI.starterAssetsInputs = player.GetComponent<StarterAssetsInputs>();
-
-            MobileDisableAutoSwitchControls mobile = UI.gameObject.GetComponent<MobileDisableAutoSwitchControls>();
-            mobile.playerInput = player.GetComponent<PlayerInput>();
-        }
-#endif
-} */
 }

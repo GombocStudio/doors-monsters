@@ -130,7 +130,7 @@ public class TerrainGenerator : MonoBehaviour
         }
 
         // update navMesh now that the geometry is generated        
-        navMeshSurface.BuildNavMesh();
+        if (navMeshSurface) { navMeshSurface.BuildNavMesh(); };
     }
 
     public void DestroyTerrain()

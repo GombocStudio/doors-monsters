@@ -10,10 +10,10 @@ public class MonsterController : MonoBehaviour
 
     public GameObject[] monsterPrefabs;
     public bool paused = false;
-    public int maxMonsters = 50;
+    public int maxMonsters = 10;
+    private int activeMonsters = 0;
 
     private System.DateTime lastSpawnedTime = System.DateTime.Now;        
-    private int activeMonsters = 0;
     private bool usePhoton = true;
 
     private TerrainStructure[,] terrainData;
@@ -22,12 +22,14 @@ public class MonsterController : MonoBehaviour
     // Start is called before the first frame update
     void Start() 
     {
-        // Disable this component in all players but the master client
-        // if (!PhotonNetwork.IsMasterClient) { return; }
+        // Disable this component in all players but the master clients
         this.enabled = PhotonNetwork.IsMasterClient;
 
-        // Initialize monster parent game object
-        monstersParent = new GameObject("MonstersParent");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // Initialize monster parent game object
+            monstersParent = new GameObject("MonstersParent");
+        }
     }
 
     private TerrainStructure GetRandomRoom()

@@ -33,6 +33,10 @@ public class GUIManager : MonoBehaviour
     private int firstRankPos = 440;
     private int distanceBtwScores = 100;
 
+    public GameObject miniMap;
+    public GameObject lightsOffPnl;
+    public GameObject icePnl;
+
     [Header("End game panel UI variables")]
     public Image statusImage;
     public Sprite winSprite;
@@ -179,6 +183,27 @@ public class GUIManager : MonoBehaviour
                 rankingTexts[i].text = scoreList[i].Value.Key + "      " + scoreList[i].Value.Value.ToString();
             }
         }
+    }
+
+    public void EnableMinimap(bool value)
+    {
+        if (!miniMap) { return; }
+
+        miniMap.SetActive(value);
+    }
+
+    public void EnableLightsOff(bool value)
+    {
+        if (!lightsOffPnl) { return; }
+
+        lightsOffPnl.SetActive(value);
+    }
+
+    public void EnableIcePanel(bool value)
+    {
+        if (!icePnl) { return; }
+
+        icePnl.SetActive(value);
     }
 
     #region Button Events

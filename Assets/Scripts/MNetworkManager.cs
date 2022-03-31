@@ -73,8 +73,11 @@ public class MNetworkManager : MonoBehaviourPunCallbacks
     #region Public Methods
     public void StartGame()
     {
-        PhotonNetwork.CurrentRoom.IsOpen = false;
-        PhotonNetwork.LoadLevel(_gameSceneName);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.LoadLevel(_gameSceneName);
+        }
     }
 
     public void DisconnectFromServerAndCloseGame()

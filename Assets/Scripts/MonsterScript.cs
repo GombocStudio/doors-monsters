@@ -34,7 +34,7 @@ public class MonsterScript : Interactable
         if (PhotonNetwork.IsMasterClient)
         {
             var agent = GetComponent<NavMeshAgent>();
-            if (!agent) { return; } // Remember that eggs dont move around the map
+            if (!agent) { return; } // Remember, eggs dont move around the map
 
             agent.destination = GetDestination();
             agent.acceleration = Random.Range(2, 10);
@@ -49,7 +49,7 @@ public class MonsterScript : Interactable
         if (PhotonNetwork.IsMasterClient)
         {
             var agent = GetComponent<NavMeshAgent>();
-            if (!agent) { return; } // Remember that eggs dont move around the map
+            if (!agent) { return; } // Remember, eggs dont move around the map
 
             if (Vector3.Distance(transform.position, agent.destination) < 5)
             {
@@ -66,8 +66,10 @@ public class MonsterScript : Interactable
     #region Interactable Interface Methods
     public override void Interact(GameObject player) 
     {
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+
         // Increase score of the player that interacted with the egg
-        if (scoreManager) { scoreManager.UpdatePlayerScore(player, points); }
+        if (scoreManager && cc) { scoreManager.UpdatePlayerScore(player, cc.scoreMul * points); }
 
         // Destroy monster and update monster contoller status
         if (monsterController) { monsterController.MonsterCollision(this); }
