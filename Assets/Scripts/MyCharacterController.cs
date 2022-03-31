@@ -3,6 +3,7 @@ using Photon.Pun;
 using ExitGames.Client.Photon;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.OnScreen;
+using System.Collections;
 
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
@@ -29,7 +30,32 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     // Abilities
     [Header("Long distance attack")]
     public GameObject projectile;
-    public float launchVel = 700f;
+
+    // Melee weapon collider
+    public Collider weaponCollider;
+
+    // Time the player is stunned after melee attack (in secons)
+    public float stunTime = 2.0f;
+
+    // Time the player is invencible when stunned (in seconds)
+    public float invencibleTime = 3.0f;
+
+    // Is player stunned
+    private bool _stunned = false;
+
+    // Is player invencible
+    private bool _invencible = false;
+
+    // When the player will stop being stunned
+    private float _timeStunned = 0.0f;
+
+    // When the player will stop being invencible
+    private float _timeInvencible = 0.0f;
+
+    public float projectileTimeToLive = 5.0f;
+    public Transform projectileThrower;
+    public float projectileSpeed = 1000.0f;
+    private GameObject _projectileInstance;
 
     [Header("Powerup variables")]
     public float speedUpTime = 5.0f;
@@ -103,6 +129,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
 
         // Initialize animator component reference
         _anim = GetComponent<Animator>();
+
+        // Disable weapon collider
+        weaponCollider.enabled = false;
 
         // Get Joystick (mobile)
 #if UNITY_IOS || UNITY_ANDROID
@@ -211,6 +240,18 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
                 //PhotonNetwork.Destroy(iceCube);
             }
         }
+
+        // Check stunned
+        if (_stunned)
+        {
+            _stunned = Time.time <= _timeStunned;
+        }
+
+        // Check invencible
+        if (_invencible)
+        {
+            _invencible = Time.time <= _timeInvencible;
+        }
     }
 
 
@@ -236,7 +277,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
             // Rotate character
             transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
-
+        
         // Set character's velocity
         if (_rb) { _rb.velocity = new Vector3(_movement.x, 0, _movement.y) * _speed; }
     }
@@ -265,7 +306,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
 #endif
 
         // Power up effects
-        if (isFrozen) { _movement = Vector2.zero; }
+        if (isFrozen || _stunned) { _movement = Vector2.zero; }
         if (isReversedControls) { _movement = -_movement; }
 
         // Play walk animation when needed
@@ -276,26 +317,24 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
     public void OnAttack(InputAction.CallbackContext context)
     {
         // Play animation attack
-        if (_anim && !isFrozen)
+        if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
-
-            // Launch projectile
-            GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position, transform.rotation);
-            if (!bullet) { return; }
-
-            Quaternion rotAdjust = projectile.transform.localRotation;
-            Vector3 posAdjust = Vector3.up * 0.65f + Vector3.right * 0.4f + Vector3.forward * 0.25f;
-
-            PhotonView v = bullet.GetPhotonView();
-            v.transform.localRotation *= rotAdjust;
-            v.transform.position += posAdjust;
-            bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));
         }
     }
-#endregion
+    // Method triggered when the characterActions.InputActions specified shoot key is pressed
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        // Play animation shoot
+        if (_anim && !isFrozen && !_stunned)
+        {
+            _anim.SetBool("isShooting", context.ReadValueAsButton());
+        }
+    }
 
-#region Trigger and Collider Events
+    #endregion
+
+    #region Trigger and Collider Events
     private void OnTriggerEnter(Collider other)
     {
         // Check if other collider gameobject is interactable
@@ -379,5 +418,89 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-#endregion
+    private IEnumerator PhotonDestroyAfterTime(GameObject gameObject, float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        PhotonNetwork.Destroy(gameObject.GetPhotonView());
+    }
+
+    #endregion
+
+    #region Melee interaction Methods
+
+    public void EnableMeleeCollider()
+    {
+        weaponCollider.enabled = true;
+    }
+
+    public void DisableMeleeCollider()
+    {
+        weaponCollider.enabled = false;
+    }
+
+    // When the player is hit by a melee attack, this function is called
+    public void MeleeHit()
+    {
+        if (!_invencible)
+        {
+            _stunned = true;
+            _invencible = true;
+            _timeStunned = Time.time + stunTime;
+            _timeInvencible = Time.time + invencibleTime;
+
+            Debug.Log("MeleeHit(): Reducir score y soltar monstruos");
+        }
+    }
+
+    // When the player capture a monster, thsi function is called
+    public void CaptureMonster()
+    {
+        Debug.Log("CaptureMonster(): Modificar score");
+    }
+
+    #endregion
+
+    #region Shoot interaction Methods
+
+    public void InstantiateProjectile()
+    {
+        _projectileInstance = PhotonNetwork.Instantiate(projectile.name, projectileThrower.position, projectileThrower.rotation);
+        _projectileInstance.transform.parent = projectileThrower;
+        _projectileInstance.GetComponent<Rigidbody>().useGravity = false;
+    }
+
+    public void ShootProjectile()
+    {
+        _projectileInstance.transform.parent = null;
+        PhotonView projectileView = _projectileInstance.GetPhotonView();
+
+        RaycastHit hitInfo;
+        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation, 10.0f);
+        if (hitted && (hitInfo.transform.CompareTag("Player") || hitInfo.transform.CompareTag("Monster")))
+        {
+            Vector3 direction = (hitInfo.transform.position - this.transform.position).normalized;
+            projectileView.transform.rotation = Quaternion.LookRotation(-direction);
+            projectileView.GetComponent<Rigidbody>().AddForce(direction * projectileSpeed);
+        }
+        else
+        {
+            Vector3 rotation = new Vector3(projectile.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 180.0f, projectile.transform.rotation.eulerAngles.z);
+            projectileView.transform.rotation = Quaternion.Euler(rotation);
+            projectileView.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileSpeed);
+        }
+
+        StartCoroutine(PhotonDestroyAfterTime(_projectileInstance, projectileTimeToLive));
+    }
+
+    public void DistanceHit()
+    {
+        Debug.Log("Golpeado con arma a distancia");
+        if (!_stunned)
+        {
+            _stunned = true;
+            _timeStunned = Time.time + stunTime;
+        }
+    }
+
+    #endregion
 }

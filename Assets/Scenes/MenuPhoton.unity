@@ -2062,7 +2062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb68e9cc5a0084419c507ab127e59fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameSceneName: Game 1
+  _gameSceneName: Game
 --- !u!4 &748551590
 Transform:
   m_ObjectHideFlags: 0
@@ -5865,6 +5865,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 522447463}
     m_Modifications:
     - target: {fileID: -8362944345496774685, guid: 851890b6de894e347811652420bd5552, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4970497936324121687, guid: 851890b6de894e347811652420bd5552, type: 3}
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}

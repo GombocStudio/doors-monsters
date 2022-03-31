@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 9069780185498816959}
   m_Layer: 6
   m_Name: Medusa
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
