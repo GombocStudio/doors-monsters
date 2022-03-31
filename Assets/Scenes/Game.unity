@@ -558,7 +558,7 @@ RectTransform:
   m_Children:
   - {fileID: 1282170986}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -1615,7 +1615,7 @@ MonoBehaviour:
   - {fileID: 3830601237474015446, guid: 1ceb34ebdcbb4604782acff0364ee019, type: 3}
   - {fileID: 8979046212769408021, guid: 3b8ddab1cdf742640899f4b74ea277d2, type: 3}
   paused: 0
-  maxMonsters: 0
+  maxMonsters: 10
 --- !u!1 &580016846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2619,7 +2619,7 @@ RectTransform:
   - {fileID: 994852834}
   - {fileID: 1820382915}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -2721,7 +2721,7 @@ RectTransform:
   m_Children:
   - {fileID: 1899127175}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2911,7 +2911,7 @@ GameObject:
   - component: {fileID: 1268276637}
   - component: {fileID: 1268276636}
   m_Layer: 5
-  m_Name: LightsOff
+  m_Name: LightsOff Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3390,8 +3390,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerupPrefabs:
   - {fileID: 5725839245109118695, guid: eebecb08940966e4c8e86441ef3f91d3, type: 3}
-  maxPowerups: 5
-  spawnTime: 2
+  - {fileID: 5725839245109118695, guid: 0ac33da3e5d652f4e9efdcd1ae17fd17, type: 3}
+  - {fileID: 5725839245109118695, guid: e54850848c3c54148aa042f58a4fbd8a, type: 3}
+  - {fileID: 5725839245109118695, guid: bc1513df9b659e148bf664e8ce325537, type: 3}
+  - {fileID: 5725839245109118695, guid: 8c6707b870f9c904789b528aacb54eb1, type: 3}
+  - {fileID: 5725839245109118695, guid: 84a22c62ef443a3488a47692ebed80e2, type: 3}
+  - {fileID: 5725839245109118695, guid: 6291118555ca1b04ba6c1a5bdd402787, type: 3}
+  maxPowerups: 4
+  spawnTime: 15
 --- !u!4 &1317692557
 Transform:
   m_ObjectHideFlags: 0
@@ -3562,6 +3568,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395551367}
   m_CullTransparentMesh: 1
+--- !u!1 &1439667404
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1439667405}
+  - component: {fileID: 1439667407}
+  - component: {fileID: 1439667406}
+  m_Layer: 5
+  m_Name: Ice Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1439667405
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439667404}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_Children: []
+  m_Father: {fileID: 1952589313}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1439667406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439667404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 8dd3262a89685e1468effeaef5fb124d, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 1
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 1
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1439667407
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1439667404}
+  m_CullTransparentMesh: 1
 --- !u!1 &1465823553
 GameObject:
   m_ObjectHideFlags: 0
@@ -3687,7 +3768,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -4064,7 +4145,7 @@ RectTransform:
   m_Children:
   - {fileID: 330554473}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -4216,7 +4297,7 @@ RectTransform:
   - {fileID: 275514199}
   - {fileID: 290660584}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -4406,6 +4487,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1268276635}
+  - {fileID: 1439667405}
   - {fileID: 1484255646}
   - {fileID: 1177712520}
   - {fileID: 1889357927}
@@ -4655,6 +4737,7 @@ MonoBehaviour:
   _redScoreUI: {fileID: 703308795}
   miniMap: {fileID: 1133132186}
   lightsOffPnl: {fileID: 1268276634}
+  icePnl: {fileID: 1439667404}
   statusImage: {fileID: 705253390}
   winSprite: {fileID: 21300000, guid: cd5714b6c6b87b64b892f8360107921e, type: 3}
   loseSprite: {fileID: 21300000, guid: 6a56bd98b5ffe6d409633b2384a2399b, type: 3}

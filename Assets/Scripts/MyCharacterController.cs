@@ -8,7 +8,7 @@ using UnityEngine.InputSystem.OnScreen;
 // Script responsible for handling the movement and actions of the characters in the scene.
 public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventCallback
 {
-    #region Character Variables
+#region Character Variables
     // Character movement related variables
     public float _speed = 3.0f;
     private Vector2 _movement;
@@ -57,9 +57,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public float openDoorsTime = 5.0f;
     public bool isOpenDoors = false;
 
-    #endregion
+#endregion
 
-    #region Character Components
+#region Character Components
 
     // Reference to in game ui manager
     private GUIManager uiManager;
@@ -78,7 +78,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     #endregion
 
-    #region Unity Default Methods
+#region Unity Default Methods
     // Start is called before the first frame update
     private void Start()
     {
@@ -176,7 +176,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             if (frozenTime <= 0)
             {
                 isFrozen = false;
-                if (iceCubeInstance) { PhotonNetwork.Destroy(iceCubeInstance); };
+                if (iceCubePrefab) { iceCubePrefab.transform.localScale = new Vector3(0, 0, 0); };
+                if (uiManager) { uiManager.EnableIcePanel(false); };
             }
         }
     }
@@ -346,11 +347,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
                 frozenTime = 5.0f;
 
                 //  Spawn ice cube mesh
-                if (iceCubePrefab && !iceCubeInstance) 
-                {
-                    Vector3 spawnPosition = new Vector3(this.transform.position.x, iceCubePrefab.transform.position.y, this.transform.position.z);
-                    iceCubeInstance = PhotonNetwork.Instantiate(iceCubePrefab.name, spawnPosition, iceCubePrefab.transform.rotation);
-                }
+                if (iceCubePrefab) { iceCubePrefab.transform.localScale = new Vector3(1, 1, 1); };
+                if (uiManager) { uiManager.EnableIcePanel(true); };
                 break;
 
             default:

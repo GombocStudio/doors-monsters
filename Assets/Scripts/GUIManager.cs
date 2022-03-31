@@ -35,6 +35,7 @@ public class GUIManager : MonoBehaviour
 
     public GameObject miniMap;
     public GameObject lightsOffPnl;
+    public GameObject icePnl;
 
     [Header("End game panel UI variables")]
     public Image statusImage;
@@ -196,6 +197,13 @@ public class GUIManager : MonoBehaviour
         if (!lightsOffPnl) { return; }
 
         lightsOffPnl.SetActive(value);
+    }
+
+    public void EnableIcePanel(bool value)
+    {
+        if (!icePnl) { return; }
+
+        icePnl.SetActive(value);
     }
 
     #region Button Events
