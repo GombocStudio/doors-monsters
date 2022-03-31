@@ -20,14 +20,17 @@ public class Freeze : Interactable
         // Get photon view component
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
+
+        // Freeze other characters
         FreezeControls();
     }
 
-    public const byte FreezeEventCode = 4;
-
     private void FreezeControls()
     {
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions();// { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+        const byte FreezeEventCode = 4;
+
+        // You would have to set the Receivers to All in order to receive this event on the local client as well
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions();
         PhotonNetwork.RaiseEvent(FreezeEventCode, null, raiseEventOptions, SendOptions.SendReliable);
     }
 }

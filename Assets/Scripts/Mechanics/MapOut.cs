@@ -21,16 +21,17 @@ public class MapOut : Interactable
         // Get photon view component
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
-        HideMiniMap();
 
+        // Hide other characters mini map
+        HideMiniMap();
     }
 
     public const byte HideMiniMapEventCode = 1;
 
     private void HideMiniMap()
     {
-        //object[] content = new object[] { true }; // Array contains the target position and the IDs of the selected units
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions();// { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+        // You would have to set the Receivers to All in order to receive this event on the local client as well
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions();
         PhotonNetwork.RaiseEvent(HideMiniMapEventCode, null, raiseEventOptions, SendOptions.SendReliable);
     }
 }

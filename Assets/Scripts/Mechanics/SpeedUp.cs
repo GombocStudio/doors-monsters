@@ -12,19 +12,20 @@ public class SpeedUp : Interactable
         // Check if player that interacted with the door is not null
         if (!player) { return; }
 
-        //if (PhotonNetwork.IsMasterClient)
-        {
+        // Destroy power up instance
+        if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Destroy(gameObject);
-        }
+
         // Get photon view component
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
 
-        MyCharacterController character = player.GetComponent<MyCharacterController>();
-        character._speed = 6.75f;
-        character.isSpeedUp = true;
-        character.speedUpTime = 5.0f;
-        Debug.Log("speed");
+        // Increase local player speed
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
 
+        cc._speed = 6.75f;
+        cc.isSpeedUp = true;
+        cc.speedUpTime = 5.0f;
     }
 }

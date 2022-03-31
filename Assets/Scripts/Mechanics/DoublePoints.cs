@@ -20,11 +20,12 @@ public class DoublePoints : Interactable
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
 
-        MyCharacterController character = player.GetComponent<MyCharacterController>();
-        character.isDoublePoints = true;
-        character.doublePointsTime = 5.0f;
-        character.scoreMul = 2;
-        Debug.Log("doble");
+        // Increase local player score multiplier
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
 
+        cc.isDoublePoints = true;
+        cc.doublePointsTime = 5.0f;
+        cc.scoreMul = 2;
     }
 }

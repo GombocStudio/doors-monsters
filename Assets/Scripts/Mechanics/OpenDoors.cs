@@ -20,11 +20,11 @@ public class OpenDoors : Interactable
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
 
-        MyCharacterController character = player.GetComponent<MyCharacterController>();
+        // Give local player ability to open every door
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
 
-        character.isOpenDoors = true;
-        character.openDoorsTime = 5.0f;
-        Debug.Log("pooertas");
-
+        cc.isOpenDoors = true;
+        cc.openDoorsTime = 5.0f;
     }
 }

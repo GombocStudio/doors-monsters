@@ -21,15 +21,17 @@ public class LightsOut : Interactable
         // Get photon view component
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
+
+        // Turn off other character lights
         LightsOff();
     }
 
-    public const byte LightsOffEventCode = 2;
-
     private void LightsOff()
     {
-        //object[] content = new object[] { true }; // Array contains the target position and the IDs of the selected units
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions() ;// { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
+        const byte LightsOffEventCode = 2;
+
+        // You would have to set the Receivers to All in order to receive this event on the local client as well
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions() ; 
         PhotonNetwork.RaiseEvent(LightsOffEventCode, null, raiseEventOptions, SendOptions.SendReliable);
     }
 }
