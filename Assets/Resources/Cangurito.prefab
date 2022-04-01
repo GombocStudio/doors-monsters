@@ -71,8 +71,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7160318159467129611}
-  - component: {fileID: 5166277059390551818}
-  - component: {fileID: 6852387190014177340}
+  - component: {fileID: 6682171346265340774}
+  - component: {fileID: 2787322770069783029}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -94,7 +94,7 @@ Transform:
   m_Father: {fileID: 4995603358152535741}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!199 &5166277059390551818
+--- !u!199 &6682171346265340774
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -114,7 +114,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 620addf73db5d714086bb1612fb2a5b4, type: 2}
+  - {fileID: 2100000, guid: 8e054e7c6927afd4d86435745cfb44e3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,7 +160,7 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!198 &6852387190014177340
+--- !u!198 &2787322770069783029
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -349,8 +349,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.1990032, g: 0.6132076, b: 0.2731891, a: 1}
-      maxColor: {r: 0.8301887, g: 0.79855406, b: 0.2615877, a: 1}
+      minColor: {r: 0.2627451, g: 0.83137256, b: 0.6431373, a: 1}
+      maxColor: {r: 0.39607844, g: 0.6156863, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
