@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class Freeze : Interactable
 {
+    public float effectDuration = 5.0f;
+
     // Start is called before the first frame update
     public override void Interact(GameObject player)
     {
@@ -20,14 +22,16 @@ public class Freeze : Interactable
         // Get photon view component
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
+
+        // Freeze other characters
         FreezeControls();
     }
 
-    public const byte FreezeEventCode = 4;
-
     private void FreezeControls()
     {
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions();// { Receivers = ReceiverGroup.All }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-        PhotonNetwork.RaiseEvent(FreezeEventCode, null, raiseEventOptions, SendOptions.SendReliable);
+        // You would have to set the Receivers to All in order to receive this event on the local client as well
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions();
+        object[] content = new object[] { "Freeze", effectDuration };
+        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }

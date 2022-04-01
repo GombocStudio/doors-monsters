@@ -7,9 +7,10 @@ public class Door : Interactable
 {
     // Door child mesh reference
     public MeshRenderer doorMesh;
+    public MeshRenderer edgeMesh;
 
     // Door default texture
-    public Texture defaultTexture;
+    public Texture2D defaultTexture;
 
     // Controlling character id: -1 if door is not controlled by anyone
     public int characterId = -1;
@@ -75,10 +76,17 @@ public class Door : Interactable
         if (characterId == view.ViewID)
         {
             // Set door material to the material of the character that opened it
-            if (!doorMesh || !cc.doorTexture) { return; }
+            if (!doorMesh || !edgeMesh || !cc.doorTexture) { return; }
 
             if (doorMesh.material.mainTexture != cc.doorTexture)
+            {
+                Color pixel_colour = cc.doorTexture.GetPixel(1, 1);
                 doorMesh.material.mainTexture = cc.doorTexture;
+                edgeMesh.material.color = pixel_colour;
+
+                edgeMesh.material.EnableKeyword("_EMISSION");
+                edgeMesh.material.SetColor("_EmissionColor", pixel_colour);
+            }
         }
     }
 
@@ -118,8 +126,12 @@ public class Door : Interactable
     {
         /**** RESET DOOR TEXTURE ****/
         // Reset door default texture
-        if (doorMesh && defaultTexture)
+        if (doorMesh && edgeMesh && defaultTexture)
+        {
             doorMesh.material.mainTexture = defaultTexture;
+            edgeMesh.material.color = Color.white;
+            edgeMesh.material.DisableKeyword("_EMISSION");
+        }
 
         /**** PLAY OPEN ANIMATION ****/
         // Play open door animation

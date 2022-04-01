@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SpeedUp : Interactable
 {
+    public float effectDuration = 5.0f;
 
     // Start is called before the first frame update
     public override void Interact(GameObject player)
@@ -12,19 +13,19 @@ public class SpeedUp : Interactable
         // Check if player that interacted with the door is not null
         if (!player) { return; }
 
-        //if (PhotonNetwork.IsMasterClient)
-        {
+        // Destroy power up instance
+        if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.Destroy(gameObject);
-        }
+
         // Get photon view component
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
 
-        MyCharacterController character = player.GetComponent<MyCharacterController>();
-        character._speed = 6.75f;
-        character.isSpeedUp = true;
-        character.speedUpTime = 5.0f;
-        Debug.Log("speed");
+        // Increase local player speed
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
 
+        // Set speed up power up effect in local character
+        cc.ActivatePowerupEffect("SpeedUp", effectDuration);
     }
 }

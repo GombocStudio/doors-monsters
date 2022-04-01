@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class LightsOut : Interactable
 {
+    public float effectDuration = 5.0f;
 
     // Start is called before the first frame update
     public override void Interact(GameObject player)
@@ -21,15 +22,16 @@ public class LightsOut : Interactable
         // Get photon view component
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
+
+        // Turn off other character lights
         LightsOff();
     }
 
-    public const byte LightsOffEventCode = 2;
-
     private void LightsOff()
     {
-        //object[] content = new object[] { true }; // Array contains the target position and the IDs of the selected units
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions() ;// { Receivers = ReceiverGroup.Others }; // You would have to set the Receivers to All in order to receive this event on the local client as well
-        PhotonNetwork.RaiseEvent(LightsOffEventCode, null, raiseEventOptions, SendOptions.SendReliable);
+        // You would have to set the Receivers to All in order to receive this event on the local client as well
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions() ;
+        object[] content = new object[] { "LightsOut", effectDuration };
+        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }

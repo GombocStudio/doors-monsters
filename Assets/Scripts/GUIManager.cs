@@ -33,6 +33,13 @@ public class GUIManager : MonoBehaviour
     private int firstRankPos = 440;
     private int distanceBtwScores = 100;
 
+    public GameObject miniMap;
+    public GameObject lightsOffPnl;
+    public GameObject icePnl;
+
+    [Header("Power up indicators")]
+    public List<UIRadialIndicator> powerupIndicators;
+
     [Header("End game panel UI variables")]
     public Image statusImage;
     public Sprite winSprite;
@@ -178,6 +185,37 @@ public class GUIManager : MonoBehaviour
                 rankingTexts[i].enabled = true;
                 rankingTexts[i].text = scoreList[i].Value.Key + "      " + scoreList[i].Value.Value.ToString();
             }
+        }
+    }
+
+    public void EnableMinimap(bool value)
+    {
+        if (!miniMap) { return; }
+
+        miniMap.SetActive(value);
+    }
+
+    public void EnableLightsOff(bool value)
+    {
+        if (!lightsOffPnl) { return; }
+
+        lightsOffPnl.SetActive(value);
+    }
+
+    public void EnableIcePanel(bool value)
+    {
+        if (!icePnl) { return; }
+
+        icePnl.SetActive(value);
+    }
+
+    public void ActivatePowerupIndicator(int index, float time)
+    {
+        if (index >= 0 && index < powerupIndicators.Count)
+        {
+            if (!powerupIndicators[index]) { return; }
+
+            powerupIndicators[index].ActivateXSeconds(time);
         }
     }
 

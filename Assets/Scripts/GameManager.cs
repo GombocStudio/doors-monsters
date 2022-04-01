@@ -34,20 +34,23 @@ public class GameManager : MonoBehaviourPunCallbacks
     private bool isGameFinished = false;
 
     #region Unity Default Methods
+    private void Awake()
+    {
+        // Syncronize scene for all players
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         // Initialise mobile UI if needed
-#if !UNITY_IOS && !UNITY_ANDROID
+        #if !UNITY_IOS && !UNITY_ANDROID
         GameObject stick = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.gameObject;
         GameObject button = FindObjectOfType<OnScreenButton>().gameObject;
 
-        if (stick && button)
-        {
-            stick.gameObject.SetActive(false);
-            button.gameObject.SetActive(false);
-        }
-#endif
+        if (stick) { stick.gameObject.SetActive(false); }
+        if (button) { button.gameObject.SetActive(false); }
+        #endif
 
         // Initialise terrain generator reference
         terrainGenerator = FindObjectOfType<TerrainGenerator>();
@@ -195,13 +198,17 @@ public class GameManager : MonoBehaviourPunCallbacks
                     characterInstance = PhotonNetwork.Instantiate(characterName, terrainCorners[i], Quaternion.identity);
                     if (!characterInstance) { return; }
 
-                    // Instantiate player camera
+                    // Init player camera
                     CinemachineVirtualCamera camera = FindObjectOfType<CinemachineVirtualCamera>();
                     if (camera)
                     {
                         camera.LookAt = characterInstance.transform;
                         camera.Follow = characterInstance.transform;
                     }
+
+                    // Init minimap player camera
+                    MinimapCameraController minimapCamera = FindObjectOfType<MinimapCameraController>();
+                    if (minimapCamera) { minimapCamera.playerTransform = characterInstance.transform; }
                 }
             }
         }
