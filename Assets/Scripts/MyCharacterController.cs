@@ -25,7 +25,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public float doorControlTime;
 
     // Character's door texture
-    public Texture doorTexture;
+    public Texture2D doorTexture;
 
     // Abilities
     [Header("Long distance attack")]
@@ -36,26 +36,25 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public float speedUpTime = 5.0f;
     public bool isSpeedUp = false;
 
+    public float doublePointsTime = 5.0f;
+    public int scoreMul = 1;
+    public bool isDoublePoints = false;
+
+    public float openDoorsTime = 5.0f;
+    public bool isOpenDoors = false;
+
     public float mapOutTime = 5.0f;
     public bool isMapOut = false;
 
     public float lightOutTime = 5.0f;
     public bool isLightOut = false;
 
-    public float doublePointsTime = 5.0f;
-    public int scoreMul = 1;
-    public bool isDoublePoints = false;
+    public float reversedControlsTime = 5.0f;
+    public bool isReversedControls = false;
 
-    private float reversedControlsTime = 5.0f;
-    private bool isReversedControls = false;
-
-    private GameObject iceCubeInstance;
     public GameObject iceCubePrefab;
     public float frozenTime = 5.0f;
     public bool isFrozen = false;
-
-    public float openDoorsTime = 5.0f;
-    public bool isOpenDoors = false;
 
 #endregion
 
@@ -317,44 +316,94 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     public void OnEvent(EventData photonEvent)
     {
+        // Get event code and check if is an event sent by a power up
         byte eventCode = photonEvent.Code;
+        if (eventCode != 0 || photonEvent.CustomData == null) { return; }
 
-        switch (eventCode)
+        // Get event data
+        object[] data = (object[])photonEvent.CustomData;
+
+        string powerupName = (string)data[0];
+        float duration = (float)data[1];
+
+        ActivatePowerupEffect(powerupName, duration);
+    }
+
+    #endregion
+
+    #region Powerup Methods
+    public void ActivatePowerupEffect(string powerupName, float duration)
+    {
+        if (!uiManager) { return; }
+        int indicatorIndex = -1;
+
+        switch (powerupName)
         {
-            // Hide minimap
-            case 1:
-                isMapOut = true;
-                mapOutTime = 5.0f;
-                if (uiManager) { uiManager.EnableMinimap(false); }
+            case "OpenDoors":
+                isOpenDoors = true;
+                openDoorsTime = duration;
+                indicatorIndex = 0;
                 break;
 
-            // Turn off lights
-            case 2:
+            case "SpeedUp":
+                isSpeedUp = true;
+                speedUpTime = duration;
+                _speed *= 2;
+                indicatorIndex = 1;
+                break;
+
+            case "DoublePoints":
+                isDoublePoints = true;
+                doublePointsTime = duration;
+                scoreMul = 2;
+                indicatorIndex = 2;
+                break;
+
+            case "Freeze":
+                isFrozen = true;
+                frozenTime = duration;
+                indicatorIndex = 3;
+
+                //  Spawn ice cube mesh
+                if (iceCubePrefab) { iceCubePrefab.transform.localScale = new Vector3(1, 1, 1); }
+
+                // Show ice panel
+                uiManager.EnableIcePanel(true);
+                break;
+
+            case "LightsOut":
                 isLightOut = true;
-                lightOutTime = 5.0f;
-                if (uiManager) { uiManager.EnableLightsOff(true); };
+                lightOutTime = duration;
+                indicatorIndex = 4;
+
+                // Show lights off panel
+                uiManager.EnableLightsOff(true);
+                break;
+
+            // Hide minimap
+            case "MapOut":
+                isMapOut = true;
+                mapOutTime = duration;
+                indicatorIndex = 5;
+
+                // Hide minimap ui
+                uiManager.EnableMinimap(false);
                 break;
 
             // Reverse controls
-            case 3:
+            case "Reverse":
                 isReversedControls = true;
-                reversedControlsTime = 5.0f;
-                break;
-
-            // Freeze
-            case 4:
-                isFrozen = true;
-                frozenTime = 5.0f;
-
-                //  Spawn ice cube mesh
-                if (iceCubePrefab) { iceCubePrefab.transform.localScale = new Vector3(1, 1, 1); };
-                if (uiManager) { uiManager.EnableIcePanel(true); };
+                reversedControlsTime = duration;
+                indicatorIndex = 6;
                 break;
 
             default:
                 break;
         }
+
+        // Activate power up indicator
+        uiManager.ActivatePowerupIndicator(indicatorIndex, duration);
     }
 
-#endregion
+    #endregion
 }

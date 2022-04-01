@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DoublePoints : Interactable
 {
+    public float effectDuration = 5.0f;
 
     // Start is called before the first frame update
     public override void Interact(GameObject player)
@@ -24,8 +25,7 @@ public class DoublePoints : Interactable
         MyCharacterController cc = player.GetComponent<MyCharacterController>();
         if (!cc) { return; }
 
-        cc.isDoublePoints = true;
-        cc.doublePointsTime = 5.0f;
-        cc.scoreMul = 2;
+        // Set double points power up effect in local character
+        cc.ActivatePowerupEffect("DoublePoints", effectDuration);
     }
 }

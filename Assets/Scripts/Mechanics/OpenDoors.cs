@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class OpenDoors : Interactable
 {
+    public float effectDuration = 5.0f;
 
     // Start is called before the first frame update
     public override void Interact(GameObject player)
@@ -24,7 +25,7 @@ public class OpenDoors : Interactable
         MyCharacterController cc = player.GetComponent<MyCharacterController>();
         if (!cc) { return; }
 
-        cc.isOpenDoors = true;
-        cc.openDoorsTime = 5.0f;
+        // Set open doors power up effect in local character
+        cc.ActivatePowerupEffect("OpenDoors", effectDuration);
     }
 }

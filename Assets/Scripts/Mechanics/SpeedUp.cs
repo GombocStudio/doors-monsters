@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SpeedUp : Interactable
 {
+    public float effectDuration = 5.0f;
 
     // Start is called before the first frame update
     public override void Interact(GameObject player)
@@ -24,8 +25,7 @@ public class SpeedUp : Interactable
         MyCharacterController cc = player.GetComponent<MyCharacterController>();
         if (!cc) { return; }
 
-        cc._speed = 6.75f;
-        cc.isSpeedUp = true;
-        cc.speedUpTime = 5.0f;
+        // Set speed up power up effect in local character
+        cc.ActivatePowerupEffect("SpeedUp", effectDuration);
     }
 }
