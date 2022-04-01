@@ -1854,6 +1854,7 @@ MonoBehaviour:
   - {fileID: 5255076712804916016, guid: 67692c0db06b1a24ba7d6996ffd01222, type: 3}
   - {fileID: 3830601237474015446, guid: 1ceb34ebdcbb4604782acff0364ee019, type: 3}
   - {fileID: 8979046212769408021, guid: 3b8ddab1cdf742640899f4b74ea277d2, type: 3}
+  - {fileID: 5627285555006829575, guid: e6c1be0310786d746bc2cfbb6a1b3768, type: 3}
   paused: 0
   maxMonsters: 10
 --- !u!1 &580016846
