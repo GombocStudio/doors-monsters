@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class ReverseControls : Interactable
 {
+    public float effectDuration = 5.0f;
 
     // Start is called before the first frame update
     public override void Interact(GameObject player)
@@ -22,16 +23,15 @@ public class ReverseControls : Interactable
         PhotonView view = player.GetPhotonView();
         if (!view || !view.IsMine) { return; }
 
-        // Reverse other player controls
+        // Reverse other characters controls
         Reverse();
     }
-
-    public const byte ReverseEventCode = 3;
 
     private void Reverse()
     {
         // You would have to set the Receivers to All in order to receive this event on the local client as well
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions();// { Receivers = ReceiverGroup.Others }; 
-        PhotonNetwork.RaiseEvent(ReverseEventCode, null, raiseEventOptions, SendOptions.SendReliable);
+        object[] content = new object[] { "Reverse", effectDuration };
+        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }

@@ -37,6 +37,9 @@ public class GUIManager : MonoBehaviour
     public GameObject lightsOffPnl;
     public GameObject icePnl;
 
+    [Header("Power up indicators")]
+    public List<UIRadialIndicator> powerupIndicators;
+
     [Header("End game panel UI variables")]
     public Image statusImage;
     public Sprite winSprite;
@@ -204,6 +207,16 @@ public class GUIManager : MonoBehaviour
         if (!icePnl) { return; }
 
         icePnl.SetActive(value);
+    }
+
+    public void ActivatePowerupIndicator(int index, float time)
+    {
+        if (index >= 0 && index < powerupIndicators.Count)
+        {
+            if (!powerupIndicators[index]) { return; }
+
+            powerupIndicators[index].ActivateXSeconds(time);
+        }
     }
 
     #region Button Events

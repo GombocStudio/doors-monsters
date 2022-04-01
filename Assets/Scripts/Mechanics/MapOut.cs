@@ -7,7 +7,8 @@ using UnityEngine;
 
 public class MapOut : Interactable
 {
-    private GameObject miniMap;
+    public float effectDuration = 5.0f;
+
     // Start is called before the first frame update
     public override void Interact(GameObject player)
     {
@@ -26,12 +27,12 @@ public class MapOut : Interactable
         HideMiniMap();
     }
 
-    public const byte HideMiniMapEventCode = 1;
 
     private void HideMiniMap()
     {
         // You would have to set the Receivers to All in order to receive this event on the local client as well
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions();
-        PhotonNetwork.RaiseEvent(HideMiniMapEventCode, null, raiseEventOptions, SendOptions.SendReliable);
+        object[] content = new object[] { "MapOut", effectDuration };
+        PhotonNetwork.RaiseEvent(0, content, raiseEventOptions, SendOptions.SendReliable);
     }
 }
