@@ -28,12 +28,14 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     // Character's door texture
     public Texture2D doorTexture;
 
-    // Abilities
-    [Header("Long distance attack")]
-    public GameObject projectile;
+    [Header("Melee attack")]
 
     // Melee weapon collider
     public Collider weaponCollider;
+
+    // Abilities
+    [Header("Long distance attack")]
+    public GameObject projectile;
 
     // Time the player is stunned after melee attack (in secons)
     public float stunTime = 2.0f;
@@ -290,7 +292,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             // LaunchProjectile();
         }
     }
-
+    /*
     public void LaunchProjectile()
     {
         GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position, transform.rotation);
@@ -304,6 +306,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         v.transform.position += posAdjust;
         bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));
     }
+    */
+
     // Method triggered when the characterActions.InputActions specified shoot key is pressed
     public void OnShoot(InputAction.CallbackContext context)
     {
@@ -527,7 +531,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             projectileView.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileSpeed);
         }
 
-        StartCoroutine(PhotonDestroyAfterTime(_projectileInstance, projectileTimeToLive));
+        //StartCoroutine(PhotonDestroyAfterTime(_projectileInstance, projectileTimeToLive));
     }
 
     public void DistanceHit()

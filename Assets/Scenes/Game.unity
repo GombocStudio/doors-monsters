@@ -2034,6 +2034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentRound: 0
   _numRounds: 0
+  _roundDuration: 60
 --- !u!1 &694783306
 GameObject:
   m_ObjectHideFlags: 0
@@ -4886,7 +4887,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 375
+    m_Bits: 631
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -15,6 +15,8 @@ public class WeaponController : MonoBehaviour
     {
         GameObject enemy = other.gameObject;
 
+        if (enemy == playerController.gameObject) { return; }
+
         // Check if the attack has hit a monster
         if (enemy.CompareTag("Monster"))
         {
