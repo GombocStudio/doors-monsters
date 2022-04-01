@@ -7,9 +7,10 @@ public class Door : Interactable
 {
     // Door child mesh reference
     public MeshRenderer doorMesh;
+    public MeshRenderer edgeMesh;
 
     // Door default texture
-    public Texture defaultTexture;
+    public Texture2D defaultTexture;
 
     // Controlling character id: -1 if door is not controlled by anyone
     public int characterId = -1;
@@ -53,14 +54,18 @@ public class Door : Interactable
         PhotonView view = player.GetPhotonView();
         if (!view) { return; }
 
+        // Get character component from player
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
+
         // Set door player ID to the ID of the character that opened it
         if (characterId < 0)
             characterId = view.ViewID;
 
+        if (characterId != view.ViewID && !cc.isOpenDoors) { return; }
+
         /**** PLAY OPEN ANIMATION ****/
         // Play open door animation
-        if (characterId != view.ViewID) { return; }
-
         if (_anim && !isOpen)
         {
             isOpen = true;
@@ -68,15 +73,21 @@ public class Door : Interactable
         }
 
         /**** SET DOOR TEXTURE ****/
-        // Get character component from player
-        MyCharacterController cc = player.GetComponent<MyCharacterController>();
-        if (!cc) { return; }
+        if (characterId == view.ViewID)
+        {
+            // Set door material to the material of the character that opened it
+            if (!doorMesh || !edgeMesh || !cc.doorTexture) { return; }
 
-        // Set door material to the material of the character that opened it
-        if (!doorMesh || !cc.doorTexture) { return; }
+            if (doorMesh.material.mainTexture != cc.doorTexture)
+            {
+                Color pixel_colour = cc.doorTexture.GetPixel(1, 1);
+                doorMesh.material.mainTexture = cc.doorTexture;
+                edgeMesh.material.color = pixel_colour;
 
-        if (doorMesh.material.mainTexture != cc.doorTexture)
-            doorMesh.material.mainTexture = cc.doorTexture;
+                edgeMesh.material.EnableKeyword("_EMISSION");
+                edgeMesh.material.SetColor("_EmissionColor", pixel_colour);
+            }
+        }
     }
 
     public override void Deinteract(GameObject player)
@@ -89,8 +100,12 @@ public class Door : Interactable
         PhotonView view = player.GetPhotonView();
         if (!view) { return; }
 
+        // Get character component from player
+        MyCharacterController cc = player.GetComponent<MyCharacterController>();
+        if (!cc) { return; }
+
         // Check if same player that contols the door is the one deinteracting
-        if (characterId != view.ViewID) { return; }
+        if (characterId != view.ViewID && !cc.isOpenDoors) { return; }
 
         // Play close door animation
         if (_anim && isOpen)
@@ -100,20 +115,23 @@ public class Door : Interactable
         }
 
         /**** SET DOOR CONTROLLED TIME ****/
-        // Get character component from player
-        MyCharacterController cc = player.GetComponent<MyCharacterController>();
-        if (!cc) { return; }
-
-        // Set door controlled time to the control time of the character that interacted with it
-        controlledTime = cc.doorControlTime;
+        if (characterId == view.ViewID)
+        {
+            // Set door controlled time to the control time of the character that interacted with it
+            controlledTime = cc.doorControlTime;
+        }
     }
 
     public void ResetDoorControl()
     {
         /**** RESET DOOR TEXTURE ****/
         // Reset door default texture
-        if (doorMesh && defaultTexture)
+        if (doorMesh && edgeMesh && defaultTexture)
+        {
             doorMesh.material.mainTexture = defaultTexture;
+            edgeMesh.material.color = Color.white;
+            edgeMesh.material.DisableKeyword("_EMISSION");
+        }
 
         /**** PLAY OPEN ANIMATION ****/
         // Play open door animation

@@ -41,6 +41,9 @@ MonoBehaviour:
   - RespawnSpaceship
   - SetPlayerColor
   - SpawnPlayer
+  - ChatMessage
+  - ActivatePowerupEffect
+  - RPCActivatePowerupEffect
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
