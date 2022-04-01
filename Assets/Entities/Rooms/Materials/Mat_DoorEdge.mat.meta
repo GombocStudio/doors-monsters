@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Entities/Rooms/Materials/Mat_DoorEdge.mat.meta
 guid: 778bff585f5f62746baf19cdd0299139
+=======
+guid: d3ea0cc6bd2d9ce46a67034b0f79335d
+>>>>>>> main:Assets/GUI/Mini mapa/Materials/playerPink-02.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000
