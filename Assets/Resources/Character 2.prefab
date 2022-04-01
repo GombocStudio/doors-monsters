@@ -65,7 +65,7 @@ Transform:
   - {fileID: 4760722521283242833}
   m_Father: {fileID: 3390954353698527430}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 78.831024, y: 63.697495, z: 63.25978}
 --- !u!1 &671073930662199451
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +705,7 @@ Transform:
   - {fileID: 6954545647850337382}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -84.60682, y: -64.204475, z: 88.91723}
 --- !u!1 &3238950624147841752
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,7 +766,7 @@ Transform:
   - {fileID: 2868897950986536801}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.728537, y: 78.31678, z: -143.06354}
 --- !u!1 &3859828244185649804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,7 +1313,7 @@ Transform:
   - {fileID: 936849615515539773}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.0352755, y: 0.42315468, z: -5.8059273}
 --- !u!1 &5937616638599310695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6954545647850337382}
   - component: {fileID: 759351549897041785}
+  - component: {fileID: 3167303111316244846}
   m_Layer: 9
   m_Name: CloseWeapon_end
   m_TagString: Untagged
@@ -1533,11 +1534,25 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6252515907769197963}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.01, y: 0.014, z: 0.01}
-  m_Center: {x: 0, y: -0.005, z: 0}
+  m_Center: {x: 0, y: -0.005, z: -0.003}
+--- !u!114 &3167303111316244846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252515907769197963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6409769037455708898}
+  meleeWeapon: 1
 --- !u!1 &6409769037455708898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2160,7 +2175,7 @@ Transform:
   - {fileID: 2656854121829116103}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 7.175521, y: 13.190576, z: 122.12983}
 --- !u!1 &9158554760976287033
 GameObject:
   m_ObjectHideFlags: 0

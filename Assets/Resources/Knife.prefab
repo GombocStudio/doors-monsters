@@ -167,5 +167,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 6300880902946192515, guid: 301f284f8cabb474c8f2518e24d61aae, type: 3}
+  player: {fileID: 6409769037455708898, guid: 301f284f8cabb474c8f2518e24d61aae, type: 3}
   meleeWeapon: 0

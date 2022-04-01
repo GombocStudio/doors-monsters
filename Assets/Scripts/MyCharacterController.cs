@@ -325,7 +325,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     {
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        if (!interactable) { return; }
+        GameObject gameObject = other.gameObject;
+        if (!interactable || gameObject.CompareTag("Monster")) { return; }
 
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);
@@ -337,7 +338,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        if (!interactable) { return; }
+        GameObject gameObject = other.gameObject;
+        if (!interactable || gameObject.CompareTag("Monster")) { return; }
 
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);
@@ -347,7 +349,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     {
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        if (!interactable) { return; }
+        GameObject gameObject = other.gameObject;
+        if (!interactable || gameObject.CompareTag("Monster")) { return; }
 
         // Interact with collider gameobject
         interactable.Deinteract(this.gameObject);
@@ -513,14 +516,27 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     public void ShootProjectile()
     {
+        RaycastHit hitInfo;
+        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation);
+        if (hitInfo.transform.CompareTag("Player"))
+        {
+            hitInfo.transform.GetComponent<MyCharacterController>().DistanceHit();
+        }
+        else if (hitInfo.transform.CompareTag("Monster"))
+        {
+            hitInfo.transform.GetComponent<MonsterScript>().StunMonster();
+        }
+
+        if (_projectileInstance == null) { return; }
+
         _projectileInstance.transform.parent = null;
         PhotonView projectileView = _projectileInstance.GetPhotonView();
 
-        RaycastHit hitInfo;
-        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation, 10.0f);
         if (hitted && (hitInfo.transform.CompareTag("Player") || hitInfo.transform.CompareTag("Monster")))
         {
-            Vector3 direction = (hitInfo.transform.position - this.transform.position).normalized;
+            Vector3 enemyPos = hitInfo.transform.position;
+            enemyPos.y = 0.1f;
+            Vector3 direction = (enemyPos - this.transform.position).normalized;
             projectileView.transform.rotation = Quaternion.LookRotation(-direction);
             projectileView.GetComponent<Rigidbody>().AddForce(direction * projectileSpeed);
         }

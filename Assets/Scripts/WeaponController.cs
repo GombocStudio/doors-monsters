@@ -6,7 +6,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour
 {
     // Player using the weapon 
-    public MyCharacterController playerController;
+    public GameObject player;
 
     // Weapon type --> True: meele, False: distance
     public bool meleeWeapon = true;
@@ -15,20 +15,18 @@ public class WeaponController : MonoBehaviour
     {
         GameObject enemy = other.gameObject;
 
-        if (enemy == playerController.gameObject) { return; }
-
+        if (enemy == player) { return; }
+        
         // Check if the attack has hit a monster
         if (enemy.CompareTag("Monster"))
         {
             if (meleeWeapon)
             {
-                playerController.CaptureMonster();
-                // TODO: Crear funcion en monster y destruir alli, asi se pueden poner particulas
-                Destroy(enemy); 
+                enemy.GetComponent<Interactable>().Interact(player);
             }
             else
             {
-                Debug.Log("Stunt monster");
+                //enemy.GetComponent<MonsterScript>().StunMonster();
             }
         }
 
@@ -38,7 +36,7 @@ public class WeaponController : MonoBehaviour
             if (meleeWeapon) enemy.GetComponent<MyCharacterController>().MeleeHit();
             else
             {
-                enemy.GetComponent<MyCharacterController>().DistanceHit();
+                //enemy.GetComponent<MyCharacterController>().DistanceHit();
             }
         }
 

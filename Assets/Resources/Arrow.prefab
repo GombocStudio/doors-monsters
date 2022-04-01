@@ -168,5 +168,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 6258445932633915925, guid: 880da810f3b5fa044b335bea13f07f28, type: 3}
+  player: {fileID: 7840464761389086095, guid: 880da810f3b5fa044b335bea13f07f28, type: 3}
   meleeWeapon: 0

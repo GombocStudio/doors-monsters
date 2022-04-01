@@ -383,6 +383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   points: 10
+  stunTime: 2
 --- !u!114 &4716499657537858697
 MonoBehaviour:
   m_ObjectHideFlags: 0
