@@ -518,6 +518,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     {
         RaycastHit hitInfo;
         bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation);
+        if (!hitted) { return; }
+
         if (hitInfo.transform.CompareTag("Player"))
         {
             hitInfo.transform.GetComponent<MyCharacterController>().DistanceHit();
