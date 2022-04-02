@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1960729221236785067}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3010617283963756077}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ Transform:
   - {fileID: 1435136104082579468}
   m_Father: {fileID: 6603210393724082669}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0.8022299, y: -13.297672, z: -118.949104}
 --- !u!1 &603469082725434431
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6167362376741559437}
   - component: {fileID: 8129154667659402157}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7163169659391373459}
   - component: {fileID: 1149157704547296265}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: BagBelt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ GameObject:
   m_Component:
   - component: {fileID: 401810402905574642}
   - component: {fileID: 6629404702259771404}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,6 +335,36 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.000053439522, y: 0.0034386197, z: 0.00037501653}
     m_Extent: {x: 0.006694045, y: 0.0017495367, z: 0.0014765998}
   m_DirtyAABB: 0
+--- !u!1 &1367823575452626435
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3594733220217554812}
+  m_Layer: 9
+  m_Name: ProjectileThrower
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3594733220217554812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367823575452626435}
+  m_LocalRotation: {x: -0.42670277, y: -0.5042014, z: 0.627069, w: -0.41290468}
+  m_LocalPosition: {x: 0.00018787323, y: 0.0015576808, z: -0.00020154752}
+  m_LocalScale: {x: 0.010001749, y: 0.010001751, z: 0.010001749}
+  m_Children: []
+  m_Father: {fileID: 1217649123291828138}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1566126049459159850
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +375,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4076366859328739005}
   - component: {fileID: 1635342260232751682}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 152797840701289320}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Bow_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,7 +498,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1435136104082579468}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 955542907586538934}
   - component: {fileID: 2518771972902506129}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4128737456836898436}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Bow 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,7 +643,7 @@ Transform:
   - {fileID: 152797840701289320}
   m_Father: {fileID: 6603210393724082669}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -82.215546, y: -39.47766, z: -179.84128}
 --- !u!1 &2442201921248682731
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6945644863057569616}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815310416993899638}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Axe 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -674,7 +704,7 @@ Transform:
   - {fileID: 8991271656668604287}
   m_Father: {fileID: 6603210393724082669}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -48.20644, y: -87.12254, z: 78.075966}
 --- !u!1 &2824291409435650721
 GameObject:
   m_ObjectHideFlags: 0
@@ -685,7 +715,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6297124880350786033}
   - component: {fileID: 926693656322726947}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Ear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -776,7 +806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8736810993942741884}
   - component: {fileID: 7902670615867571058}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -868,7 +898,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5617073590021320927}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -899,7 +929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1992303309458053654}
   - component: {fileID: 7817773188808131110}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Axe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -991,7 +1021,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8444049285041053340}
   - component: {fileID: 7369678335895230057}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arrow.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1084,7 +1114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7102042906826905908}
   - component: {fileID: 1761392181295247506}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arrow.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1176,7 +1206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6603210393724082669}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1233,7 @@ Transform:
   - {fileID: 8515044908237720636}
   m_Father: {fileID: 1960729221236785067}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 77.738464, y: -45.157173, z: -44.39152}
 --- !u!1 &4443418129249176700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,7 +1243,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8515044908237720636}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1246,7 +1276,7 @@ GameObject:
   - component: {fileID: 662125637541977331}
   - component: {fileID: 3003352024956062806}
   - component: {fileID: 2121484654860335508}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Character Collision Blocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1293,10 +1323,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 0.1
+  m_Radius: 0.2
+  m_Height: 1.75
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.875, z: 0}
 --- !u!1 &4664862718469564795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,7 +1337,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1914917931195957338}
   - component: {fileID: 271506033728833137}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: ArrowBag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1399,7 +1429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4464669956684870629}
   - component: {fileID: 245551804186999090}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: HairTail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1490,7 +1520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 796203689412259316}
   - component: {fileID: 1933678897988871295}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Bow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1581,7 +1611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4643682152375370888}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1612,7 +1642,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8991271656668604287}
-  m_Layer: 7
+  - component: {fileID: 6349275428967587463}
+  - component: {fileID: 8747172573104824501}
+  m_Layer: 11
   m_Name: Axe_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1633,6 +1665,33 @@ Transform:
   m_Father: {fileID: 815310416993899638}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6349275428967587463
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6099720639860654972}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.014, z: 0.01}
+  m_Center: {x: 0, y: -0.005, z: -0.003}
+--- !u!114 &8747172573104824501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6099720639860654972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 7840464761389086095}
+  meleeWeapon: 1
 --- !u!1 &6244657731006849395
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,7 +1701,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4123788800214957648}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1672,7 +1731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5088461827834478069}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1693,7 +1752,7 @@ Transform:
   - {fileID: 1217649123291828138}
   m_Father: {fileID: 6603210393724082669}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 12.618618, y: -76.27065, z: 134.36378}
 --- !u!1 &7214998991300526877
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,7 +1763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 545502781215522137}
   - component: {fileID: 2995232249445118890}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arrow.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1805,9 +1864,9 @@ GameObject:
   - component: {fileID: 2490537938329803880}
   - component: {fileID: -968251033400363981}
   - component: {fileID: -7436479046012471575}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Character 1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1983,6 +2042,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9da9b60e-a18e-4341-b712-7eaf89d4a001
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6258445932633915925}
+        m_TargetAssemblyTypeName: MyCharacterController, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 44c3376a-a172-4ccc-b76f-1bb9e8b7aec2
+    m_ActionName: Player/Shoot
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2004,24 +2079,16 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   doorControlTime: 3
   doorTexture: {fileID: 2800000, guid: bb3b05068b9a84621a4f2eba0bbb653b, type: 3}
+  weaponCollider: {fileID: 6349275428967587463}
   projectile: {fileID: 7477973442010662947, guid: 894b963f8296c604a9b179156e24960b, type: 3}
-  launchVel: 700
-  speedUpTime: 5
-  isSpeedUp: 0
-  doublePointsTime: 5
+  stunTime: 2
+  invencibleTime: 3
+  projectileTimeToLive: 5
+  projectileThrower: {fileID: 3594733220217554812}
+  projectileSpeed: 1000
   scoreMul: 1
-  isDoublePoints: 0
-  openDoorsTime: 5
   isOpenDoors: 0
-  mapOutTime: 5
-  isMapOut: 0
-  lightOutTime: 5
-  isLightOut: 0
-  reversedControlsTime: 5
-  isReversedControls: 0
   iceCubePrefab: {fileID: 5705937960835712763}
-  frozenTime: 5
-  isFrozen: 0
 --- !u!114 &3916194779150401155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2055,7 +2122,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6258445932633915925}
   - {fileID: -968251033400363981}
   - {fileID: -7436479046012471575}
   sceneViewId: 0
@@ -2115,11 +2181,19 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isAttacking
+  - Type: 4
+    SynchronizeType: 1
+    Name: isShooting
+  - Type: 4
+    SynchronizeType: 1
+    Name: isInvincible
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
+  - SynchronizeType: 0
+    LayerIndex: 2
 --- !u!1 &8538040033976044872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2129,7 +2203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1217649123291828138}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2146,7 +2220,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0.0057109315, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 3594733220217554812}
   m_Father: {fileID: 5088461827834478069}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2160,7 +2235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6695969864739592906}
   - component: {fileID: 4939791520508263796}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2250,7 +2325,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3297161017395790706}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2271,7 +2346,7 @@ Transform:
   - {fileID: 4123788800214957648}
   m_Father: {fileID: 6603210393724082669}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.2111835, y: 6.7701283, z: 1.7796471}
 --- !u!1001 &4025996487336359884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2338,6 +2413,10 @@ PrefabInstance:
     - target: {fileID: 8714647941448528183, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}
       propertyPath: m_Name
       value: IceCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714647941448528183, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}

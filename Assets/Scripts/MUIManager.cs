@@ -225,6 +225,10 @@ public class MUIManager : MonoBehaviour
 
     IEnumerator StartGameCR()
     {
+        if (_startGameBtn) { _startGameBtn.interactable = false; }
+
+        if (_loadingGIF) { _loadingGIF.SetActive(true); }
+
         if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
 
         yield return new WaitForSeconds(_transitionTime);
@@ -274,7 +278,6 @@ public class MUIManager : MonoBehaviour
         // Add error message to the content of the panel
         if (_errorTxt) { _errorTxt.text = errorMsg.ToUpper(); }
     }
-
 
     #endregion
 }

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8837623057783224675}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4398058317063884106}
   - component: {fileID: 6974469258259337564}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: KatanaHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4719163044784539008}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4217049542103833290}
   - component: {fileID: 7233832873494166186}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: HairFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7851182820937289809}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ Transform:
   - {fileID: 4719163044784539008}
   m_Father: {fileID: 3198603729448302103}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 73.90186, y: 90, z: 90}
 --- !u!1 &1182115605177951005
 GameObject:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6932641009861900365}
   - component: {fileID: 4290266935250376095}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Ear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -377,7 +377,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6284125425200967404}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1136169328869924609}
   - component: {fileID: 2443122449895719934}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -501,7 +501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 244404595415650128}
   - component: {fileID: 2538964736063008404}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Shuriken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,7 +590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8942631408315728309}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: CloseWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,7 @@ Transform:
   - {fileID: 7201023027014343351}
   m_Father: {fileID: 7851182820937289809}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 23.558392, y: 100.35914, z: -90.80581}
 --- !u!1 &3115841921387869518
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +622,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4185133530614621194}
   - component: {fileID: 1558852608328386349}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -713,7 +713,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2647256064258779568}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2202697323161917329}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -764,7 +764,7 @@ Transform:
   - {fileID: 2647256064258779568}
   m_Father: {fileID: 7851182820937289809}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 24.889954, y: 49.18315, z: -146.66504}
 --- !u!1 &3962168729910262877
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,7 +774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3198603729448302103}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,7 +806,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6638580905993853808}
   - component: {fileID: 7288746845628560247}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -896,7 +896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7439068689870791768}
   - component: {fileID: 4821355691240327040}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Katana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -987,7 +987,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3658565143663789390}
   - component: {fileID: 7734423837457379760}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1077,7 +1077,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7115844178914874673}
   - component: {fileID: 5154051920738292241}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1166,7 +1166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2860811189463189014}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1198,7 +1198,7 @@ GameObject:
   - component: {fileID: 4228833327235897266}
   - component: {fileID: 6324375757813343537}
   - component: {fileID: 48863951964090903}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Character Collision Blocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1245,10 +1245,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 0.1
+  m_Radius: 0.2
+  m_Height: 1.75
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.875, z: 0}
 --- !u!1 &5205655176916714204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,7 +1258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1916157991127534286}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1279,7 +1279,7 @@ Transform:
   - {fileID: 1039475969959753708}
   m_Father: {fileID: 7851182820937289809}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 1.020196, y: -4.603445, z: -7.1792817}
 --- !u!1 &5222397309970227125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,7 +1290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7762671865802036086}
   - component: {fileID: 8348543156713370824}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1380,7 +1380,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9039511414547491439}
   - component: {fileID: 2760603896532673954}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Kimono
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1469,7 +1469,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7201023027014343351}
-  m_Layer: 7
+  - component: {fileID: 1568019828216471477}
+  - component: {fileID: 4429144474907186292}
+  m_Layer: 11
   m_Name: CloseWeapon_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1490,6 +1492,33 @@ Transform:
   m_Father: {fileID: 8942631408315728309}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1568019828216471477
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6172684901122132826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.015, y: 0.014, z: 0.013}
+  m_Center: {x: 0.005, y: -0.007, z: 0}
+--- !u!114 &4429144474907186292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6172684901122132826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6600232904626469939}
+  meleeWeapon: 1
 --- !u!1 &6600232904626469939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,9 +1537,9 @@ GameObject:
   - component: {fileID: -8362944345496774685}
   - component: {fileID: 2295372232355134537}
   - component: {fileID: 7144929330046359094}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Character 0
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1685,6 +1714,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9da9b60e-a18e-4341-b712-7eaf89d4a001
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5430020314100938559}
+        m_TargetAssemblyTypeName: MyCharacterController, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 44c3376a-a172-4ccc-b76f-1bb9e8b7aec2
+    m_ActionName: Player/Shoot
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1706,8 +1751,13 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   doorControlTime: 3
   doorTexture: {fileID: 2800000, guid: 89bf1bc30bb414806bd66fb3a122b2ab, type: 3}
+  weaponCollider: {fileID: 1568019828216471477}
   projectile: {fileID: 6367202931326633606, guid: 63dc52ef00a70a94ba7bbd81eae73810, type: 3}
-  launchVel: 700
+  stunTime: 2
+  invencibleTime: 3
+  projectileTimeToLive: 5
+  projectileThrower: {fileID: 2860811189463189014}
+  projectileSpeed: 1000
   speedUpTime: 5
   isSpeedUp: 0
   doublePointsTime: 5
@@ -1757,7 +1807,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 5430020314100938559}
   - {fileID: 2295372232355134537}
   - {fileID: 7144929330046359094}
   sceneViewId: 0
@@ -1817,11 +1866,19 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isAttacking
+  - Type: 4
+    SynchronizeType: 1
+    Name: isShooting
+  - Type: 4
+    SynchronizeType: 1
+    Name: isInvincible
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
+  - SynchronizeType: 0
+    LayerIndex: 2
 --- !u!1 &7061409939931392207
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,7 +1888,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1039475969959753708}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1862,7 +1919,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7109481543795520154}
   - component: {fileID: 800615491665647324}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Bandana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1951,7 +2008,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8586110095248411956}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1982,7 +2039,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8199798046888817737}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2014,7 +2071,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8985501468430400096}
   - component: {fileID: 4915616154661526573}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2105,7 +2162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6117792366598742677}
   - component: {fileID: 5255408283680468448}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: KatanaPort
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2252,6 +2309,10 @@ PrefabInstance:
     - target: {fileID: 8714647941448528183, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}
       propertyPath: m_Name
       value: IceCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714647941448528183, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}

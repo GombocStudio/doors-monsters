@@ -9,6 +9,14 @@ public class MonsterScript : Interactable
     public float speed;
     public int points;
 
+    // Time the monster is stunned after melee attack (in secons)
+    public float stunTime = 2.0f;
+
+    // Is monster stunned
+    private bool _stunned = false;
+
+    // When the monster will stop being stunned
+    private float _timeStunned = 0.0f;
     private ScoreManager scoreManager;
     private MonsterController monsterController;
 
@@ -55,6 +63,17 @@ public class MonsterScript : Interactable
             {
                 agent.destination = GetDestination();
             }
+
+            if (_stunned)
+            {
+                agent.destination = this.transform.position;
+            }
+        }
+
+        // Check stunned
+        if (_stunned)
+        {
+            _stunned = Time.time <= _timeStunned;
         }
     }
 
@@ -67,7 +86,7 @@ public class MonsterScript : Interactable
     public override void Interact(GameObject player) 
     {
         MyCharacterController cc = player.GetComponent<MyCharacterController>();
-
+        
         // Increase score of the player that interacted with the egg
         if (scoreManager && cc) { scoreManager.UpdatePlayerScore(player, cc.scoreMul * points); }
 
@@ -76,6 +95,15 @@ public class MonsterScript : Interactable
     }
 
     public override void Deinteract(GameObject player) {}
+
+    public void StunMonster()
+    {
+        if (!_stunned)
+        {
+            _stunned = true;
+            _timeStunned = Time.time + stunTime;
+        }
+    }
 
     #endregion
 }

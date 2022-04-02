@@ -66,6 +66,7 @@ public class ScoreManager : MonoBehaviour
 
         // Update local player score
         myScore += scoreToAdd;
+        myScore = Mathf.Clamp(myScore, 0, 9999);
 
         // Update player socre in other player's machines
         if (gameManager) { gameManager.UpdatePlayerOnlineScore(myScore); }

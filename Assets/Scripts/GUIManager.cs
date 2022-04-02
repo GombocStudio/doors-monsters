@@ -12,7 +12,7 @@ public class GUIManager : MonoBehaviour
     [Header("UI panels")]
     public GameObject _gamePnl;
     public GameObject _roundPnl;
-    public GameObject _errorPnl;
+    public GameObject _exitPnl;
     public GameObject _endGamePnl;
 
     [Header("Transition panel variables")]
@@ -151,6 +151,7 @@ public class GUIManager : MonoBehaviour
     private void DisplayFinalPlayerScores()
     {
         // Disable game UI and enable end game panel
+        // if (_exitPnl) { _exitPnl.SetActive(false); }
         if (_gamePnl) { _gamePnl.SetActive(false); }
         if (_endGamePnl) { _endGamePnl.SetActive(true); }
 
@@ -226,6 +227,21 @@ public class GUIManager : MonoBehaviour
         StartCoroutine(LeaveGameUICR());
     }
 
+    public void DisplayHideExitPanel()
+    {
+        if (_exitPnl) { _exitPnl.SetActive(!_exitPnl.activeSelf); }
+    }
+
+    public void OnClickKeepPlaying()
+    {
+        if (_exitPnl) { _exitPnl.SetActive(false); }
+    }
+
+    public void OnClickLeaveGame()
+    {
+        StartCoroutine(LeaveGameUICR());
+    }
+
     #endregion
 
     #region Coroutines
@@ -291,7 +307,6 @@ public class GUIManager : MonoBehaviour
 
         // Enable end game panel where player scores are displayed
         DisplayFinalPlayerScores();
-
 
         // Start fade in transition
         if (_transitionPnlAnim) { _transitionPnlAnim.Play("FadeIn"); }

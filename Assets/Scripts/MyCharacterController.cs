@@ -4,11 +4,12 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.OnScreen;
+using System.Collections;
 
 // Script responsible for handling the movement and actions of the characters in the scene.
-public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventCallback
+public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-#region Character Variables
+    #region Character Variables
     // Character movement related variables
     public float _speed = 3.0f;
     private Vector2 _movement;
@@ -27,38 +28,68 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     // Character's door texture
     public Texture2D doorTexture;
 
+    [Header("Melee attack")]
+
+    // Melee weapon collider
+    public Collider weaponCollider;
+
     // Abilities
     [Header("Long distance attack")]
     public GameObject projectile;
-    public float launchVel = 700f;
+
+    // Time the player is stunned after melee attack (in secons)
+    public float stunTime = 2.0f;
+
+    // Time the player is invencible when stunned (in seconds)
+    public float invencibleTime = 3.0f;
+
+    // Is player stunned
+    private bool _stunned = false;
+
+    // Is player invencible
+    private bool _invencible = false;
+
+    // When the player will stop being stunned
+    private float _timeStunned = 0.0f;
+
+    // When the player will stop being invencible
+    private float _timeInvencible = 0.0f;
+
+    public float projectileTimeToLive = 5.0f;
+    public Transform projectileThrower;
+    public float projectileSpeed = 1000.0f;
+    private GameObject _projectileInstance;
 
     [Header("Powerup variables")]
-    public float speedUpTime = 5.0f;
-    public bool isSpeedUp = false;
+    private float speedUpTime = 5.0f;
+    private bool isSpeedUp = false;
 
-    public float doublePointsTime = 5.0f;
+    private float doublePointsTime = 5.0f;
     public int scoreMul = 1;
-    public bool isDoublePoints = false;
+    private bool isDoublePoints = false;
 
-    public float openDoorsTime = 5.0f;
+    private float openDoorsTime = 5.0f;
     public bool isOpenDoors = false;
 
-    public float mapOutTime = 5.0f;
-    public bool isMapOut = false;
+    private float mapOutTime = 5.0f;
+    private bool isMapOut = false;
 
-    public float lightOutTime = 5.0f;
-    public bool isLightOut = false;
+    private float lightOutTime = 5.0f;
+    private bool isLightOut = false;
 
-    public float reversedControlsTime = 5.0f;
-    public bool isReversedControls = false;
+    private float reversedControlsTime = 5.0f;
+    private bool isReversedControls = false;
 
     public GameObject iceCubePrefab;
-    public float frozenTime = 5.0f;
-    public bool isFrozen = false;
+    private float frozenTime = 5.0f;
+    private bool isFrozen = false;
 
-#endregion
+    #endregion
 
-#region Character Components
+    #region Character Components
+
+    // Reference to in game score manager
+    private ScoreManager scoreManager;
 
     // Reference to in game ui manager
     private GUIManager uiManager;
@@ -77,10 +108,13 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     #endregion
 
-#region Unity Default Methods
+    #region Unity Default Methods
     // Start is called before the first frame update
     private void Start()
     {
+        // Initialize in game score manager reference
+        scoreManager = FindObjectOfType<ScoreManager>();
+
         // Initialize photon view component reference
         // _view = GetComponent<PhotonView>();
 
@@ -92,6 +126,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
         // Initialize animator component reference
         _anim = GetComponent<Animator>();
+
+        // Disable weapon collider
+        weaponCollider.enabled = false;
 
         // Get Joystick (mobile)
         #if UNITY_IOS || UNITY_ANDROID
@@ -179,8 +216,20 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
                 if (uiManager) { uiManager.EnableIcePanel(false); };
             }
         }
-    }
 
+        // Check stunned
+        if (_stunned && Time.time > _timeStunned)
+        {
+            _stunned = false;
+        }
+
+        // Check invencible
+        if (_invencible && Time.time > _timeInvencible)
+        {
+            _invencible = false;
+            if (_anim) { _anim.SetBool("isInvincible", false); }
+        }
+    }
 
     public void FixedUpdate()
     {
@@ -202,13 +251,13 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             // Rotate character
             transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
         }
-
+        
         // Set character's velocity
         if (_rb) { _rb.velocity = new Vector3(_movement.x, 0, _movement.y) * _speed; }
     }
-#endregion
+    #endregion
 
-#region Input System Methods
+    #region Input System Methods
     // Method triggered when any of the characterActions.InputActions specified movement keys is pressed
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -230,7 +279,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         #endif
 
         // Power up effects
-        if (isFrozen) { _movement = Vector2.zero; }
+        if (isFrozen || _stunned) { _movement = Vector2.zero; }
         if (isReversedControls) { _movement = -_movement; }
 
         // Play walk animation when needed
@@ -241,33 +290,29 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void OnAttack(InputAction.CallbackContext context)
     {
         // Play animation attack
-        if (_anim && !isFrozen)
+        if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
-
-            // Distance attack if needed
-            // LaunchProjectile();
         }
     }
 
-    public void LaunchProjectile()
+    // Method triggered when the characterActions.InputActions specified shoot key is pressed
+    public void OnShoot(InputAction.CallbackContext context)
     {
-        GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position, transform.rotation);
-        if (!bullet) { return; }
-
-        Quaternion rotAdjust = projectile.transform.localRotation;
-        Vector3 posAdjust = Vector3.up * 0.65f + Vector3.right * 0.4f + Vector3.forward * 0.25f;
-
-        PhotonView v = bullet.GetPhotonView();
-        v.transform.localRotation *= rotAdjust;
-        v.transform.position += posAdjust;
-        bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));
+        // Play animation shoot
+        /* if (_anim && !isFrozen && !_stunned)
+        {
+            _anim.SetBool("isShooting", context.ReadValueAsButton());
+        } */
     }
-#endregion
 
-#region Trigger and Collider Events
+    #endregion
+
+    #region Trigger and Collider Events
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Monster")) { return; }
+
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
@@ -278,7 +323,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag != "Door") { return; }
+        // Just for doors
+        if (!other.gameObject.CompareTag("Door")) { return; }
 
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
@@ -290,6 +336,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("Monster")) { return; }
+
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
@@ -297,23 +345,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         // Interact with collider gameobject
         interactable.Deinteract(this.gameObject);
     }
-#endregion
+    #endregion
 
-#region Photon Methods
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        /* if (stream.IsWriting)
-        {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
-        }
-        else
-        {
-            transform.position = (Vector3)stream.ReceiveNext();
-            transform.rotation = (Quaternion)stream.ReceiveNext();
-        } */
-    }
-
+    #region Photon Methods
     public void OnEvent(EventData photonEvent)
     {
         // Get event code and check if is an event sent by a power up
@@ -348,7 +382,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
             case "SpeedUp":
                 isSpeedUp = true;
                 speedUpTime = duration;
-                _speed *= 2;
+                _speed = 5;
                 indicatorIndex = 1;
                 break;
 
@@ -403,6 +437,96 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
         // Activate power up indicator
         uiManager.ActivatePowerupIndicator(indicatorIndex, duration);
+    }
+    #endregion
+
+    #region Melee interaction Methods
+    public void EnableMeleeCollider()
+    {
+        weaponCollider.enabled = true;
+    }
+
+    public void DisableMeleeCollider()
+    {
+        weaponCollider.enabled = false;
+    }
+
+    // When the player is hit by a melee attack, this function is called
+    public void MeleeHit()
+    {
+        if (!_invencible)
+        {
+            // Stun character
+            // _stunned = true;
+            // _timeStunned = Time.time + stunTime;
+
+            // Make character invincible
+            _invencible = true;
+            _timeInvencible = Time.time + invencibleTime;
+            if (_anim) { _anim.SetBool("isInvincible", true); }
+
+            // Decrease player score
+            if (scoreManager) { scoreManager.UpdatePlayerScore(this.gameObject, -50); }
+            Debug.Log("Soltar monstruos");
+        }
+    }
+
+    #endregion
+
+    #region Shoot interaction Methods
+    public void InstantiateProjectile()
+    {
+        _projectileInstance = PhotonNetwork.Instantiate(projectile.name, projectileThrower.position, projectileThrower.rotation);
+        _projectileInstance.transform.parent = projectileThrower;
+        _projectileInstance.GetComponent<Rigidbody>().useGravity = false;
+    }
+
+    public void ShootProjectile()
+    {
+        RaycastHit hitInfo;
+        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation);
+        if (!hitted) { return; }
+
+        if (hitInfo.transform.CompareTag("Player"))
+        {
+            hitInfo.transform.GetComponent<MyCharacterController>().DistanceHit();
+        }
+        else if (hitInfo.transform.CompareTag("Monster"))
+        {
+            hitInfo.transform.GetComponent<MonsterScript>().StunMonster();
+        }
+
+        if (_projectileInstance == null) { return; }
+
+        _projectileInstance.transform.parent = null;
+        PhotonView projectileView = _projectileInstance.GetPhotonView();
+
+        if (hitted && (hitInfo.transform.CompareTag("Player") || hitInfo.transform.CompareTag("Monster")))
+        {
+            Vector3 enemyPos = hitInfo.transform.position;
+            enemyPos.y = 0.1f;
+            Vector3 direction = (enemyPos - this.transform.position).normalized;
+            projectileView.transform.rotation = Quaternion.LookRotation(-direction);
+            projectileView.GetComponent<Rigidbody>().AddForce(direction * projectileSpeed);
+        }
+        else
+        {
+            Vector3 rotation = new Vector3(projectile.transform.rotation.eulerAngles.x, this.transform.rotation.eulerAngles.y + 180.0f, projectile.transform.rotation.eulerAngles.z);
+            projectileView.transform.rotation = Quaternion.Euler(rotation);
+            projectileView.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileSpeed);
+        }
+
+        //StartCoroutine(PhotonDestroyAfterTime(_projectileInstance, projectileTimeToLive));
+    }
+
+    public void DistanceHit()
+    {
+        Debug.Log("Golpeado con arma a distancia");
+        if (!_stunned)
+        {
+            _stunned = true;
+            _timeStunned = Time.time + stunTime;
+        }
     }
 
     #endregion
