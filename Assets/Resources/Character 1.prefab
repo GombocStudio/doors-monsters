@@ -2086,22 +2086,9 @@ MonoBehaviour:
   projectileTimeToLive: 5
   projectileThrower: {fileID: 3594733220217554812}
   projectileSpeed: 1000
-  speedUpTime: 5
-  isSpeedUp: 0
-  doublePointsTime: 5
   scoreMul: 1
-  isDoublePoints: 0
-  openDoorsTime: 5
   isOpenDoors: 0
-  mapOutTime: 5
-  isMapOut: 0
-  lightOutTime: 5
-  isLightOut: 0
-  reversedControlsTime: 5
-  isReversedControls: 0
   iceCubePrefab: {fileID: 5705937960835712763}
-  frozenTime: 5
-  isFrozen: 0
 --- !u!114 &3916194779150401155
 MonoBehaviour:
   m_ObjectHideFlags: 0
