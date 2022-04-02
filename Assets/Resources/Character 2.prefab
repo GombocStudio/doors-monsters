@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8775586551388886962}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8041651077841387136}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ Transform:
   - {fileID: 4760722521283242833}
   m_Father: {fileID: 3390954353698527430}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 78.831024, y: 63.697495, z: 63.25978}
 --- !u!1 &671073930662199451
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,7 +76,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3421309261835053293}
   - component: {fileID: 3789237846036592286}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Hair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4760722521283242833}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   m_Component:
   - component: {fileID: 59756114195191174}
   - component: {fileID: 4391204691715718949}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: PackBelt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6077920947755024445}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4496243267984315688}
   - component: {fileID: 6167932458825650548}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Ear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -407,7 +407,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5259361124603228363}
   - component: {fileID: 459826764296663175}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Grenade.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 912214073888666064}
   - component: {fileID: 2489110489176714543}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -595,7 +595,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8551255785565703931}
   - component: {fileID: 3648367507852919142}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: GrenadeHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9184587602159447908}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: CloseWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -705,7 +705,7 @@ Transform:
   - {fileID: 6954545647850337382}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -84.60682, y: -64.204475, z: 88.91723}
 --- !u!1 &3238950624147841752
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +715,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2868897950986536801}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,7 +745,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2160922610803128640}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -766,7 +766,7 @@ Transform:
   - {fileID: 2868897950986536801}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 15.728537, y: 78.31678, z: -143.06354}
 --- !u!1 &3859828244185649804
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +776,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3390954353698527430}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -808,7 +808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3578527430156381087}
   - component: {fileID: 7510490844700827489}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -898,7 +898,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3503888123536094404}
   - component: {fileID: 4475546405037652277}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -988,7 +988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3515329199195610633}
   - component: {fileID: 6059882100219797039}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1083,7 +1083,7 @@ GameObject:
   m_Component:
   - component: {fileID: 747665798157887287}
   - component: {fileID: 1767437303313218530}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1172,7 +1172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2656854121829116103}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7554263698081988007}
   - component: {fileID: 8122054896719075865}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1292,7 +1292,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1872127091385590815}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1313,7 +1313,7 @@ Transform:
   - {fileID: 936849615515539773}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -4.0352755, y: 0.42315468, z: -5.8059273}
 --- !u!1 &5937616638599310695
 GameObject:
   m_ObjectHideFlags: 0
@@ -1324,7 +1324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1233827700118811188}
   - component: {fileID: 735247522118431382}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: EarRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1414,7 +1414,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3458677877418675295}
   - component: {fileID: 2912015989091310195}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: EarBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1503,7 +1503,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6954545647850337382}
-  m_Layer: 7
+  - component: {fileID: 759351549897041785}
+  - component: {fileID: 3167303111316244846}
+  m_Layer: 9
   m_Name: CloseWeapon_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1524,6 +1526,33 @@ Transform:
   m_Father: {fileID: 9184587602159447908}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &759351549897041785
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252515907769197963}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.01, y: 0.014, z: 0.01}
+  m_Center: {x: 0, y: -0.005, z: -0.003}
+--- !u!114 &3167303111316244846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6252515907769197963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0186ce8ded8c93c4d94ef979183ba675, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 6409769037455708898}
+  meleeWeapon: 1
 --- !u!1 &6409769037455708898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1542,9 +1571,9 @@ GameObject:
   - component: {fileID: -1729126493680421984}
   - component: {fileID: -8243753620698489629}
   - component: {fileID: 5676558325581065410}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Character 2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1713,6 +1742,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 9da9b60e-a18e-4341-b712-7eaf89d4a001
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6300880902946192515}
+        m_TargetAssemblyTypeName: MyCharacterController, Assembly-CSharp
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 44c3376a-a172-4ccc-b76f-1bb9e8b7aec2
+    m_ActionName: Player/Shoot
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1734,8 +1779,13 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   doorControlTime: 3
   doorTexture: {fileID: 2800000, guid: 1e380bee19b0c41cf9e930ba83c1d91f, type: 3}
-  projectile: {fileID: 7477973442010662947, guid: 894b963f8296c604a9b179156e24960b, type: 3}
-  launchVel: 700
+  weaponCollider: {fileID: 759351549897041785}
+  projectile: {fileID: 3919092505533975352, guid: a6ebeeec2cb3d1744a2ed152247f56c3, type: 3}
+  stunTime: 2
+  invencibleTime: 3
+  projectileTimeToLive: 5
+  projectileThrower: {fileID: 2656854121829116103}
+  projectileSpeed: 1000
   speedUpTime: 5
   isSpeedUp: 0
   doublePointsTime: 5
@@ -1845,6 +1895,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isAttacking
+  - Type: 4
+    SynchronizeType: 0
+    Name: isShooting
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -1860,7 +1913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2005323364320221465}
   - component: {fileID: 289613129926706993}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1951,7 +2004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4483738225500572246}
   - component: {fileID: 6644839189306843855}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: GrenadeHandle.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2040,7 +2093,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 936849615515539773}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2070,7 +2123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8379883350259655653}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Leg.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2101,7 +2154,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8261614650940807832}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Arm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2122,7 +2175,7 @@ Transform:
   - {fileID: 2656854121829116103}
   m_Father: {fileID: 8041651077841387136}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 7.175521, y: 13.190576, z: 122.12983}
 --- !u!1 &9158554760976287033
 GameObject:
   m_ObjectHideFlags: 0
@@ -2134,7 +2187,7 @@ GameObject:
   - component: {fileID: 6155575931012868065}
   - component: {fileID: 2383588486096904591}
   - component: {fileID: 6784552729710116488}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Character Collision Blocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2195,7 +2248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4369023633317778479}
   - component: {fileID: 8926179730784368482}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Pack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2342,6 +2395,10 @@ PrefabInstance:
     - target: {fileID: 8714647941448528183, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}
       propertyPath: m_Name
       value: IceCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8714647941448528183, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 080037cfa9b881f4eaa3601aed13f77d, type: 3}

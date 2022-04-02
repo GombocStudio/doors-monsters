@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+<<<<<<< HEAD
+guid: 1dc932e4e75db214ba95ca299f484b2c
+=======
+<<<<<<< HEAD:Assets/Scripts/GUIManager.cs.meta
+guid: 4da2329dcdc074740b0c2ee37d0c77d5
+=======
+guid: 1dc932e4e75db214ba95ca299f484b2c
+>>>>>>> player-interaction:Assets/Scripts/Mechanics/DoublePoints.cs.meta
+>>>>>>> player-interaction
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
