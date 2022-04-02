@@ -7,9 +7,9 @@ using UnityEngine.InputSystem.OnScreen;
 using System.Collections;
 
 // Script responsible for handling the movement and actions of the characters in the scene.
-public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, IOnEventCallback
+public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-#region Character Variables
+    #region Character Variables
     // Character movement related variables
     public float _speed = 3.0f;
     private Vector2 _movement;
@@ -84,9 +84,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public float frozenTime = 5.0f;
     public bool isFrozen = false;
 
-#endregion
+    #endregion
 
-#region Character Components
+    #region Character Components
 
     // Reference to in game ui manager
     private GUIManager uiManager;
@@ -105,7 +105,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     #endregion
 
-#region Unity Default Methods
+    #region Unity Default Methods
     // Start is called before the first frame update
     private void Start()
     {
@@ -224,7 +224,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         }
     }
 
-
     public void FixedUpdate()
     {
         // Mobile controls
@@ -249,9 +248,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         // Set character's velocity
         if (_rb) { _rb.velocity = new Vector3(_movement.x, 0, _movement.y) * _speed; }
     }
-#endregion
+    #endregion
 
-#region Input System Methods
+    #region Input System Methods
     // Method triggered when any of the characterActions.InputActions specified movement keys is pressed
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -287,26 +286,8 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
-
-            // Distance attack if needed
-            // LaunchProjectile();
         }
     }
-    /*
-    public void LaunchProjectile()
-    {
-        GameObject bullet = PhotonNetwork.Instantiate(projectile.name, transform.position, transform.rotation);
-        if (!bullet) { return; }
-
-        Quaternion rotAdjust = projectile.transform.localRotation;
-        Vector3 posAdjust = Vector3.up * 0.65f + Vector3.right * 0.4f + Vector3.forward * 0.25f;
-
-        PhotonView v = bullet.GetPhotonView();
-        v.transform.localRotation *= rotAdjust;
-        v.transform.position += posAdjust;
-        bullet.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVel));
-    }
-    */
 
     // Method triggered when the characterActions.InputActions specified shoot key is pressed
     public void OnShoot(InputAction.CallbackContext context)
@@ -355,23 +336,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         // Interact with collider gameobject
         interactable.Deinteract(this.gameObject);
     }
-#endregion
+    #endregion
 
-#region Photon Methods
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        /* if (stream.IsWriting)
-        {
-            stream.SendNext(transform.position);
-            stream.SendNext(transform.rotation);
-        }
-        else
-        {
-            transform.position = (Vector3)stream.ReceiveNext();
-            transform.rotation = (Quaternion)stream.ReceiveNext();
-        } */
-    }
-
+    #region Photon Methods
     public void OnEvent(EventData photonEvent)
     {
         // Get event code and check if is an event sent by a power up
@@ -462,13 +429,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         // Activate power up indicator
         uiManager.ActivatePowerupIndicator(indicatorIndex, duration);
     }
-
-    private IEnumerator PhotonDestroyAfterTime(GameObject gameObject, float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        PhotonNetwork.Destroy(gameObject.GetPhotonView());
-    }
-
     #endregion
 
     #region Melee interaction Methods
@@ -506,7 +466,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     #endregion
 
     #region Shoot interaction Methods
-
     public void InstantiateProjectile()
     {
         _projectileInstance = PhotonNetwork.Instantiate(projectile.name, projectileThrower.position, projectileThrower.rotation);
