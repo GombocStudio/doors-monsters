@@ -9,7 +9,7 @@ public class RoundManager : MonoBehaviour
 
     public int _currentRound = 0;
     public int _numRounds = 0;
-    public float _roundDuration = 10;
+    public float _roundDuration = 0;
 
     private bool _startTimer = false;
     private float _currentRoundTime = 0;

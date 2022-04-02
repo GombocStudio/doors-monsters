@@ -61,32 +61,35 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     private GameObject _projectileInstance;
 
     [Header("Powerup variables")]
-    public float speedUpTime = 5.0f;
-    public bool isSpeedUp = false;
+    private float speedUpTime = 5.0f;
+    private bool isSpeedUp = false;
 
-    public float doublePointsTime = 5.0f;
+    private float doublePointsTime = 5.0f;
     public int scoreMul = 1;
-    public bool isDoublePoints = false;
+    private bool isDoublePoints = false;
 
-    public float openDoorsTime = 5.0f;
+    private float openDoorsTime = 5.0f;
     public bool isOpenDoors = false;
 
-    public float mapOutTime = 5.0f;
-    public bool isMapOut = false;
+    private float mapOutTime = 5.0f;
+    private bool isMapOut = false;
 
-    public float lightOutTime = 5.0f;
-    public bool isLightOut = false;
+    private float lightOutTime = 5.0f;
+    private bool isLightOut = false;
 
-    public float reversedControlsTime = 5.0f;
-    public bool isReversedControls = false;
+    private float reversedControlsTime = 5.0f;
+    private bool isReversedControls = false;
 
     public GameObject iceCubePrefab;
-    public float frozenTime = 5.0f;
-    public bool isFrozen = false;
+    private float frozenTime = 5.0f;
+    private bool isFrozen = false;
 
     #endregion
 
     #region Character Components
+
+    // Reference to in game score manager
+    private ScoreManager scoreManager;
 
     // Reference to in game ui manager
     private GUIManager uiManager;
@@ -109,6 +112,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     // Start is called before the first frame update
     private void Start()
     {
+        // Initialize in game score manager reference
+        scoreManager = FindObjectOfType<ScoreManager>();
+
         // Initialize photon view component reference
         // _view = GetComponent<PhotonView>();
 
@@ -212,15 +218,16 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         }
 
         // Check stunned
-        if (_stunned)
+        if (_stunned && Time.time > _timeStunned)
         {
-            _stunned = Time.time <= _timeStunned;
+            _stunned = false;
         }
 
         // Check invencible
-        if (_invencible)
+        if (_invencible && Time.time > _timeInvencible)
         {
-            _invencible = Time.time <= _timeInvencible;
+            _invencible = false;
+            if (_anim) { _anim.SetBool("isInvincible", false); }
         }
     }
 
@@ -293,10 +300,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     public void OnShoot(InputAction.CallbackContext context)
     {
         // Play animation shoot
-        if (_anim && !isFrozen && !_stunned)
+        /* if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isShooting", context.ReadValueAsButton());
-        }
+        } */
     }
 
     #endregion
@@ -304,10 +311,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     #region Trigger and Collider Events
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.CompareTag("Monster")) { return; }
+
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        GameObject gameObject = other.gameObject;
-        if (!interactable || gameObject.CompareTag("Monster")) { return; }
+        if (!interactable) { return; }
 
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);
@@ -315,12 +323,12 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag != "Door") { return; }
+        // Just for doors
+        if (!other.gameObject.CompareTag("Door")) { return; }
 
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        GameObject gameObject = other.gameObject;
-        if (!interactable || gameObject.CompareTag("Monster")) { return; }
+        if (!interactable) { return; }
 
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);
@@ -328,10 +336,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("Monster")) { return; }
+
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
-        GameObject gameObject = other.gameObject;
-        if (!interactable || gameObject.CompareTag("Monster")) { return; }
+        if (!interactable) { return; }
 
         // Interact with collider gameobject
         interactable.Deinteract(this.gameObject);
@@ -373,7 +382,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             case "SpeedUp":
                 isSpeedUp = true;
                 speedUpTime = duration;
-                _speed *= 2;
+                _speed = 5;
                 indicatorIndex = 1;
                 break;
 
@@ -432,7 +441,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     #endregion
 
     #region Melee interaction Methods
-
     public void EnableMeleeCollider()
     {
         weaponCollider.enabled = true;
@@ -448,19 +456,19 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         if (!_invencible)
         {
-            _stunned = true;
+            // Stun character
+            // _stunned = true;
+            // _timeStunned = Time.time + stunTime;
+
+            // Make character invincible
             _invencible = true;
-            _timeStunned = Time.time + stunTime;
             _timeInvencible = Time.time + invencibleTime;
+            if (_anim) { _anim.SetBool("isInvincible", true); }
 
-            Debug.Log("MeleeHit(): Reducir score y soltar monstruos");
+            // Decrease player score
+            if (scoreManager) { scoreManager.UpdatePlayerScore(this.gameObject, -50); }
+            Debug.Log("Soltar monstruos");
         }
-    }
-
-    // When the player capture a monster, thsi function is called
-    public void CaptureMonster()
-    {
-        Debug.Log("CaptureMonster(): Modificar score");
     }
 
     #endregion

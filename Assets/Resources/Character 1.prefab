@@ -683,7 +683,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815310416993899638}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Axe 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1276,7 +1276,7 @@ GameObject:
   - component: {fileID: 662125637541977331}
   - component: {fileID: 3003352024956062806}
   - component: {fileID: 2121484654860335508}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Character Collision Blocker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1323,10 +1323,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 0.1
+  m_Radius: 0.2
+  m_Height: 1.75
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.875, z: 0}
 --- !u!1 &4664862718469564795
 GameObject:
   m_ObjectHideFlags: 0
@@ -1644,7 +1644,7 @@ GameObject:
   - component: {fileID: 8991271656668604287}
   - component: {fileID: 6349275428967587463}
   - component: {fileID: 8747172573104824501}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Axe_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2135,7 +2135,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6258445932633915925}
   - {fileID: -968251033400363981}
   - {fileID: -7436479046012471575}
   sceneViewId: 0
@@ -2196,13 +2195,18 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: isAttacking
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isShooting
+  - Type: 4
+    SynchronizeType: 1
+    Name: isInvincible
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
   - SynchronizeType: 0
     LayerIndex: 1
+  - SynchronizeType: 0
+    LayerIndex: 2
 --- !u!1 &8538040033976044872
 GameObject:
   m_ObjectHideFlags: 0

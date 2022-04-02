@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -4187688822314990588}
   - component: {fileID: 1564885591239256064}
   - component: {fileID: -3979455881047671560}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: PuSpeedUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7450491895065663686}
   - component: {fileID: 2109412948188546473}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
