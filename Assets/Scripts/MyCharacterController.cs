@@ -3,6 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using UnityEngine.InputSystem;
+using System;
 using UnityEngine.InputSystem.OnScreen;
 using System.Collections;
 
@@ -84,6 +85,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     private float frozenTime = 5.0f;
     private bool isFrozen = false;
 
+    // Character sounds
+    [Header("Character Sounds")]
+    public Sound[] sounds;
+
     #endregion
 
     #region Character Components
@@ -109,6 +114,20 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     #endregion
 
     #region Unity Default Methods
+    private void Awake()
+    {
+        // Init character sound sources
+        foreach (Sound s in sounds)
+        {
+            s.source = gameObject.AddComponent<AudioSource>();
+            s.source.clip = s.clip;
+
+            s.source.volume = s.volume;
+            s.source.pitch = s.pitch;
+            s.source.loop = s.loop;
+        }
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -293,6 +312,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
+
+            // Play attack sound (short range)
+            Sound s = Array.Find(sounds, sound => sound.name == "ShortRangeAttack");
+            if (s != null && s.source != null) { s.source.Play(); }
+            else { Debug.Log("Character attack sound not found!"); }
         }
     }
 
@@ -303,6 +327,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         /* if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isShooting", context.ReadValueAsButton());
+
+            // Play attack sound (short range)
+            Sound s = Array.Find(sounds, sound => sound.name == "LongRangeAttack");
+            if (s != null) { s.source.Play(); }
         } */
     }
 
@@ -329,6 +357,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
+
+        // Play pick up powerup sound
+        if (other.gameObject.CompareTag("PowerUp"))
+            FindObjectOfType<AudioManager>().Play("CatchPowerup");
 
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);

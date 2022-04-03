@@ -1781,6 +1781,19 @@ MonoBehaviour:
   scoreMul: 1
   isOpenDoors: 0
   iceCubePrefab: {fileID: 6513766411947792241}
+  sounds:
+  - clip: {fileID: 8300000, guid: e908f6b1854e14a5bb17d06e39117d23, type: 3}
+    name: ShortRangeAttack
+    volume: 3
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: c2bc6ce304478425cb41f18d1bea38b7, type: 3}
+    name: LongRangeAttack
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!114 &1987684495784234586
 MonoBehaviour:
   m_ObjectHideFlags: 0
