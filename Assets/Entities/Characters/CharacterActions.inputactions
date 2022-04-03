@@ -39,8 +39,8 @@
                     "id": "978bfe49-cc26-4a3d-ab7b-7d7a29327403",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "StickDeadzone(min=-0.3,max=0.3)",
-                    "groups": "Gamepad;Touch;Joystick;Keyboard&Mouse",
+                    "processors": "",
+                    "groups": "Gamepad;Touch;Keyboard&Mouse;Joystick",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
