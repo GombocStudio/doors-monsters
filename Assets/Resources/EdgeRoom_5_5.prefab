@@ -165,45 +165,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6345218096006791920, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -6345218096006791920, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -2720221069562527839, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -2720221069562527839, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 566860969287147491, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 566860969287147491, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
       propertyPath: m_Name
       value: RoomMesh
-      objectReference: {fileID: 0}
-    - target: {fileID: 1391724132148829795, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1391724132148829795, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
-      propertyPath: m_ReceiveShadows
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4026526069006075691, guid: 1f3c039a6b4204d6ba656801d94b989f, type: 3}
       propertyPath: m_IsActive
@@ -380,6 +344,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
 --- !u!4 &813287278215301006 stripped
@@ -469,6 +449,22 @@ PrefabInstance:
     - target: {fileID: 4544007223312967888, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
       propertyPath: m_Name
       value: Door (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
@@ -687,6 +683,22 @@ PrefabInstance:
     - target: {fileID: 4544007223312967888, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
       propertyPath: m_Name
       value: Door (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
