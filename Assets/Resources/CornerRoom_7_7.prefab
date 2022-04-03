@@ -116,6 +116,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point Light (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_Intensity
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_RenderMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7541634093245833142, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -230,9 +238,49 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -6345218096006791920, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6345218096006791920, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2720221069562527839, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2720221069562527839, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566860969287147491, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566860969287147491, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
       propertyPath: m_Name
       value: RoomMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6820594879077173776, guid: 320c5e6f08e0c497683bd1f110b89365, type: 3}
       propertyPath: m_IsActive
@@ -274,6 +322,14 @@ PrefabInstance:
     - target: {fileID: 608738114049357552, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
       propertyPath: m_Name
       value: Point Light (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_Intensity
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_RenderMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7541634093245833142, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
       propertyPath: m_RootOrder
@@ -409,6 +465,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
 --- !u!4 &2049652997407432011 stripped
@@ -499,6 +571,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372402117786017752, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8935621899507783256, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16bfd6d3640b38942afbe715b59f72cc, type: 3}
 --- !u!4 &1343157354771144996 stripped
@@ -516,6 +604,14 @@ PrefabInstance:
     - target: {fileID: 608738114049357552, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
       propertyPath: m_Name
       value: Point Light (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_Intensity
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_RenderMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7541634093245833142, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
       propertyPath: m_RootOrder
@@ -582,6 +678,14 @@ PrefabInstance:
     - target: {fileID: 608738114049357552, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
       propertyPath: m_Name
       value: Point Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_Intensity
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540061712094289325, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
+      propertyPath: m_RenderMode
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7541634093245833142, guid: dc206322a92833e4cafa0171cd1429f2, type: 3}
       propertyPath: m_RootOrder
