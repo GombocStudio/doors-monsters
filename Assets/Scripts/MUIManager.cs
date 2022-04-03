@@ -13,6 +13,7 @@ public class MUIManager : MonoBehaviour
     public GameObject _lobbyPnl;
     public GameObject _roomPnl;
     public GameObject _errorPnl;
+    public GameObject _settingsPnl;
 
     [Header("Lobby menu variables")]
     public InputField _nicknameInputField;
@@ -38,6 +39,10 @@ public class MUIManager : MonoBehaviour
     public float _transitionTime;
     private Animator _transitionAnim;
 
+    [Header("Settings variables")]
+    public Slider _volumeSlider;
+    public Dropdown _resolutionDropdown;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +50,7 @@ public class MUIManager : MonoBehaviour
         networkManager = FindObjectOfType<MNetworkManager>();
 
         // Initialise transition panel animator
-        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }
+        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }        
     }
 
     public void EnableMain()
@@ -61,6 +66,15 @@ public class MUIManager : MonoBehaviour
     public void EnableRoom()
     {
         StartCoroutine(EnableRoomCR());
+    }
+
+    public void EnableSettings()
+    {
+        if (_settingsPnl && _volumeSlider)
+        {
+            _volumeSlider.value = AudioListener.volume;
+        }
+        StartCoroutine(EnableSettingsCR());
     }
 
     public void EnableLoadingGIF(bool value)
@@ -154,6 +168,12 @@ public class MUIManager : MonoBehaviour
 
     public void OnClickGoBack()
     {
+        if (_settingsPnl.activeSelf)
+        {
+            EnableLobby();
+            return;
+        }
+
         if (!networkManager) { return; }
 
         // Disconnect from server
@@ -174,6 +194,29 @@ public class MUIManager : MonoBehaviour
         if (_errorPnl) { _errorPnl.SetActive(false); }
     }
 
+    public void OnClickSettings()
+    {
+        EnableSettings();
+    }
+
+    #endregion
+
+    #region Settings
+
+    public void OnVolumeSliderValueChanged()
+    {
+        AudioListener.volume = _volumeSlider.value;        
+    }
+
+    public void OnResolutionValueChanged()
+    {
+        switch(_resolutionDropdown.value)
+        {
+            case 0: Screen.SetResolution(1920, 1080, true); break;
+            case 1: Screen.SetResolution(1280, 720, true); break;
+        }
+    }
+
     #endregion
 
     #region Coroutines
@@ -191,6 +234,7 @@ public class MUIManager : MonoBehaviour
         if (_mainPnl) { _mainPnl.SetActive(true); }
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
     }
 
     IEnumerator EnableLobbyCR()
@@ -206,6 +250,7 @@ public class MUIManager : MonoBehaviour
         if (_mainPnl) { _mainPnl.SetActive(false); }
         if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
     }
 
     IEnumerator EnableRoomCR()
@@ -221,6 +266,24 @@ public class MUIManager : MonoBehaviour
         if (_mainPnl) { _mainPnl.SetActive(false); }
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(true); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
+    }
+
+
+    IEnumerator EnableSettingsCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
+        if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(true); }
     }
 
     IEnumerator StartGameCR()
