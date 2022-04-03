@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8748109108750703040}
   m_Layer: 6
   m_Name: Egg
-  m_TagString: Monster
+  m_TagString: Egg
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,6 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   points: 1
+  species: 1
   stunTime: 2
 --- !u!114 &8748109108750703040
 MonoBehaviour:
