@@ -55,6 +55,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     // When the player will stop being invencible
     private float _timeInvencible = 0.0f;
 
+    // Layer mask for distance attack boxcast
+    private int layerMask = 0;
+
     public float projectileTimeToLive = 5.0f;
     public Transform projectileThrower;
     public float projectileSpeed = 1000.0f;
@@ -125,9 +128,12 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         weaponCollider.enabled = false;
 
         // Get Joystick (mobile)
-        #if UNITY_IOS || UNITY_ANDROID
+#if UNITY_IOS || UNITY_ANDROID
         stick = FindObjectOfType<OnScreenStick>().gameObject.GetComponent<RectTransform>();
-        #endif
+#endif
+
+        // Set layer mask for player and monster layers
+        layerMask = (1 << 6) | (1 << 9);
     }
 
     private void Update()
@@ -517,7 +523,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
     public void ShootProjectile()
     {
         RaycastHit hitInfo;
-        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation);
+        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation, 100.0f, layerMask);
         if (!hitted) { return; }
 
         if (hitInfo.transform.CompareTag("Player"))
