@@ -165,9 +165,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6345218096006791920, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6345218096006791920, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2720221069562527839, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2720221069562527839, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566860969287147491, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566860969287147491, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 62ff5e4843db247a299fad7596796148, type: 3}
       propertyPath: m_Name
       value: RoomMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: 62ff5e4843db247a299fad7596796148, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4026526069006075691, guid: 62ff5e4843db247a299fad7596796148, type: 3}
       propertyPath: m_IsActive

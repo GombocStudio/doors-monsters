@@ -294,6 +294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point Light
       objectReference: {fileID: 0}
+    - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
+      propertyPath: m_DrawHalo
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
 --- !u!4 &2003262173822365392 stripped
@@ -426,9 +430,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6345218096006791920, guid: e911fe8a230d74df5a17be944dce553b, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2720221069562527839, guid: e911fe8a230d74df5a17be944dce553b, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566860969287147491, guid: e911fe8a230d74df5a17be944dce553b, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e911fe8a230d74df5a17be944dce553b, type: 3}
       propertyPath: m_Name
       value: RoomMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: e911fe8a230d74df5a17be944dce553b, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: e911fe8a230d74df5a17be944dce553b, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4001884000757521604, guid: e911fe8a230d74df5a17be944dce553b, type: 3}
       propertyPath: m_IsActive

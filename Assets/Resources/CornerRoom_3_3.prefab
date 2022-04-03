@@ -247,6 +247,10 @@ PrefabInstance:
       value: Point Light (2)
       objectReference: {fileID: 0}
     - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
       propertyPath: m_BounceIntensity
       value: 1
       objectReference: {fileID: 0}
@@ -313,6 +317,10 @@ PrefabInstance:
       value: Point Light (3)
       objectReference: {fileID: 0}
     - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
       propertyPath: m_BounceIntensity
       value: 1
       objectReference: {fileID: 0}
@@ -377,6 +385,10 @@ PrefabInstance:
     - target: {fileID: 5686880781598656041, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
       propertyPath: m_Name
       value: Point Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
       propertyPath: m_BounceIntensity
@@ -538,9 +550,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6345218096006791920, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6345218096006791920, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2720221069562527839, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2720221069562527839, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566860969287147491, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 566860969287147491, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
       propertyPath: m_Name
       value: RoomMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1391724132148829795, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6820594879077173776, guid: 1a00600cec98e4f108f31626cd3a88b7, type: 3}
       propertyPath: m_IsActive
@@ -626,6 +674,10 @@ PrefabInstance:
     - target: {fileID: 5686880781598656041, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
       propertyPath: m_Name
       value: Point Light (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
+      propertyPath: m_Intensity
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7631500049674391717, guid: 8a3cfa08a179fb744b6167a45c17a49e, type: 3}
       propertyPath: m_BounceIntensity
