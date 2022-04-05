@@ -3391,7 +3391,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 1075769110}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 2
   m_Options:
     m_Options:
     - m_Text: 2 JUGADORES
@@ -5001,7 +5001,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 2118223098}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 3
   m_Options:
     m_Options:
     - m_Text: 2 RONDAS
@@ -7331,7 +7331,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2 RONDAS
+  m_Text: 5 RONDAS
 --- !u!222 &1594162259
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7802,7 +7802,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 2 JUGADORES
+  m_Text: 4 JUGADORES
 --- !u!222 &1684427437
 CanvasRenderer:
   m_ObjectHideFlags: 0
