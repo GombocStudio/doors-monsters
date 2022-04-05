@@ -285,10 +285,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
 
         // Mobile controls
         #if UNITY_IOS || UNITY_ANDROID
-        if (_movement.x < -0.3) { _movement.x = -1.0f; }
-        if (_movement.x > 0.3) { _movement.x = 1.0f; }
-        if (_movement.y < -0.3) { _movement.y = -1.0f; }
-        if (_movement.y > 0.3) { _movement.y = 1.0f; }
+        if (_movement.x < -0.5) { _movement.x = -1.0f; }
+        if (_movement.x > 0.5) { _movement.x = 1.0f; }
+        if (_movement.y < -0.5) { _movement.y = -1.0f; }
+        if (_movement.y > 0.5) { _movement.y = 1.0f; }
 
         _movement.Normalize();
 
