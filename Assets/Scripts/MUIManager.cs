@@ -315,6 +315,8 @@ public class MUIManager : MonoBehaviour
 
     public void HandleError(short errorCode)
     {
+        if (_loadingGIF) { _loadingGIF.SetActive(false); }
+
         switch (errorCode)
         {
             case 32766:

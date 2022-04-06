@@ -312,11 +312,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
-
-            // Play attack sound (short range)
-            Sound s = Array.Find(sounds, sound => sound.name == "ShortRangeAttack");
-            if (s != null && s.source != null) { s.source.Play(); }
-            else { Debug.Log("Character attack sound not found!"); }
         }
     }
 
@@ -559,6 +554,18 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             _stunned = true;
             _timeStunned = Time.time + stunTime;
         }
+    }
+
+    #endregion
+
+    #region Sound Methods
+
+    public void PlayShortRangeAttackSound()
+    {
+        // Play attack sound (short range)
+        Sound s = Array.Find(sounds, sound => sound.name == "ShortRangeAttack");
+        if (s != null && s.source != null) { s.source.Play(); }
+        else { Debug.Log("Character attack sound not found!"); }
     }
 
     #endregion
