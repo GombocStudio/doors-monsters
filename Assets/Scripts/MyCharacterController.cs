@@ -125,6 +125,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+
+            s.source.spatialBlend = s.spatialBlend;
+            s.source.maxDistance = s.maxDistance;
+            s.source.minDistance = s.minDistance;
         }
     }
 
@@ -285,10 +289,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
 
         // Mobile controls
         #if UNITY_IOS || UNITY_ANDROID
-        if (_movement.x < -0.3) { _movement.x = -1.0f; }
-        if (_movement.x > 0.3) { _movement.x = 1.0f; }
-        if (_movement.y < -0.3) { _movement.y = -1.0f; }
-        if (_movement.y > 0.3) { _movement.y = 1.0f; }
+        if (_movement.x < -0.5) { _movement.x = -1.0f; }
+        if (_movement.x > 0.5) { _movement.x = 1.0f; }
+        if (_movement.y < -0.5) { _movement.y = -1.0f; }
+        if (_movement.y > 0.5) { _movement.y = 1.0f; }
 
         _movement.Normalize();
 
@@ -312,11 +316,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isAttacking", context.ReadValueAsButton());
-
-            // Play attack sound (short range)
-            Sound s = Array.Find(sounds, sound => sound.name == "ShortRangeAttack");
-            if (s != null && s.source != null) { s.source.Play(); }
-            else { Debug.Log("Character attack sound not found!"); }
         }
     }
 
@@ -500,6 +499,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             // Decrease player score
             if (scoreManager) { scoreManager.UpdatePlayerScore(this.gameObject, -50); }
             Debug.Log("Soltar monstruos");
+
+            // Play receive damage sound
+            Sound s = Array.Find(sounds, sound => sound.name == "ReceiveDamage");
+            if (s != null && s.source != null) { s.source.Play(); }
+            else { Debug.Log("Character attack sound not found!"); }
         }
     }
 
@@ -559,6 +563,18 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             _stunned = true;
             _timeStunned = Time.time + stunTime;
         }
+    }
+
+    #endregion
+
+    #region Sound Methods
+
+    public void PlayShortRangeAttackSound()
+    {
+        // Play attack sound (short range)
+        Sound s = Array.Find(sounds, sound => sound.name == "ShortRangeAttack");
+        if (s != null && s.source != null) { s.source.Play(); }
+        else { Debug.Log("Character attack sound not found!"); }
     }
 
     #endregion

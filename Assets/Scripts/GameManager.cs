@@ -209,6 +209,9 @@ public class GameManager : MonoBehaviourPunCallbacks
                     // Init minimap player camera
                     MinimapCameraController minimapCamera = FindObjectOfType<MinimapCameraController>();
                     if (minimapCamera) { minimapCamera.playerTransform = characterInstance.transform; }
+
+                    // Init player audio listener
+                    characterInstance.AddComponent<AudioListener>();
                 }
             }
         }

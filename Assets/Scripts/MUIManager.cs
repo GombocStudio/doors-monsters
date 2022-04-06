@@ -170,7 +170,7 @@ public class MUIManager : MonoBehaviour
     {
         if (_settingsPnl.activeSelf)
         {
-            EnableLobby();
+            StartCoroutine(DisableSettingsCR());
             return;
         }
 
@@ -280,10 +280,20 @@ public class MUIManager : MonoBehaviour
 
         EnableLoadingGIF(false);
 
-        if (_mainPnl) { _mainPnl.SetActive(false); }
-        if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
-        if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(true); }
+    }
+
+    IEnumerator DisableSettingsCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
     }
 
     IEnumerator StartGameCR()
@@ -305,6 +315,8 @@ public class MUIManager : MonoBehaviour
 
     public void HandleError(short errorCode)
     {
+        if (_loadingGIF) { _loadingGIF.SetActive(false); }
+
         switch (errorCode)
         {
             case 32766:
