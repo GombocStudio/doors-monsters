@@ -125,6 +125,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
+
+            s.source.spatialBlend = s.spatialBlend;
+            s.source.maxDistance = s.maxDistance;
+            s.source.minDistance = s.minDistance;
         }
     }
 
@@ -495,6 +499,11 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             // Decrease player score
             if (scoreManager) { scoreManager.UpdatePlayerScore(this.gameObject, -50); }
             Debug.Log("Soltar monstruos");
+
+            // Play receive damage sound
+            Sound s = Array.Find(sounds, sound => sound.name == "ReceiveDamage");
+            if (s != null && s.source != null) { s.source.Play(); }
+            else { Debug.Log("Character attack sound not found!"); }
         }
     }
 
