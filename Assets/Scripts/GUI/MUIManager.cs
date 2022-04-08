@@ -8,6 +8,9 @@ public class MUIManager : MonoBehaviour
     // Network manager reference
     private MNetworkManager networkManager;
 
+    [Header("Cursor Texture")]
+    public Texture2D cursorTexture;
+
     [Header("Menu panels")]
     public GameObject _mainPnl;
     public GameObject _lobbyPnl;
@@ -50,7 +53,10 @@ public class MUIManager : MonoBehaviour
         networkManager = FindObjectOfType<MNetworkManager>();
 
         // Initialise transition panel animator
-        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }        
+        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }     
+        
+        // Set cursor texture
+        if (cursorTexture) { Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); }
     }
 
     public void EnableMain()

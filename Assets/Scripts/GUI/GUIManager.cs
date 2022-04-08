@@ -256,9 +256,6 @@ public class GUIManager : MonoBehaviour
         // Play start round UI animation
         if (_roundPnlAnim) { _roundPnlAnim.Play("StartRound"); }
 
-        //Play start round sound
-        FindObjectOfType<AudioManager>().Play("StartGame");
-
         yield return new WaitForSeconds(4.25f);
 
         // After round counter UI animation is done activate player input and start round timer
