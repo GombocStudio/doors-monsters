@@ -1756,7 +1756,7 @@ MonoBehaviour:
   sounds:
   - clip: {fileID: 8300000, guid: 5bbab3f343cae484f937a1cc5e9029a4, type: 3}
     name: ShortRangeAttack
-    volume: 0.75
+    volume: 0.5
     pitch: 1
     loop: 0
     spatialBlend: 1
