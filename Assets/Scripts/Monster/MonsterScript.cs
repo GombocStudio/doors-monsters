@@ -8,6 +8,7 @@ public class MonsterScript : Interactable
 {    
     public float speed;
     public int points;
+    public ParticleSystem spawnPS;
 
     // Sound variables
     public enum Species { Monster, Egg }
@@ -41,6 +42,9 @@ public class MonsterScript : Interactable
     {
         // Initialize score manager component
         scoreManager = FindObjectOfType<ScoreManager>();
+
+        // Play spanw particle system
+        if (spawnPS) { spawnPS.Play(); }
 
         // Monsters only move on the master client
         if (PhotonNetwork.IsMasterClient)

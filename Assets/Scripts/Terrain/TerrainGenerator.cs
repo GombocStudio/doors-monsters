@@ -53,7 +53,7 @@ public class TerrainGenerator : MonoBehaviour
     public int maxRoomDepth;
 
     [Header("Room spawning chance")]
-    public float roomChance = 0.85f;
+    private float roomChance = 1.0f;
 
     [Header("Room prefabs")]
     public GameObject[] cornerRooms;
@@ -61,7 +61,7 @@ public class TerrainGenerator : MonoBehaviour
     public GameObject[] centerRooms;
 
     [Header("Corridor prefabs")]
-    public List<GameObject> corridorOrigin;
+    // public List<GameObject> corridorOrigin;
     public GameObject corridorTile;
 
     [Header("Terrain data generation")]
@@ -252,7 +252,7 @@ public class TerrainGenerator : MonoBehaviour
                     break;
 
                 case CellType.Corridor:
-                    if (corridorOrigin.Count > 2) { element.prefab = corridorOrigin[2].name; }
+                    // if (corridorOrigin.Count > 2) { element.prefab = corridorOrigin[2].name; }
                     break;
 
                 default:
@@ -275,7 +275,7 @@ public class TerrainGenerator : MonoBehaviour
                     break;
 
                 case CellType.Corridor:
-                    if (corridorOrigin.Count > 1) { element.prefab = corridorOrigin[1].name; }
+                    // if (corridorOrigin.Count > 1) { element.prefab = corridorOrigin[1].name; }
                     break;
 
                 default:
@@ -298,7 +298,7 @@ public class TerrainGenerator : MonoBehaviour
                     break;
 
                 case CellType.Corridor:
-                    if (corridorOrigin.Count > 0) { element.prefab = corridorOrigin[0].name; }
+                    // if (corridorOrigin.Count > 0) { element.prefab = corridorOrigin[0].name; }
                     break;
 
                 default:
@@ -359,7 +359,7 @@ public class TerrainGenerator : MonoBehaviour
             structureDictionary.Add(room.name, room);
 
         // Add corridor origins to dictionary
-        foreach (GameObject corridor in corridorOrigin)
-            structureDictionary.Add(corridor.name, corridor);
+        /* foreach (GameObject corridor in corridorOrigin)
+            structureDictionary.Add(corridor.name, corridor); */
     }
 }
