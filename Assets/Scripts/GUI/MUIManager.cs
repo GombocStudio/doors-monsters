@@ -17,6 +17,7 @@ public class MUIManager : MonoBehaviour
     public GameObject _roomPnl;
     public GameObject _errorPnl;
     public GameObject _settingsPnl;
+    public GameObject _tutorialPnl;
 
     [Header("Lobby menu variables")]
     public InputField _nicknameInputField;
@@ -30,6 +31,11 @@ public class MUIManager : MonoBehaviour
     public List<GameObject> characterPlatforms;
     public List<GameObject> characterPrefabs;
     public List<Text> playerNicknameTxts;
+
+    [Header("Tutorial variables")]
+    public GameObject _gamePnl;
+    public GameObject _controlsPnl;
+    public GameObject _powerupsPnl;    
 
     [Header("Error popup variables")]
     public Text _errorTxt;
@@ -53,8 +59,8 @@ public class MUIManager : MonoBehaviour
         networkManager = FindObjectOfType<MNetworkManager>();
 
         // Initialise transition panel animator
-        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }     
-        
+        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }
+
         // Set cursor texture
         if (cursorTexture) { Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); }
     }
@@ -81,6 +87,11 @@ public class MUIManager : MonoBehaviour
             _volumeSlider.value = AudioListener.volume;
         }
         StartCoroutine(EnableSettingsCR());
+    }
+
+    public void EnableTutorial()
+    {
+        StartCoroutine(EnableTutorialCR());
     }
 
     public void EnableLoadingGIF(bool value)
@@ -180,6 +191,12 @@ public class MUIManager : MonoBehaviour
             return;
         }
 
+        if (_tutorialPnl.activeSelf)
+        {
+            StartCoroutine(DisableTutorialCR());
+            return;
+        }
+
         if (!networkManager) { return; }
 
         // Disconnect from server
@@ -205,6 +222,11 @@ public class MUIManager : MonoBehaviour
         EnableSettings();
     }
 
+    public void OnClickTutorial()
+    {
+        EnableTutorial();
+    }
+
     #endregion
 
     #region Settings
@@ -225,6 +247,15 @@ public class MUIManager : MonoBehaviour
 
     #endregion
 
+    #region Tutorial
+    public void OnTabChanged(int tab)
+    {
+        _gamePnl.SetActive(tab == 0);
+        _controlsPnl.SetActive(tab == 1);
+        _powerupsPnl.SetActive(tab == 2);        
+    }
+    #endregion
+
     #region Coroutines
 
     IEnumerator EnableMainCR()
@@ -241,6 +272,7 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator EnableLobbyCR()
@@ -257,6 +289,7 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator EnableRoomCR()
@@ -273,6 +306,7 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(true); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
 
@@ -287,6 +321,34 @@ public class MUIManager : MonoBehaviour
         EnableLoadingGIF(false);
 
         if (_settingsPnl) { _settingsPnl.SetActive(true); }
+    }
+
+    IEnumerator EnableTutorialCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_tutorialPnl) {  _tutorialPnl.SetActive(true); }
+    }
+
+    IEnumerator DisableTutorialCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(true); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator DisableSettingsCR()
