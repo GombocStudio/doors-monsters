@@ -43,9 +43,6 @@ public class MonsterScript : Interactable
         // Initialize score manager component
         scoreManager = FindObjectOfType<ScoreManager>();
 
-        // Play spanw particle system
-        if (spawnPS) { spawnPS.Play(); }
-
         // Monsters only move on the master client
         if (PhotonNetwork.IsMasterClient)
         {

@@ -344,6 +344,14 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
 
+        // Play pick up powerup sound
+        if (other.gameObject.CompareTag("PowerUp"))
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == "CatchPowerup");
+            if (s != null && s.source != null) { s.source.Play(); }
+            else { Debug.Log("Character attack sound not found!"); }
+        }
+
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);
     }
@@ -356,10 +364,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
-
-        // Play pick up powerup sound
-        if (other.gameObject.CompareTag("PowerUp"))
-            FindObjectOfType<AudioManager>().Play("CatchPowerup");
 
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);

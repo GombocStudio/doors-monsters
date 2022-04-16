@@ -1782,6 +1782,15 @@ MonoBehaviour:
     minDistance: 0.5
     maxDistance: 8
     source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: c1d8c5efc6803483eb555eec1aeb21e7, type: 3}
+    name: CatchPowerup
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    spatialBlend: 1
+    minDistance: 0.5
+    maxDistance: 8
+    source: {fileID: 0}
 --- !u!114 &-4722877832658063450
 MonoBehaviour:
   m_ObjectHideFlags: 0

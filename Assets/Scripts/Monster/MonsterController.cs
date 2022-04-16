@@ -89,13 +89,16 @@ public class MonsterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Only spawn monsters if client is master and terrain data is ready
-        if (paused || activeMonsters >= maxMonsters || !terrainDataReady) { return; }
-
-        if (System.DateTime.Now - lastSpawnedTime > System.TimeSpan.FromMilliseconds(1000))
+        if (terrainDataReady && monstersParent && !paused)
         {
-            SpawnMonster();
-            lastSpawnedTime = System.DateTime.Now;
+            if (monstersParent.transform.childCount < maxMonsters)
+            {
+                if (System.DateTime.Now - lastSpawnedTime > System.TimeSpan.FromMilliseconds(1000))
+                {
+                    SpawnMonster();
+                    lastSpawnedTime = System.DateTime.Now;
+                }
+            }
         }
     }
 

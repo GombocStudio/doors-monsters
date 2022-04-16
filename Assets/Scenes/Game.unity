@@ -751,15 +751,6 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: c1d8c5efc6803483eb555eec1aeb21e7, type: 3}
-    name: CatchPowerup
-    volume: 1
-    pitch: 1
-    loop: 0
-    spatialBlend: 0
-    minDistance: 0
-    maxDistance: 0
-    source: {fileID: 0}
   - clip: {fileID: 8300000, guid: 7e558c55f0294422c81a59d813a02b8c, type: 3}
     name: DoorOpen
     volume: 0.1
@@ -1867,13 +1858,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce52cf7efd3d5284492de0ff1464740c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRows: 3
-  maxRows: 3
+  minRows: 2
+  maxRows: 2
   minColumns: 2
-  maxColumns: 3
+  maxColumns: 2
   maxRoomWidth: 9
   maxRoomDepth: 9
-  roomChance: 1
   cornerRooms:
   - {fileID: 7528944740460675877, guid: 67401e274e3bc484da71ee94aea5e915, type: 3}
   - {fileID: 5968963788454281245, guid: 31b303b3031dccd45ae9e013ae02e879, type: 3}
@@ -1886,10 +1876,6 @@ MonoBehaviour:
   - {fileID: 8687890310481330568, guid: c724a2924d2d2d84084d349f0cff56c1, type: 3}
   - {fileID: 693259328136038952, guid: 11ba699e86340ba4a9437e840d7302ac, type: 3}
   - {fileID: 1138978739608380183, guid: e3b725be73e3a3d48adbf25568c270be, type: 3}
-  corridorOrigin:
-  - {fileID: 2374625122092861940, guid: 2db699ab9a9f1454a9ee55d9e473cf62, type: 3}
-  - {fileID: 2594990341318704803, guid: cd428c6ef342041488a17697aad88080, type: 3}
-  - {fileID: 8706671230545415314, guid: 9c93c6c312798e7479ff3d093d9d2bee, type: 3}
   corridorTile: {fileID: 5896170599851216676, guid: bc32710903bb44d47841ce1ad9a5c56d, type: 3}
   navMeshSurface: {fileID: 1314448631}
   usePhoton: 1
