@@ -98,6 +98,7 @@ public class MonsterScript : Interactable
 
     public void StunMonster()
     {
+        Debug.Log("Monstruo: Golpeado con arma a distancia");
         if (!_stunned)
         {
             _stunned = true;

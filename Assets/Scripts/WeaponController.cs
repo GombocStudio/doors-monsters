@@ -14,7 +14,7 @@ public class WeaponController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameObject enemy = other.gameObject;
-
+        
         if (enemy == player) { return; }
         
         // Check if the attack has hit a monster
@@ -26,7 +26,7 @@ public class WeaponController : MonoBehaviour
             }
             else
             {
-                //enemy.GetComponent<MonsterScript>().StunMonster();
+                enemy.GetComponent<MonsterScript>().StunMonster();
             }
         }
 
@@ -36,7 +36,7 @@ public class WeaponController : MonoBehaviour
             if (meleeWeapon) enemy.GetComponent<MyCharacterController>().MeleeHit();
             else
             {
-                //enemy.GetComponent<MyCharacterController>().DistanceHit();
+                enemy.GetComponent<MyCharacterController>().DistanceHit();
             }
         }
 
@@ -46,7 +46,7 @@ public class WeaponController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
+        if (collision.transform.gameObject == player) { return; }
         if (!meleeWeapon == false) PhotonNetwork.Destroy(this.gameObject.GetPhotonView());
     }
 }

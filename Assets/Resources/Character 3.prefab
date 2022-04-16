@@ -772,7 +772,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.2
+  m_Radius: 0.6
   m_Height: 1.75
   m_Direction: 1
   m_Center: {x: 0, y: 0.875, z: 0}
@@ -1724,7 +1724,7 @@ Transform:
   - {fileID: 5437907905007509811}
   m_Father: {fileID: 233804676615346386}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 11.842576, y: -13.366617, z: -121.99388}
+  m_LocalEulerAnglesHint: {x: 21.55873, y: -14.080207, z: -124.46777}
 --- !u!1 &7225556580339642033
 GameObject:
   m_ObjectHideFlags: 0
@@ -1760,7 +1760,7 @@ Transform:
   - {fileID: 2441643007688353825}
   m_Father: {fileID: 4875177476972035732}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 79.000015, y: -90, z: -90}
+  m_LocalEulerAnglesHint: {x: 89.54922, y: 80.64001, z: 80.64001}
 --- !u!1 &7293515809568148803
 GameObject:
   m_ObjectHideFlags: 0

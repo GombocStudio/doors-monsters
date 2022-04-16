@@ -518,14 +518,14 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         _projectileInstance = PhotonNetwork.Instantiate(projectile.name, projectileThrower.position, projectileThrower.rotation);
         _projectileInstance.transform.parent = projectileThrower;
         _projectileInstance.GetComponent<Rigidbody>().useGravity = false;
+        _projectileInstance.GetComponent<WeaponController>().player = this.gameObject;
     }
 
     public void ShootProjectile()
     {
         RaycastHit hitInfo;
         bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation, 100.0f, layerMask);
-        if (!hitted) { return; }
-
+        /*
         if (hitInfo.transform.CompareTag("Player"))
         {
             hitInfo.transform.GetComponent<MyCharacterController>().DistanceHit();
@@ -534,13 +534,13 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
         {
             hitInfo.transform.GetComponent<MonsterScript>().StunMonster();
         }
-
+        */
         if (_projectileInstance == null) { return; }
 
         _projectileInstance.transform.parent = null;
         PhotonView projectileView = _projectileInstance.GetPhotonView();
 
-        if (hitted && (hitInfo.transform.CompareTag("Player") || hitInfo.transform.CompareTag("Monster")))
+        if (hitted)
         {
             Vector3 enemyPos = hitInfo.transform.position;
             enemyPos.y = 0.1f;
@@ -560,7 +560,7 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IPunObservable, 
 
     public void DistanceHit()
     {
-        Debug.Log("Golpeado con arma a distancia");
+        Debug.Log("Personaje: Golpeado con arma a distancia");
         if (!_stunned)
         {
             _stunned = true;
