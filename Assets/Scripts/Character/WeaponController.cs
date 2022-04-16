@@ -29,6 +29,10 @@ public class WeaponController : MonoBehaviour
                 // Interact with collider gameobject
                 interactable.Interact(player);
             }
+            else
+            {
+                enemy.GetComponent<MonsterScript>().StunMonster();
+            }
         }
 
         // Check if the attack has hit another player
@@ -41,7 +45,7 @@ public class WeaponController : MonoBehaviour
             }
             else
             {
-                //enemy.GetComponent<MyCharacterController>().DistanceHit();
+                enemy.GetComponent<MyCharacterController>().DistanceHit();
             }
         }
 

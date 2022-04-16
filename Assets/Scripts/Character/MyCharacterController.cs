@@ -56,6 +56,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     // When the player will stop being invencible
     private float _timeInvencible = 0.0f;
 
+    // Layer mask for distance attack boxcast
+    private int layerMask = 0;
+
     public float projectileTimeToLive = 5.0f;
     public Transform projectileThrower;
     public float projectileSpeed = 1000.0f;
@@ -160,9 +163,12 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         weaponCollider.enabled = false;
 
         // Get Joystick (mobile)
-        #if UNITY_IOS || UNITY_ANDROID
+#if UNITY_IOS || UNITY_ANDROID
         stick = FindObjectOfType<OnScreenStick>().gameObject.GetComponent<RectTransform>();
-        #endif
+#endif
+
+        // Set layer mask for player and monster layers
+        layerMask = (1 << 6) | (1 << 9);
     }
 
     private void Update()
@@ -329,14 +335,14 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     public void OnShoot(InputAction.CallbackContext context)
     {
         // Play animation shoot
-        /* if (_anim && !isFrozen && !_stunned)
+        if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isShooting", context.ReadValueAsButton());
 
             // Play attack sound (short range)
             Sound s = Array.Find(sounds, sound => sound.name == "LongRangeAttack");
             if (s != null) { s.source.Play(); }
-        } */
+        }
     }
 
     #endregion
@@ -529,14 +535,14 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         _projectileInstance = PhotonNetwork.Instantiate(projectile.name, projectileThrower.position, projectileThrower.rotation);
         _projectileInstance.transform.parent = projectileThrower;
         _projectileInstance.GetComponent<Rigidbody>().useGravity = false;
+        _projectileInstance.GetComponent<WeaponController>().player = this.gameObject;
     }
 
     public void ShootProjectile()
     {
         RaycastHit hitInfo;
-        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation);
-        if (!hitted) { return; }
-
+        bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation, 100.0f, layerMask);
+        /*
         if (hitInfo.transform.CompareTag("Player"))
         {
             hitInfo.transform.GetComponent<MyCharacterController>().DistanceHit();
@@ -545,13 +551,13 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             hitInfo.transform.GetComponent<MonsterScript>().StunMonster();
         }
-
+        */
         if (_projectileInstance == null) { return; }
 
         _projectileInstance.transform.parent = null;
         PhotonView projectileView = _projectileInstance.GetPhotonView();
 
-        if (hitted && (hitInfo.transform.CompareTag("Player") || hitInfo.transform.CompareTag("Monster")))
+        if (hitted)
         {
             Vector3 enemyPos = hitInfo.transform.position;
             enemyPos.y = 0.1f;
