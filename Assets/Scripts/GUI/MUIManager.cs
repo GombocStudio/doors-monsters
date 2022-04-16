@@ -45,6 +45,7 @@ public class MUIManager : MonoBehaviour
     [Header("Settings variables")]
     public Slider _volumeSlider;
     public Dropdown _resolutionDropdown;
+    public Toggle _screenModeToggle;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,9 @@ public class MUIManager : MonoBehaviour
         
         // Set cursor texture
         if (cursorTexture) { Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); }
+
+        // Init settings values
+        InitSettings();
     }
 
     public void EnableMain()
@@ -209,6 +213,18 @@ public class MUIManager : MonoBehaviour
 
     #region Settings
 
+    public void InitSettings()
+    {
+        // Init volume value
+        if (_volumeSlider) { _volumeSlider.SetValueWithoutNotify(AudioListener.volume); }
+
+        // Init resolution value
+        if (_resolutionDropdown) { Screen.SetResolution(1920, 1080, Screen.fullScreen); }
+
+        // Init screen mode value
+        if (_screenModeToggle) { _screenModeToggle.SetIsOnWithoutNotify(Screen.fullScreen); }
+    }
+
     public void OnVolumeSliderValueChanged()
     {
         AudioListener.volume = _volumeSlider.value;        
@@ -218,9 +234,14 @@ public class MUIManager : MonoBehaviour
     {
         switch(_resolutionDropdown.value)
         {
-            case 0: Screen.SetResolution(1920, 1080, true); break;
-            case 1: Screen.SetResolution(1280, 720, true); break;
+            case 0: Screen.SetResolution(1920, 1080, Screen.fullScreen); break;
+            case 1: Screen.SetResolution(1280, 720, Screen.fullScreen); break;
         }
+    }
+
+    public void OnScreenModeChanged()
+    {
+        if (_screenModeToggle) { Screen.fullScreen = _screenModeToggle.isOn; }
     }
 
     #endregion

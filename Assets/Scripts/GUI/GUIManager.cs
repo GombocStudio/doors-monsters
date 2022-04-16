@@ -44,7 +44,8 @@ public class GUIManager : MonoBehaviour
     public Image statusImage;
     public Sprite winSprite;
     public Sprite loseSprite;
-    public List<Text> rankingTexts;
+    public List<Text> rankingNameTexts;
+    public List<Text> rankingScoreTexts;
 
     // Start is called before the first frame update
     void Start()
@@ -179,12 +180,16 @@ public class GUIManager : MonoBehaviour
         // Display sorted score list in end game panel
         for (int i = 0; i < scoreList.Count; i++)
         {
-            if (i >= rankingTexts.Count) { return; }
+            if (i >= rankingNameTexts.Count) { return; }
+            if (i >= rankingScoreTexts.Count) { return; }
 
-            if (rankingTexts[i])
+            if (rankingNameTexts[i])
             {
-                rankingTexts[i].enabled = true;
-                rankingTexts[i].text = scoreList[i].Value.Key + "      " + scoreList[i].Value.Value.ToString();
+                rankingNameTexts[i].enabled = true;
+                rankingNameTexts[i].text = scoreList[i].Value.Key;
+
+                rankingScoreTexts[i].enabled = true;
+                rankingScoreTexts[i].text = scoreList[i].Value.Value.ToString();
             }
         }
     }

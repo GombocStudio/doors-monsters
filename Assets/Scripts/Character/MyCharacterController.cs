@@ -111,6 +111,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     // Reference to stick for mobile controls
     private RectTransform stick;
 
+    // Reference to camera shake component
+    private CinemachineShake cinemachineShake;
+
     #endregion
 
     #region Unity Default Methods
@@ -149,6 +152,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
 
         // Initialize animator component reference
         _anim = GetComponent<Animator>();
+
+        // Initialize cinemachine shake component reference
+        cinemachineShake = FindObjectOfType<CinemachineShake>();
 
         // Disable weapon collider
         weaponCollider.enabled = false;
@@ -344,6 +350,14 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
 
+        // Play pick up powerup sound
+        if (other.gameObject.CompareTag("PowerUp"))
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == "CatchPowerup");
+            if (s != null && s.source != null) { s.source.Play(); }
+            else { Debug.Log("Character attack sound not found!"); }
+        }
+
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);
     }
@@ -356,10 +370,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         // Check if other collider gameobject is interactable
         Interactable interactable = other.gameObject.GetComponent<Interactable>();
         if (!interactable) { return; }
-
-        // Play pick up powerup sound
-        if (other.gameObject.CompareTag("PowerUp"))
-            FindObjectOfType<AudioManager>().Play("CatchPowerup");
 
         // Interact with collider gameobject
         interactable.Interact(this.gameObject);
@@ -504,6 +514,10 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             Sound s = Array.Find(sounds, sound => sound.name == "ReceiveDamage");
             if (s != null && s.source != null) { s.source.Play(); }
             else { Debug.Log("Character attack sound not found!"); }
+
+            // Shake camera
+            if (cinemachineShake) { cinemachineShake.ShakeCamera(2, 0.15f); }
+            else { Debug.LogWarning("CinemachineShake component not found!"); }
         }
     }
 

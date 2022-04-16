@@ -8,6 +8,7 @@ public class MonsterScript : Interactable
 {    
     public float speed;
     public int points;
+    public ParticleSystem spawnPS;
 
     // Sound variables
     public enum Species { Monster, Egg }
