@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bf089dbfcd42145f5bda701cd38d6523
+guid: 6bf15f11139cb4983a704f98cb198558
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,23 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialLampGlass.001
-    second: {fileID: 2100000, guid: d9c77a9d9c57e46309e3b4a636544747, type: 2}
+      name: MaterialAll
+    second: {fileID: 2100000, guid: 5a96c2f6d2d14450ea6114b817cbfcd7, type: 2}
   - first:
-      type: UnityEngine:Material
+      type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: MaterialLampMetallic.001
-    second: {fileID: 2100000, guid: 964fab362e8884ee99635d1e26f30afe, type: 2}
+      name: MapNormalsAll
+    second: {fileID: 2800000, guid: b7a51a1f83599400ab9e1c656fc8ddb5, type: 3}
   - first:
-      type: UnityEngine:Material
+      type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: MaterialParedPasillo
-    second: {fileID: 2100000, guid: a2efa6f715bb64561a1589fb688bea0c, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialSueloPasillo
-    second: {fileID: 2100000, guid: c863565bee4d04187a56e2be491b10c0, type: 2}
+      name: MapUVsAll
+    second: {fileID: 2800000, guid: ddb2cf302535d4bfe876dce4e809ac0b, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -65,7 +60,7 @@ ModelImporter:
     importLights: 0
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -93,7 +88,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []

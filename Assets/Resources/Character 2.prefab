@@ -1702,7 +1702,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6409769037455708898}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1737e2ebef12d1c459d863fdbe19d34b, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.2
@@ -1853,7 +1853,7 @@ MonoBehaviour:
   _speed: 3
   RotationSmoothTime: 0.12
   doorControlTime: 3
-  doorTexture: {fileID: 2800000, guid: 1e380bee19b0c41cf9e930ba83c1d91f, type: 3}
+  doorTexture: {fileID: 2800000, guid: 09ae77f59fe9f4945bd43dc0a58d0de9, type: 3}
   weaponCollider: {fileID: 759351549897041785}
   projectile: {fileID: 3919092505533975352, guid: a6ebeeec2cb3d1744a2ed152247f56c3, type: 3}
   stunTime: 2
