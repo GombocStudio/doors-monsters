@@ -1943,7 +1943,7 @@ MonoBehaviour:
   invencibleTime: 3
   projectileTimeToLive: 5
   projectileThrower: {fileID: 2656854121829116103}
-  projectileSpeed: 400
+  projectileSpeed: 1000
   scoreMul: 1
   isOpenDoors: 0
   iceCubePrefab: {fileID: 6513766411947792241}
