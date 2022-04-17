@@ -49,6 +49,8 @@ public class WeaponController : MonoBehaviour
             }
         }
 
+        if (enemy.CompareTag("Door")) { return; }
+
         // Destroy weapon if it is not of type melee (projectile)
         if (meleeWeapon == false) PhotonNetwork.Destroy(this.gameObject.GetPhotonView());
     }
