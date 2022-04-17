@@ -259,6 +259,7 @@ public class MUIManager : MonoBehaviour
         // Init volume value
         if (_volumeSlider) { _volumeSlider.SetValueWithoutNotify(AudioListener.volume); }
 
+        #if !UNITY_IOS && !UNITY_ANDROID
         // Init resolution value
         if (_resolutionDropdown)
         {
@@ -281,6 +282,7 @@ public class MUIManager : MonoBehaviour
 
         // Init screen mode value
         if (_screenModeToggle) { _screenModeToggle.SetIsOnWithoutNotify(Screen.fullScreen); }
+        #endif
     }
 
     public void OnVolumeSliderValueChanged()
@@ -301,18 +303,18 @@ public class MUIManager : MonoBehaviour
         if (_screenModeToggle) { Screen.fullScreen = _screenModeToggle.isOn; }
     }
 
-    #endregion
+#endregion
 
-    #region Tutorial
+#region Tutorial
     public void OnTabChanged(int tab)
     {
         _gamePnl.SetActive(tab == 0);
         _controlsPnl.SetActive(tab == 1);
         _powerupsPnl.SetActive(tab == 2);
     }
-    #endregion
+#endregion
 
-    #region Coroutines
+#region Coroutines
 
     IEnumerator EnableMainCR()
     {
@@ -480,9 +482,9 @@ public class MUIManager : MonoBehaviour
         if (networkManager) { networkManager.StartGame(); }
     }
 
-    #endregion
+#endregion
 
-    #region Error Handler
+#region Error Handler
 
     public void HandleError(short errorCode)
     {
@@ -525,5 +527,5 @@ public class MUIManager : MonoBehaviour
         if (_errorTxt) { _errorTxt.text = errorMsg.ToUpper(); }
     }
 
-    #endregion
+#endregion
 }
