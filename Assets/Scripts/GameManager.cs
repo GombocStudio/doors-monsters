@@ -169,9 +169,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Compute spawning positions from terrain data
         List<Vector3> terrainCorners = new List<Vector3>();
         terrainCorners.Add(terrainData[0, 0].position + new Vector3(0, 1, 0));
-        terrainCorners.Add(terrainData[0, terrainData.GetLength(1) - 1].position + new Vector3(0, 1.5f, 0));
-        terrainCorners.Add(terrainData[terrainData.GetLength(0) - 1, 0].position + new Vector3(0, 1.5f, 0));
-        terrainCorners.Add(terrainData[terrainData.GetLength(0) - 1, terrainData.GetLength(1) - 1].position + new Vector3(0, 1.5f, 0));
+        terrainCorners.Add(terrainData[0, terrainData.GetLength(1) - 1].position + new Vector3(0, 1, 0));
+        terrainCorners.Add(terrainData[terrainData.GetLength(0) - 1, 0].position + new Vector3(0, 1f, 0));
+        terrainCorners.Add(terrainData[terrainData.GetLength(0) - 1, terrainData.GetLength(1) - 1].position + new Vector3(0, 1f, 0));
 
         // Compute player spawning position and ID
         for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++)

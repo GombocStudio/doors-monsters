@@ -21,6 +21,7 @@ public class MUIManager : MonoBehaviour
     public GameObject _errorPnl;
     public GameObject _settingsPnl;
     public GameObject _contactPnl;
+    public GameObject _tutorialPnl;
 
     [Header("Lobby menu variables")]
     public InputField _nicknameInputField;
@@ -34,6 +35,11 @@ public class MUIManager : MonoBehaviour
     public List<GameObject> characterPlatforms;
     public List<GameObject> characterPrefabs;
     public List<Text> playerNicknameTxts;
+
+    [Header("Tutorial variables")]
+    public GameObject _gamePnl;
+    public GameObject _controlsPnl;
+    public GameObject _powerupsPnl;
 
     [Header("Error popup variables")]
     public Text _errorTxt;
@@ -89,6 +95,11 @@ public class MUIManager : MonoBehaviour
             _volumeSlider.value = AudioListener.volume;
         }
         StartCoroutine(EnableSettingsCR());
+    }
+
+    public void EnableTutorial()
+    {
+        StartCoroutine(EnableTutorialCR());
     }
 
     public void EnableLoadingGIF(bool value)
@@ -188,6 +199,11 @@ public class MUIManager : MonoBehaviour
             return;
         }
 
+        if (_tutorialPnl.activeSelf)
+        {
+            StartCoroutine(DisableTutorialCR());
+        }
+
         if (_contactPnl.activeSelf)
         {
             StartCoroutine(DisableContactCR());
@@ -206,6 +222,11 @@ public class MUIManager : MonoBehaviour
         {
             networkManager.LeaveRoom();
         }
+    }
+
+    public void OnClickTutorial()
+    {
+        EnableTutorial();
     }
 
     public void OnClickContactButton()
@@ -282,6 +303,15 @@ public class MUIManager : MonoBehaviour
 
     #endregion
 
+    #region Tutorial
+    public void OnTabChanged(int tab)
+    {
+        _gamePnl.SetActive(tab == 0);
+        _controlsPnl.SetActive(tab == 1);
+        _powerupsPnl.SetActive(tab == 2);
+    }
+    #endregion
+
     #region Coroutines
 
     IEnumerator EnableMainCR()
@@ -298,6 +328,8 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator EnableLobbyCR()
@@ -314,6 +346,8 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator EnableRoomCR()
@@ -330,6 +364,8 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(true); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
 
@@ -344,6 +380,42 @@ public class MUIManager : MonoBehaviour
         EnableLoadingGIF(false);
 
         if (_settingsPnl) { _settingsPnl.SetActive(true); }
+    }
+
+    IEnumerator EnableTutorialCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
+        if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(true); }
+    }
+
+    IEnumerator DisableTutorialCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
+        if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator DisableSettingsCR()
@@ -373,6 +445,7 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
         if (_contactPnl) { _contactPnl.SetActive(true); }
     }
 
@@ -391,6 +464,7 @@ public class MUIManager : MonoBehaviour
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
         if (_contactPnl) { _contactPnl.SetActive(false); }
+        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator StartGameCR()
