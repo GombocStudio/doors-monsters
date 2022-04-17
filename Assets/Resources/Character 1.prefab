@@ -2243,7 +2243,7 @@ MonoBehaviour:
   invencibleTime: 3
   projectileTimeToLive: 5
   projectileThrower: {fileID: 3594733220217554812}
-  projectileSpeed: 1000
+  projectileSpeed: 400
   scoreMul: 1
   isOpenDoors: 0
   iceCubePrefab: {fileID: 5705937960835712763}
@@ -2259,7 +2259,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - clip: {fileID: 8300000, guid: 75e42137e72a7422280c050201f0741c, type: 3}
     name: LongRangeAttack
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
     spatialBlend: 0

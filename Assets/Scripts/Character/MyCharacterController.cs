@@ -338,10 +338,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         if (_anim && !isFrozen && !_stunned)
         {
             _anim.SetBool("isShooting", context.ReadValueAsButton());
-
-            // Play attack sound (short range)
-            Sound s = Array.Find(sounds, sound => sound.name == "LongRangeAttack");
-            if (s != null) { s.source.Play(); }
         }
     }
 
@@ -542,18 +538,9 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
     {
         RaycastHit hitInfo;
         bool hitted = Physics.BoxCast(this.GetComponent<Collider>().bounds.center, this.transform.localScale * 1.5f, this.transform.forward, out hitInfo, this.transform.rotation, 100.0f, layerMask);
-        /*
-        if (hitInfo.transform.CompareTag("Player"))
-        {
-            hitInfo.transform.GetComponent<MyCharacterController>().DistanceHit();
-        }
-        else if (hitInfo.transform.CompareTag("Monster"))
-        {
-            hitInfo.transform.GetComponent<MonsterScript>().StunMonster();
-        }
-        */
         if (_projectileInstance == null) { return; }
 
+        _projectileInstance.GetComponent<BoxCollider>().enabled = true;
         _projectileInstance.transform.parent = null;
         PhotonView projectileView = _projectileInstance.GetPhotonView();
 
@@ -571,8 +558,6 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
             projectileView.transform.rotation = Quaternion.Euler(rotation);
             projectileView.GetComponent<Rigidbody>().AddForce(this.transform.forward * projectileSpeed);
         }
-
-        //StartCoroutine(PhotonDestroyAfterTime(_projectileInstance, projectileTimeToLive));
     }
 
     public void DistanceHit()
@@ -595,6 +580,14 @@ public class MyCharacterController : MonoBehaviourPunCallbacks, IOnEventCallback
         Sound s = Array.Find(sounds, sound => sound.name == "ShortRangeAttack");
         if (s != null && s.source != null) { s.source.Play(); }
         else { Debug.Log("Character attack sound not found!"); }
+    }
+
+    public void PlayLongRangeAttackSound()
+    {
+        // Play attack sound (short range)
+        Sound s = Array.Find(sounds, sound => sound.name == "LongRangeAttack");
+        if (s != null) { s.source.Play(); }
+        else { Debug.Log("Character long attack sound not found!"); }
     }
 
     #endregion

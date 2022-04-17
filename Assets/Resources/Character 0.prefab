@@ -1833,7 +1833,7 @@ MonoBehaviour:
   invencibleTime: 3
   projectileTimeToLive: 5
   projectileThrower: {fileID: 2860811189463189014}
-  projectileSpeed: 1000
+  projectileSpeed: 400
   scoreMul: 1
   isOpenDoors: 0
   iceCubePrefab: {fileID: 6281764895944308673}
@@ -1847,18 +1847,18 @@ MonoBehaviour:
     minDistance: 0.5
     maxDistance: 8
     source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: 2078a5c3096114326b04d950a392d8b2, type: 3}
+  - clip: {fileID: 8300000, guid: 6117d207d2e00554ba887948c2d78e35, type: 3}
     name: LongRangeAttack
-    volume: 1
+    volume: 0.5
     pitch: 1
     loop: 0
-    spatialBlend: 0
-    minDistance: 0
-    maxDistance: 0
+    spatialBlend: 1
+    minDistance: 0.5
+    maxDistance: 8
     source: {fileID: 0}
   - clip: {fileID: 8300000, guid: f81b770684437aa4a804fa3a3aff400c, type: 3}
     name: ReceiveDamage
-    volume: 1
+    volume: 0.8
     pitch: 1
     loop: 0
     spatialBlend: 1
