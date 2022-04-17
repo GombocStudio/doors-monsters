@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9fb821fd4b2d240ed8a222aca2e7fe63
+guid: 9367dc0a0df9745879b1836d0673fffa
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -7,43 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: MaterialLampGlass
-    second: {fileID: 2100000, guid: d9c77a9d9c57e46309e3b4a636544747, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialLampMetallic
-    second: {fileID: 2100000, guid: 964fab362e8884ee99635d1e26f30afe, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialPaintedWall
-    second: {fileID: 2100000, guid: b043a5c65fe074f6eb8a97189763097f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: MaterialParquetFloor
-    second: {fileID: 2100000, guid: 81a8986d0890544979bed601b9db5a9b, type: 2}
+      name: MaterialAll
+    second: {fileID: 2100000, guid: 5a96c2f6d2d14450ea6114b817cbfcd7, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: SalonParedNormales
-    second: {fileID: 2800000, guid: 0e52bb6867ffa43db9c7a9a1c54c55a8, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: SalonParedUVs
-    second: {fileID: 2800000, guid: e797680c5d6a9493cbcde8b481aa948d, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: SueloParquetNormales
-    second: {fileID: 2800000, guid: 18d237e56347d4f67aa31948fd9e0762, type: 3}
-  - first:
-      type: UnityEngine:Texture2D
-      assembly: UnityEngine.CoreModule
-      name: SueloParquetUVs
-    second: {fileID: 2800000, guid: f020d609958c74ddbb53b2e14aac862e, type: 3}
+      name: MapUVsAll
+    second: {fileID: 2800000, guid: 733797a5b8ed34442aa0c4ff288136cc, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -113,7 +83,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 0
+  importAnimation: 1
   humanDescription:
     serializedVersion: 3
     human: []

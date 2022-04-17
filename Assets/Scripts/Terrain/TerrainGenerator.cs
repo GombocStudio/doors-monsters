@@ -240,6 +240,8 @@ public class TerrainGenerator : MonoBehaviour
 
     private void ComputeStructureData(ref TerrainStructure element, int row, int col)
     {
+        float angle = 0.0f;
+
         /**** COMPUTE CORNER STRUCTURE ****/
         if ((row == 0 && col == 0) || (row == 0 && col == terrainColumns - 1)
         || (row == terrainRows - 1 && col == 0) || (row == terrainRows - 1 && col == terrainColumns - 1))
@@ -260,7 +262,7 @@ public class TerrainGenerator : MonoBehaviour
             }
 
             // Compute structure rotation angle
-            float angle = (90 * ((row != 0) ? 1 : 0) + 90 * ((col != 0) ? 1 : 0)) * ((row != 0 && col == 0) ? -1 : 1);
+            angle = (90 * ((row != 0) ? 1 : 0) + 90 * ((col != 0) ? 1 : 0)) * ((row != 0 && col == 0) ? -1 : 1);
             element.rotation = Quaternion.AngleAxis(angle, Vector3.up);
         }
 
@@ -283,7 +285,7 @@ public class TerrainGenerator : MonoBehaviour
             }
 
             // Compute structure rotation angle
-            float angle = 90 * ((col != 0) ? 1 : -1) * ((row != 0) ? 1 : 0) + 90 * ((row == terrainRows - 1) ? 1 : 0);
+            angle = 90 * ((col != 0) ? 1 : -1) * ((row != 0) ? 1 : 0) + 90 * ((row == terrainRows - 1) ? 1 : 0);
             element.rotation = Quaternion.AngleAxis(angle, Vector3.up);
         }
 
@@ -316,8 +318,16 @@ public class TerrainGenerator : MonoBehaviour
 
             if (temp.Length < 3) { return; }
 
-            float.TryParse(element.prefab.Split('_')[1], out element.width); // RandomOddNumber(2, maxRoomWidth);
-            float.TryParse(element.prefab.Split('_')[2], out element.depth); // RandomOddNumber(2, maxRoomDepth);
+            if (angle == 0.0f || angle == 180.0f || angle == -180.0f || angle == -0.0f)
+            {
+                float.TryParse(element.prefab.Split('_')[1], out element.width); // RandomOddNumber(2, maxRoomWidth);
+                float.TryParse(element.prefab.Split('_')[2], out element.depth); // RandomOddNumber(2, maxRoomDepth);
+            }
+            else
+            {
+                float.TryParse(element.prefab.Split('_')[1], out element.depth); // RandomOddNumber(2, maxRoomWidth);
+                float.TryParse(element.prefab.Split('_')[2], out element.width); // RandomOddNumber(2, maxRoomDepth);
+            }
         }
     }
 
