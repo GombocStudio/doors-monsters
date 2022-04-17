@@ -2013,7 +2013,7 @@ RectTransform:
   m_Children:
   - {fileID: 492205417}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 8
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -4077,10 +4077,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b87337f3da595e14cab035a04840bb95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  androidControls:
-  - {fileID: 253288671}
-  - {fileID: 444483207}
-  - {fileID: 1784547085}
 --- !u!4 &1158052173
 Transform:
   m_ObjectHideFlags: 0
@@ -6424,7 +6420,7 @@ RectTransform:
   m_Children:
   - {fileID: 330554473}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6746,7 +6742,7 @@ RectTransform:
   - {fileID: 82196865}
   - {fileID: 789538334}
   m_Father: {fileID: 1952589313}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -6982,9 +6978,9 @@ RectTransform:
   - {fileID: 1133132187}
   - {fileID: 1439667405}
   - {fileID: 253288672}
-  - {fileID: 444483208}
   - {fileID: 1784547086}
   - {fileID: 1878472524}
+  - {fileID: 444483208}
   m_Father: {fileID: 1297267979}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

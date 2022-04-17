@@ -33,9 +33,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     // Variable to manage when the game has finished
     private bool isGameFinished = false;
 
-    // Android buttons and stick references
-    public List<GameObject> androidControls;
-
     #region Unity Default Methods
     private void Awake()
     {
@@ -48,10 +45,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // Initialise mobile UI if needed
         #if !UNITY_IOS && !UNITY_ANDROID
-        foreach (GameObject control in androidControls)
-        {
-            if (control) { control.SetActive(false); }
-        }
+        GameObject stick = FindObjectOfType<OnScreenStick>().gameObject.transform.parent.gameObject;
+        GameObject button = FindObjectOfType<OnScreenButton>().gameObject;
+
+        if (stick) { stick.gameObject.SetActive(false); }
+        if (button) { button.gameObject.SetActive(false); }
         #endif
 
         // Initialise terrain generator reference
