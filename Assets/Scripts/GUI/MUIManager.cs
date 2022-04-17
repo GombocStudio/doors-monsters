@@ -222,19 +222,23 @@ public class MUIManager : MonoBehaviour
         if (_volumeSlider) { _volumeSlider.SetValueWithoutNotify(AudioListener.volume); }
 
         // Init resolution value
-        if (_resolutionDropdown) { Screen.SetResolution(1920, 1080, Screen.fullScreen); }
-
-        resolutions = Screen.resolutions;
-
-        List<string> dropOptions = new List<string>();
-
-        foreach (var res in resolutions)
+        if (_resolutionDropdown) 
         {
-            dropOptions.Add(res.width + " X " + res.height + " : " + res.refreshRate + " HZ");
-        }
+            Screen.SetResolution(1920, 1080, Screen.fullScreen);
 
-        _resolutionDropdown.ClearOptions();
-        _resolutionDropdown.AddOptions(dropOptions);
+            resolutions = Screen.resolutions;
+            System.Array.Reverse(resolutions);
+
+            List<string> dropOptions = new List<string>();
+
+            foreach (var res in resolutions)
+            {
+                dropOptions.Add(res.width + " X " + res.height + " : " + res.refreshRate + " HZ");
+            }
+
+            _resolutionDropdown.ClearOptions();
+            _resolutionDropdown.AddOptions(dropOptions);
+        }
 
         // Init screen mode value
         if (_screenModeToggle) { _screenModeToggle.SetIsOnWithoutNotify(Screen.fullScreen); }
