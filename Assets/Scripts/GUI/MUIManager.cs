@@ -8,6 +8,9 @@ public class MUIManager : MonoBehaviour
     // Network manager reference
     private MNetworkManager networkManager;
 
+    // Available resolutions
+    private Resolution[] resolutions;
+
     [Header("Cursor Texture")]
     public Texture2D cursorTexture;
 
@@ -236,7 +239,24 @@ public class MUIManager : MonoBehaviour
         if (_volumeSlider) { _volumeSlider.SetValueWithoutNotify(AudioListener.volume); }
 
         // Init resolution value
-        if (_resolutionDropdown) { Screen.SetResolution(1920, 1080, Screen.fullScreen); }
+        if (_resolutionDropdown)
+        {
+            resolutions = Screen.resolutions;
+            System.Array.Reverse(resolutions);
+
+            List<string> dropOptions = new List<string>();
+
+            foreach (var res in resolutions)
+            {
+                dropOptions.Add(res.width + " X " + res.height + " : " + res.refreshRate + " HZ");
+            }
+
+            _resolutionDropdown.ClearOptions();
+            _resolutionDropdown.AddOptions(dropOptions);
+            _resolutionDropdown.value = PlayerPrefs.GetInt("CurrentRes", 0); ;
+
+            OnResolutionValueChanged();
+        }
 
         // Init screen mode value
         if (_screenModeToggle) { _screenModeToggle.SetIsOnWithoutNotify(Screen.fullScreen); }
@@ -249,11 +269,10 @@ public class MUIManager : MonoBehaviour
 
     public void OnResolutionValueChanged()
     {
-        switch(_resolutionDropdown.value)
-        {
-            case 0: Screen.SetResolution(1920, 1080, Screen.fullScreen); break;
-            case 1: Screen.SetResolution(1280, 720, Screen.fullScreen); break;
-        }
+        int currentRes = _resolutionDropdown.value;
+        Resolution res = resolutions[currentRes];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen, res.refreshRate);
+        PlayerPrefs.SetInt("CurrentRes", currentRes);
     }
 
     public void OnScreenModeChanged()
