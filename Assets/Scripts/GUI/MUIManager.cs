@@ -17,6 +17,7 @@ public class MUIManager : MonoBehaviour
     public GameObject _roomPnl;
     public GameObject _errorPnl;
     public GameObject _settingsPnl;
+    public GameObject _contactPnl;
 
     [Header("Lobby menu variables")]
     public InputField _nicknameInputField;
@@ -184,6 +185,12 @@ public class MUIManager : MonoBehaviour
             return;
         }
 
+        if (_contactPnl.activeSelf)
+        {
+            StartCoroutine(DisableContactCR());
+            return;
+        }
+
         if (!networkManager) { return; }
 
         // Disconnect from server
@@ -198,6 +205,11 @@ public class MUIManager : MonoBehaviour
         }
     }
 
+    public void OnClickContactButton()
+    {
+        StartCoroutine(EnableContactCR());
+    }
+
     public void OnClickCloseError()
     {
         // Hide error panel
@@ -207,6 +219,11 @@ public class MUIManager : MonoBehaviour
     public void OnClickSettings()
     {
         EnableSettings();
+    }
+
+    public void OnClickContactLinkButton(string url)
+    {
+        Application.OpenURL(url);
     }
 
     #endregion
@@ -321,6 +338,40 @@ public class MUIManager : MonoBehaviour
         EnableLoadingGIF(false);
 
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+    }
+
+    IEnumerator EnableContactCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
+        if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(true); }
+    }
+
+    IEnumerator DisableContactCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
+        if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(false); }
     }
 
     IEnumerator StartGameCR()
