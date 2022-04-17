@@ -8,6 +8,9 @@ public class MUIManager : MonoBehaviour
     // Network manager reference
     private MNetworkManager networkManager;
 
+    // Available resolutions
+    private Resolution[] resolutions;
+
     [Header("Cursor Texture")]
     public Texture2D cursorTexture;
 
@@ -17,7 +20,7 @@ public class MUIManager : MonoBehaviour
     public GameObject _roomPnl;
     public GameObject _errorPnl;
     public GameObject _settingsPnl;
-    public GameObject _tutorialPnl;
+    public GameObject _contactPnl;
 
     [Header("Lobby menu variables")]
     public InputField _nicknameInputField;
@@ -31,11 +34,6 @@ public class MUIManager : MonoBehaviour
     public List<GameObject> characterPlatforms;
     public List<GameObject> characterPrefabs;
     public List<Text> playerNicknameTxts;
-
-    [Header("Tutorial variables")]
-    public GameObject _gamePnl;
-    public GameObject _controlsPnl;
-    public GameObject _powerupsPnl;    
 
     [Header("Error popup variables")]
     public Text _errorTxt;
@@ -51,6 +49,7 @@ public class MUIManager : MonoBehaviour
     [Header("Settings variables")]
     public Slider _volumeSlider;
     public Dropdown _resolutionDropdown;
+    public Toggle _screenModeToggle;
 
     // Start is called before the first frame update
     void Start()
@@ -59,10 +58,13 @@ public class MUIManager : MonoBehaviour
         networkManager = FindObjectOfType<MNetworkManager>();
 
         // Initialise transition panel animator
-        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }
-
+        if (_transitionPnl) { _transitionAnim = _transitionPnl.GetComponent<Animator>(); }     
+        
         // Set cursor texture
         if (cursorTexture) { Cursor.SetCursor(cursorTexture, Vector2.zero, CursorMode.Auto); }
+
+        // Init settings values
+        InitSettings();
     }
 
     public void EnableMain()
@@ -87,11 +89,6 @@ public class MUIManager : MonoBehaviour
             _volumeSlider.value = AudioListener.volume;
         }
         StartCoroutine(EnableSettingsCR());
-    }
-
-    public void EnableTutorial()
-    {
-        StartCoroutine(EnableTutorialCR());
     }
 
     public void EnableLoadingGIF(bool value)
@@ -191,9 +188,9 @@ public class MUIManager : MonoBehaviour
             return;
         }
 
-        if (_tutorialPnl.activeSelf)
+        if (_contactPnl.activeSelf)
         {
-            StartCoroutine(DisableTutorialCR());
+            StartCoroutine(DisableContactCR());
             return;
         }
 
@@ -211,6 +208,11 @@ public class MUIManager : MonoBehaviour
         }
     }
 
+    public void OnClickContactButton()
+    {
+        StartCoroutine(EnableContactCR());
+    }
+
     public void OnClickCloseError()
     {
         // Hide error panel
@@ -222,14 +224,43 @@ public class MUIManager : MonoBehaviour
         EnableSettings();
     }
 
-    public void OnClickTutorial()
+    public void OnClickContactLinkButton(string url)
     {
-        EnableTutorial();
+        Application.OpenURL(url);
     }
 
     #endregion
 
     #region Settings
+
+    public void InitSettings()
+    {
+        // Init volume value
+        if (_volumeSlider) { _volumeSlider.SetValueWithoutNotify(AudioListener.volume); }
+
+        // Init resolution value
+        if (_resolutionDropdown)
+        {
+            resolutions = Screen.resolutions;
+            System.Array.Reverse(resolutions);
+
+            List<string> dropOptions = new List<string>();
+
+            foreach (var res in resolutions)
+            {
+                dropOptions.Add(res.width + " X " + res.height + " : " + res.refreshRate + " HZ");
+            }
+
+            _resolutionDropdown.ClearOptions();
+            _resolutionDropdown.AddOptions(dropOptions);
+            _resolutionDropdown.value = PlayerPrefs.GetInt("CurrentRes", 0); ;
+
+            OnResolutionValueChanged();
+        }
+
+        // Init screen mode value
+        if (_screenModeToggle) { _screenModeToggle.SetIsOnWithoutNotify(Screen.fullScreen); }
+    }
 
     public void OnVolumeSliderValueChanged()
     {
@@ -238,22 +269,17 @@ public class MUIManager : MonoBehaviour
 
     public void OnResolutionValueChanged()
     {
-        switch(_resolutionDropdown.value)
-        {
-            case 0: Screen.SetResolution(1920, 1080, true); break;
-            case 1: Screen.SetResolution(1280, 720, true); break;
-        }
+        int currentRes = _resolutionDropdown.value;
+        Resolution res = resolutions[currentRes];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen, res.refreshRate);
+        PlayerPrefs.SetInt("CurrentRes", currentRes);
     }
 
-    #endregion
-
-    #region Tutorial
-    public void OnTabChanged(int tab)
+    public void OnScreenModeChanged()
     {
-        _gamePnl.SetActive(tab == 0);
-        _controlsPnl.SetActive(tab == 1);
-        _powerupsPnl.SetActive(tab == 2);        
+        if (_screenModeToggle) { Screen.fullScreen = _screenModeToggle.isOn; }
     }
+
     #endregion
 
     #region Coroutines
@@ -272,7 +298,6 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
-        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator EnableLobbyCR()
@@ -289,7 +314,6 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
         if (_roomPnl) { _roomPnl.SetActive(false); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
-        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
     IEnumerator EnableRoomCR()
@@ -306,7 +330,6 @@ public class MUIManager : MonoBehaviour
         if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
         if (_roomPnl) { _roomPnl.SetActive(true); }
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
-        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
     }
 
 
@@ -323,34 +346,6 @@ public class MUIManager : MonoBehaviour
         if (_settingsPnl) { _settingsPnl.SetActive(true); }
     }
 
-    IEnumerator EnableTutorialCR()
-    {
-        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
-
-        yield return new WaitForSeconds(_transitionTime);
-
-        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
-
-        EnableLoadingGIF(false);
-
-        if (_mainPnl) { _mainPnl.SetActive(false); }
-        if (_tutorialPnl) {  _tutorialPnl.SetActive(true); }
-    }
-
-    IEnumerator DisableTutorialCR()
-    {
-        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
-
-        yield return new WaitForSeconds(_transitionTime);
-
-        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
-
-        EnableLoadingGIF(false);
-
-        if (_mainPnl) { _mainPnl.SetActive(true); }
-        if (_tutorialPnl) { _tutorialPnl.SetActive(false); }
-    }
-
     IEnumerator DisableSettingsCR()
     {
         if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
@@ -362,6 +357,40 @@ public class MUIManager : MonoBehaviour
         EnableLoadingGIF(false);
 
         if (_settingsPnl) { _settingsPnl.SetActive(false); }
+    }
+
+    IEnumerator EnableContactCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_lobbyPnl) { _lobbyPnl.SetActive(false); }
+        if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(true); }
+    }
+
+    IEnumerator DisableContactCR()
+    {
+        if (_transitionAnim) { _transitionAnim.Play("FadeOut"); }
+
+        yield return new WaitForSeconds(_transitionTime);
+
+        if (_transitionAnim) { _transitionAnim.Play("FadeIn"); }
+
+        EnableLoadingGIF(false);
+
+        if (_mainPnl) { _mainPnl.SetActive(false); }
+        if (_lobbyPnl) { _lobbyPnl.SetActive(true); }
+        if (_roomPnl) { _roomPnl.SetActive(false); }
+        if (_settingsPnl) { _settingsPnl.SetActive(false); }
+        if (_contactPnl) { _contactPnl.SetActive(false); }
     }
 
     IEnumerator StartGameCR()

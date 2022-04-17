@@ -28,6 +28,9 @@ public class Door : Interactable
     {
         // Initialize door's animator component
         _anim = GetComponent<Animator>();
+
+        // Init door edge color by calling reseting it
+        ResetDoorControl();
     }
 
     public void Update()
