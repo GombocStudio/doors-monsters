@@ -1960,8 +1960,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minRows: 2
-  maxRows: 4
-  minColumns: 3
+  maxRows: 3
+  minColumns: 2
   maxColumns: 4
   maxRoomWidth: 9
   maxRoomDepth: 9
