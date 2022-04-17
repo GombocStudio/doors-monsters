@@ -70,6 +70,9 @@ public class Door : Interactable
         {
             isOpen = true;
             _anim.Play("Open");
+
+            //Play opening door sound
+            FindObjectOfType<AudioManager>().Play("DoorOpen");
         }
 
         /**** SET DOOR TEXTURE ****/
@@ -112,6 +115,9 @@ public class Door : Interactable
         {
             isOpen = false;
             _anim.Play("Close");
+
+            //Play closing door sound
+            FindObjectOfType<AudioManager>().Play("DoorClose");
         }
 
         /**** SET DOOR CONTROLLED TIME ****/
@@ -139,6 +145,9 @@ public class Door : Interactable
         {
             isOpen = true;
             _anim.Play("Open");
+
+            //Play opening door sound
+            FindObjectOfType<AudioManager>().Play("DoorOpen");
         }
 
         /**** RESET DOOR ID ****/
